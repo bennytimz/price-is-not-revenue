@@ -1,0 +1,73 @@
+== Monthly revenue composition (USD) ==
+                 gas    intents  share_intents
+date                                          
+2025-08-01  282680.0        0.0           0.00
+2025-09-01  273555.0     9529.0           0.03
+2025-10-01  258548.0   292792.0           0.53
+2025-11-01  215182.0   627858.0           0.74
+2025-12-01  139680.0   257299.0           0.65
+2026-01-01  130282.0   534407.0           0.80
+2026-02-01   77354.0   428180.0           0.85
+2026-03-01  102406.0   394921.0           0.79
+2026-04-01   31654.0   316119.0           0.91
+2026-05-01   49290.0   615116.0           0.93
+2026-06-01   59693.0   631075.0           0.91
+2026-07-01   47066.0   490964.0           0.91
+2026-08-01   45764.0   716467.0           0.94
+2026-09-01  113643.0  1784036.0           0.94
+2026-10-01  196562.0  2199426.0           0.92
+
+== POST-HOC: Intents revenue behaviour, 2025-09-23 to 2026-11-03 ==
+corr(|daily return|, Intents revenue) = 0.38 (n=401) | corr(Spearman) = 0.33
+top 10% of days = 37% of Intents revenue | median day $15,559 vs mean $23,236
+
+== Run-rates annualised to 2026-11-01 (price $4.28, circulating market cap $5.61B) ==
+trailing  30d: total $ 27.7M | Intents $ 25.5M | gas $2.19M | P/S on total 203x
+trailing  91d: total $ 20.3M | Intents $ 18.9M | gas $1.43M | P/S on total 276x
+trailing 180d: total $ 14.0M | Intents $ 13.0M | gas $1.03M | P/S on total 400x
+
+== Net new supply (total supply growth, 2026-01-04 to 2026-11-01) ==
+31.9M NEAR/yr = 2.43% of supply; worth $137M/yr at $4.28
+buybacks / Intents revenue (median day): 0.72; last-30d buyback run-rate $16.9M/yr
+
+== Sensitivity: revenue multiple vs price. Holds net new supply fixed at the 2026 rate ==
+coverage = revenue / dollar value of net new supply; buyback coverage assumes the median buyback share
+      rev_M  ps_at_current_mcap cover@2.00 cover@4.28 cover@6.00 cover@8.00
+mult                                                                       
+1      20.0               276.0        32%        15%        11%         8%
+2      41.0               138.0        64%        30%        21%        16%
+4      81.0                69.0       127%        59%        42%        32%
+8     163.0                35.0       255%       119%        85%        64%
+12    244.0                23.0       382%       178%       127%        96%
+
+Break-even: buybacks fully offset net new supply at $4.28 when revenue is 9.4x the trailing-91-day run-rate ($191M/yr).
+At current market cap that revenue would be a P/S of 29x.
+Net dilution after buybacks today: 2.17% of market cap per year (gross 2.43%).
+
+latest 28-day average Intents revenue: $67,116/day
+Intents revenue/day: Aug7-Sep2 $25,791 | Sep17-Oct15 $82,640 | Oct16-Nov4 $55,966
+
+== POST-HOC: Intents revenue vs on-chain usage ==
+                  pre (Aug 7-Sep 2)  rally (Sep 17-Oct 15)  pullback (Oct 16-Nov 3)
+intents_usd                 25791.0                82640.0                  56341.0
+gas_usd                      1505.0                 7429.0                   3770.0
+gas_near                      850.0                 1510.0                    818.0
+transactions               680538.0               882948.0                 588551.0
+active_addresses           153141.0               133300.0                 108567.0
+price                           2.0                    5.0                      5.0
+
+Indexed to pre = 100:
+                  pre (Aug 7-Sep 2)  rally (Sep 17-Oct 15)  pullback (Oct 16-Nov 3)
+intents_usd                   100.0                  320.0                    218.0
+gas_usd                       100.0                  494.0                    251.0
+gas_near                      100.0                  178.0                     96.0
+transactions                  100.0                  130.0                     86.0
+active_addresses              100.0                   87.0                     71.0
+price                         100.0                  271.0                    261.0
+
+Weekly Spearman correlations after the 2026-04-02 break (n=31 weeks):
+         intents   gas    tx  active
+intents     1.00  0.91  0.15   -0.76
+gas         0.91  1.00  0.20   -0.72
+tx          0.15  0.20  1.00    0.32
+active     -0.76 -0.72  0.32    1.00

@@ -1,0 +1,34 @@
+{
+ "note": "Row counts and revenue totals as reported by the Blockworks pulls (via the Blockworks MCP in ChatGPT) on 2026-11-05. Anyone with a Blockworks key can re-pull and compare. Tolerance is in USD.",
+ "near_daily": {
+  "2024": {
+   "rows": 366,
+   "revenue_sum": 8509860.748297995
+  },
+  "2025": {
+   "rows": 365,
+   "revenue_sum": 4857982.55
+  },
+  "2026": {
+   "rows": 308,
+   "revenue_sum": 9133652.781415243
+  }
+ },
+ "peers_weekly_revenue_sum": {
+  "SOL": 3579053364.680547,
+  "ETH": 3898154988.79908,
+  "SUI": 18501766.86798931,
+  "APT": 1838225.6196471555,
+  "AVAX": 27816602.999172844
+ },
+ "peers_weekly_rows": 740,
+ "near_total_supply_weekly": {
+  "rows": 148,
+  "sum": 184402163850.81302
+ },
+ "near_buybacks_daily": {
+  "rows": 196,
+  "sum_usd": 4606429.1491724225
+ },
+ "tolerance_usd": 1.0
+}

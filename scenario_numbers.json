@@ -1,0 +1,265 @@
+{
+ "monthly": {
+  "2024-01": {
+   "gas": 309465,
+   "intents": 0
+  },
+  "2024-02": {
+   "gas": 458936,
+   "intents": 0
+  },
+  "2024-03": {
+   "gas": 1163991,
+   "intents": 0
+  },
+  "2024-04": {
+   "gas": 1068012,
+   "intents": 0
+  },
+  "2024-05": {
+   "gas": 932568,
+   "intents": 0
+  },
+  "2024-06": {
+   "gas": 796853,
+   "intents": 0
+  },
+  "2024-07": {
+   "gas": 653162,
+   "intents": 0
+  },
+  "2024-08": {
+   "gas": 474580,
+   "intents": 0
+  },
+  "2024-09": {
+   "gas": 537026,
+   "intents": 0
+  },
+  "2024-10": {
+   "gas": 546686,
+   "intents": 0
+  },
+  "2024-11": {
+   "gas": 645124,
+   "intents": 0
+  },
+  "2024-12": {
+   "gas": 923460,
+   "intents": 0
+  },
+  "2025-01": {
+   "gas": 680786,
+   "intents": 0
+  },
+  "2025-02": {
+   "gas": 387685,
+   "intents": 0
+  },
+  "2025-03": {
+   "gas": 349101,
+   "intents": 0
+  },
+  "2025-04": {
+   "gas": 276586,
+   "intents": 0
+  },
+  "2025-05": {
+   "gas": 303741,
+   "intents": 0
+  },
+  "2025-06": {
+   "gas": 233057,
+   "intents": 0
+  },
+  "2025-07": {
+   "gas": 269901,
+   "intents": 0
+  },
+  "2025-08": {
+   "gas": 282680,
+   "intents": 0
+  },
+  "2025-09": {
+   "gas": 273555,
+   "intents": 9529
+  },
+  "2025-10": {
+   "gas": 258548,
+   "intents": 292792
+  },
+  "2025-11": {
+   "gas": 215182,
+   "intents": 627858
+  },
+  "2025-12": {
+   "gas": 139680,
+   "intents": 257299
+  },
+  "2026-01": {
+   "gas": 130282,
+   "intents": 534407
+  },
+  "2026-02": {
+   "gas": 77354,
+   "intents": 428180
+  },
+  "2026-03": {
+   "gas": 102406,
+   "intents": 394921
+  },
+  "2026-04": {
+   "gas": 31654,
+   "intents": 316119
+  },
+  "2026-05": {
+   "gas": 49290,
+   "intents": 615116
+  },
+  "2026-06": {
+   "gas": 59693,
+   "intents": 631075
+  },
+  "2026-07": {
+   "gas": 47066,
+   "intents": 490964
+  },
+  "2026-08": {
+   "gas": 45764,
+   "intents": 716467
+  },
+  "2026-09": {
+   "gas": 113643,
+   "intents": 1784036
+  },
+  "2026-10": {
+   "gas": 196562,
+   "intents": 2199426
+  }
+ },
+ "posthoc": {
+  "corr_absret_intents": 0.38,
+  "top10_share": 0.37
+ },
+ "runrate_91d": {
+  "total": 20.32,
+  "intents": 18.89,
+  "gas": 1.43
+ },
+ "issuance": {
+  "near_per_year_M": 31.9,
+  "pct": 2.43,
+  "usd_M_at_spot": 137
+ },
+ "buyback_share": 0.72,
+ "breakeven_multiple": 9.4,
+ "breakeven_rev_M": 191,
+ "grid": {
+  "1": {
+   "rev_M": 20.323,
+   "ps_at_current_mcap": 276.284,
+   "cover@2.00": 0.319,
+   "bb_cover@2.00": 0.228,
+   "cover@4.28": 0.149,
+   "bb_cover@4.28": 0.107,
+   "cover@6.00": 0.106,
+   "bb_cover@6.00": 0.076,
+   "cover@8.00": 0.08,
+   "bb_cover@8.00": 0.057
+  },
+  "2": {
+   "rev_M": 40.646,
+   "ps_at_current_mcap": 138.142,
+   "cover@2.00": 0.637,
+   "bb_cover@2.00": 0.456,
+   "cover@4.28": 0.297,
+   "bb_cover@4.28": 0.213,
+   "cover@6.00": 0.212,
+   "bb_cover@6.00": 0.152,
+   "cover@8.00": 0.159,
+   "bb_cover@8.00": 0.114
+  },
+  "4": {
+   "rev_M": 81.292,
+   "ps_at_current_mcap": 69.071,
+   "cover@2.00": 1.275,
+   "bb_cover@2.00": 0.913,
+   "cover@4.28": 0.595,
+   "bb_cover@4.28": 0.426,
+   "cover@6.00": 0.425,
+   "bb_cover@6.00": 0.304,
+   "cover@8.00": 0.319,
+   "bb_cover@8.00": 0.228
+  },
+  "8": {
+   "rev_M": 162.585,
+   "ps_at_current_mcap": 34.535,
+   "cover@2.00": 2.549,
+   "bb_cover@2.00": 1.826,
+   "cover@4.28": 1.19,
+   "bb_cover@4.28": 0.852,
+   "cover@6.00": 0.85,
+   "bb_cover@6.00": 0.609,
+   "cover@8.00": 0.637,
+   "bb_cover@8.00": 0.456
+  },
+  "12": {
+   "rev_M": 243.877,
+   "ps_at_current_mcap": 23.024,
+   "cover@2.00": 3.824,
+   "bb_cover@2.00": 2.739,
+   "cover@4.28": 1.785,
+   "bb_cover@4.28": 1.278,
+   "cover@6.00": 1.275,
+   "bb_cover@6.00": 0.913,
+   "cover@8.00": 0.956,
+   "bb_cover@8.00": 0.685
+  }
+ },
+ "intents_28d_last": 67116,
+ "phase_intents": {
+  "pre": 25791,
+  "rally": 82640,
+  "pullback": 55966
+ },
+ "phase_index": {
+  "intents_usd": [
+   100.0,
+   320.0,
+   218.0
+  ],
+  "gas_usd": [
+   100.0,
+   494.0,
+   251.0
+  ],
+  "gas_near": [
+   100.0,
+   178.0,
+   96.0
+  ],
+  "transactions": [
+   100.0,
+   130.0,
+   86.0
+  ],
+  "active_addresses": [
+   100.0,
+   87.0,
+   71.0
+  ],
+  "price": [
+   100.0,
+   271.0,
+   261.0
+  ]
+ },
+ "phase_index_labels": [
+  "pre (Aug 7-Sep 2)",
+  "rally (Sep 17-Oct 15)",
+  "pullback (Oct 16-Nov 3)"
+ ],
+ "spearman_intents_active": -0.76,
+ "spearman_intents_gas": 0.91,
+ "spearman_intents_tx": 0.15
+}

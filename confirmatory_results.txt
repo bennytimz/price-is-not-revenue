@@ -1,0 +1,51 @@
+Confirmatory days 949 | incomplete-day flags 4 | mcap spikes removed 2 | rev==fees days set missing 2
+
+==== H1  price pass-through ====
+A gas fees  [all days] elasticity 1.63 CI[1.50,1.76] n=949 | with break term 1.31 CI[1.26,1.36]
+A gas fees  [excl flagged] elasticity 1.63 CI[1.50,1.76] n=945 | with break term 1.31 CI[1.26,1.36]
+A token-denominated gas fees, 33 blocks of 28d: trend/block -3.9% p=0.000 | with break term -1.8% p=0.000
+B total protocol revenue elasticity 0.48 CI[0.37,0.59] n=947
+C non-fee (Intents) revenue since 2025-09-23 elasticity 0.02 CI[-0.67,0.70] n=316
+   exploratory window (not confirmatory) total revenue elasticity 1.06 CI[0.75,1.37] n=87
+
+==== H2  activity leads price (4-week horizon) ====
+NEAR   fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p=0.000 (n=53) | meets all conditions: False
+APT    fit beta -0.025 p=0.582 (n=67) | holdout OOS R2 +16.5% | holdout beta +0.187 p=0.000 (n=53) | meets all conditions: False
+AVAX   fit beta +0.024 p=0.787 (n=67) | holdout OOS R2 +14.9% | holdout beta +0.034 p=0.712 (n=53) | meets all conditions: False
+ETH    fit beta +0.079 p=0.246 (n=67) | holdout OOS R2 -9.8% | holdout beta -0.088 p=0.127 (n=53) | meets all conditions: False
+SOL    fit beta -0.065 p=0.421 (n=67) | holdout OOS R2 -3.8% | holdout beta +0.041 p=0.799 (n=53) | meets all conditions: False
+SUI    fit beta +0.124 p=0.444 (n=67) | holdout OOS R2 -13.5% | holdout beta -0.012 p=0.938 (n=53) | meets all conditions: False
+POOLED fixed-effects (6 assets) fit beta +0.012 p=0.684 | holdout OOS R2 +4.0%
+secondary: 4-wk growth in retained Intents revenue (USD) vs next-4wk return, holdout only: beta +0.051 p=0.396 n=25 (underpowered; not used for the verdict)
+
+==== H3  relative valuation (P/S = circulating mkt cap / trailing 91-day revenue, annualised), as of 2026-11-01 ====
+       ps_rev  ps_fees
+asset                 
+APT     425.0    425.0
+AVAX   1174.0   1174.0
+ETH     647.0   1386.0
+SOL     127.0    199.0
+SUI    2327.0   2327.0
+peer median: protocol revenue 647x | fees only 1174x
+NEAR: on gas fees 3928x | on total protocol revenue 276x
+NEAR own history (fees): now 3928x | percentile 87% (fixed-supply 87%) | 75th pct 1245x
+NEAR own history (total): now 276x | percentile 12% (fixed-supply 10%) | 75th pct 799x
+  (a) NEAR fees vs peers' revenue: NEAR 3928x vs peer median 647x; above own 75th pct: True -> SUPPORTED
+  (b) fees vs fees: NEAR 3928x vs peer median 1174x; above own 75th pct: True -> SUPPORTED
+  (c) NEAR total vs peers' revenue [not like-for-like]: NEAR 276x vs peer median 647x; above own 75th pct: False -> REJECTED
+
+==== H4  usage not monetised (28-day blocks) ====
+[excl] pre-break  n=29 blocks | active addresses +0.9%/block p=0.376 | revenue per active address -2.8%/block p=0.082
+[excl] post-break n=3 blocks | active addresses -6.0%/block p=0.000 | revenue per active address +13.2%/block p=0.415
+[excl] full + break term n=32 | active +0.9%/block p=0.380 (break -2.68 log) | rev/active -2.8%/block p=0.084
+[all] pre-break  n=29 blocks | active addresses +0.9%/block p=0.369 | revenue per active address -2.8%/block p=0.081
+[all] post-break n=3 blocks | active addresses -6.0%/block p=0.000 | revenue per active address +13.2%/block p=0.415
+[all] full + break term n=32 | active +0.9%/block p=0.373 (break -2.68 log) | rev/active -2.8%/block p=0.084
+
+==== H5 (descriptive) revenue vs new supply and buybacks ====
+2025-06-29: trailing-90d annualised revenue $3.3M vs annualised net issuance $139M -> 2%
+2025-12-28: trailing-90d annualised revenue $7.2M vs annualised net issuance $66M -> 11%
+2026-03-29: trailing-90d annualised revenue $6.7M vs annualised net issuance $37M -> 18%
+2026-06-28: trailing-90d annualised revenue $6.9M vs annualised net issuance $59M -> 12%
+2026-10-25: trailing-90d annualised revenue $18.8M vs annualised net issuance $148M -> 13%
+buybacks / retained revenue: median 0.72; last 30d buyback run-rate $16.9M/yr
