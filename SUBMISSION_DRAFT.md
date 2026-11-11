@@ -54,7 +54,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 16 | Everything rebuilds with `python run_all.py` from files in the repo (b) | `run_all.py`; `README.md:17` |
 | 17 | Each dashboard chart names the script and data behind it (b) | `dashboard_template.html`, the `class="src"` line under each chart |
 | 18 | Limit: one market regime (b) | `THESIS.md:92` |
-| 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:88`; the `methodology` field is empty in `raw_defillama_intents.json` |
+| 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:88`; the `methodology` field is empty in DefiLlama's `/summary/dexs/near-intents` response (pulled locally by `pull_defillama_intents.py`, which flags it; the raw file is not redistributed) |
 | 20 | Limit: Blockworks data needs an API key to re-pull (b) | `THESIS.md:96` |
 | 21 | Research, not investment advice (b) | `THESIS.md:5` |
 

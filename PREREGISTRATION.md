@@ -221,3 +221,7 @@ Purpose: add first-party public data so the thesis does not rest on Blockworks a
 ## Amendment 8a (2026-11-11)
 
 S2 excludes 2026-11-11, the day of the pull, because it is a partial day; this was decided before any extension test was run. S1’s last day (2026-11-10) is not used in any test, since Blockworks data ends 2026-11-04.
+
+## Amendment 8b (2026-11-11): DefiLlama raw data no longer published
+
+DefiLlama’s terms do not allow its data to be republished or mirrored without permission, so the raw DefiLlama responses (S1) are removed from the repository and from its git history. This changes rule 1 of Amendment 8 for S1 only: the raw S1 responses are no longer kept in the repository with SHA-256 hashes. Instead pull_defillama_intents.py pulls them locally (free API, no key), erify_data.py checks their row counts and date coverage, and the E1 to E3 and X1 numbers are compared with the values first committed, within stated tolerances (extension_expected.json). The test windows were already fixed by date and are unchanged; the S1 volume series is now also cut to start on 2024-12-10, the first day of the original pull. No test, threshold or verdict rule changes. S2 (BigQuery) is unaffected and keeps its hash.

@@ -1,7 +1,12 @@
 """S1 (Amendment 8): pull NEAR Intents daily volume, fees and revenue from DefiLlama's free API.
 
-Saves each HTTP response body byte-for-byte (no parsing before saving), writes SHA-256 hashes
-to RAW_PULLS.sha256, then prints a data-quality summary. No analysis is done here.
+Saves each HTTP response body byte-for-byte (no parsing before saving) into a LOCAL file and prints a
+data-quality summary. No analysis is done here.
+
+The raw files are not committed or redistributed: DefiLlama's terms (https://defillama.com/terms) do not allow
+republishing or mirroring its data without permission (PREREGISTRATION.md Amendment 8b; the files are in
+.gitignore). run_all.py calls this script when the files are missing. Because DefiLlama can revise history, a
+fresh pull can differ from the original; verify_data.py checks coverage and compares the results with tolerances.
 
 Rule 9: on HTTP 402/403 the script stops and reports; it never substitutes another source.
 Existing raw files are not overwritten unless --force is given, so a pull is never silently replaced.
@@ -22,7 +27,6 @@ PULLS = [  # (raw file, URL)
     ("raw_defillama_intents_revenue.json", f"{BASE}/fees/near-intents?dataType=dailyRevenue"),
 ]
 EXPECTED_KEYS = ["name", "slug", "chains", "totalDataChart", "methodology"]
-MANIFEST = "RAW_PULLS.sha256"
 
 
 def fetch(url):
@@ -55,7 +59,6 @@ def summarise(name, body):
 
 def main():
     force = "--force" in sys.argv
-    hashes = []
     for name, url in PULLS:
         path = os.path.join(D, name)
         if os.path.exists(path) and not force:
@@ -71,20 +74,9 @@ def main():
             with open(path, "wb") as f:
                 f.write(body)
             print(f"{name}: saved {len(body)} bytes from {url} at {dt.datetime.now(dt.timezone.utc):%Y-%m-%dT%H:%M:%SZ}")
-        hashes.append(f"{hashlib.sha256(body).hexdigest()}  {name}\n")
+        print(f"   local sha256 {hashlib.sha256(body).hexdigest()} (not stored; for comparing pulls)")
         summarise(name, body)
-    # Update only this script's lines; keep every other line (e.g. the BigQuery pull) in place.
-    mine = {ln.split("  ", 1)[1]: ln for ln in hashes}
-    mpath = os.path.join(D, MANIFEST)
-    old = open(mpath, encoding="utf-8").read().splitlines(keepends=True) if os.path.exists(mpath) else []
-    out = []
-    for ln in old:
-        key = ln.split("  ", 1)[1] if "  " in ln else None
-        out.append(mine.pop(key) if key in mine else (ln if ln.endswith("\n") else ln + "\n"))
-    out.extend(mine.values())
-    with open(mpath, "w", newline="\n") as f:
-        f.writelines(out)
-    print(f"{MANIFEST} written ({len(hashes)} files updated, {len(out) - len(hashes)} other lines kept)")
+    print(f"DefiLlama pull done: {len(PULLS)} local files (not committed)")
 
 
 if __name__ == "__main__":

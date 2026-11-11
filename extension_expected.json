@@ -1,0 +1,96 @@
+{
+  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b.",
+  "checks": [
+    [
+      "E1.spearman",
+      0.812585,
+      "abs",
+      0.02
+    ],
+    [
+      "E1.n_days",
+      406,
+      "abs",
+      0
+    ],
+    [
+      "E2.vol_A",
+      98994033.074074,
+      "rel",
+      0.01
+    ],
+    [
+      "E2.vol_B",
+      161029475.37931,
+      "rel",
+      0.01
+    ],
+    [
+      "E2.take_rate_bp_A",
+      2.605279,
+      "rel",
+      0.01
+    ],
+    [
+      "E2.take_rate_bp_B",
+      5.13196,
+      "rel",
+      0.01
+    ],
+    [
+      "E2.volume_ratio",
+      1.626658,
+      "rel",
+      0.01
+    ],
+    [
+      "E2.volume_share",
+      0.417809,
+      "abs",
+      0.02
+    ],
+    [
+      "E3.n_weeks",
+      90,
+      "abs",
+      0
+    ],
+    [
+      "E3.rho_volume",
+      0.177643,
+      "abs",
+      0.02
+    ],
+    [
+      "E3.rho_price",
+      0.335967,
+      "abs",
+      0.02
+    ],
+    [
+      "E3.difference",
+      -0.158324,
+      "abs",
+      0.02
+    ],
+    [
+      "exploratory.X1_spearman_defillama_rev_vs_blockworks_intents",
+      0.709875,
+      "abs",
+      0.02
+    ],
+    [
+      "exploratory.X1_total_ratio",
+      0.998429,
+      "abs",
+      0.005
+    ]
+  ],
+  "verdicts": {
+    "E1": "usable proxy",
+    "E2": "mixed",
+    "E3": "not supported",
+    "E4": "probably a Blockworks definition change",
+    "E5": "inconsistent"
+  }
+}

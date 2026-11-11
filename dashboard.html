@@ -48,7 +48,7 @@ input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 <h2>6. Did the revenue jump come from volume or take rate? (E2, pre-registered)</h2>
 <div class="box"><canvas id="c6" role="img" aria-label="Intents volume, retained revenue and take rate, rally window indexed to August window"></canvas></div>
 <p class="says">From the August window to the September&ndash;October rally, Intents volume rose 1.627 times but retained revenue rose 3.204 times because the take rate went from 2.61 to 5.13 basis points, so the pre-registered verdict is &ldquo;mixed&rdquo; (volume share 0.418).</p>
-<p class="src">Code: <code>analysis_extension.py</code>, E2. Data: <code>raw_defillama_intents.json</code> (DefiLlama free API, <code>/summary/dexs/near-intents</code>, pulled by <code>pull_defillama_intents.py</code>) and <code>near_daily.csv</code>. Mean daily values; window A 2026-08-07 to 2026-09-02 = 100, window B 2026-09-17 to 2026-10-15.</p>
+<p class="src">Code: <code>analysis_extension.py</code>, E2. Data: DefiLlama free API (<code>/summary/dexs/near-intents</code>), pulled locally by <code>pull_defillama_intents.py</code> and not redistributed (DefiLlama's terms), and <code>near_daily.csv</code>. Only window-level aggregates are shown: mean daily values per window, window A 2026-08-07 to 2026-09-02 = 100, window B 2026-09-17 to 2026-10-15.</p>
 
 <h2>7. Is the April 2026 activity break real on chain? (E4, E5, pre-registered)</h2>
 <div class="box"><canvas id="c7" role="img" aria-label="Daily on-chain distinct signers versus Blockworks active addresses around 2026-04-02, indexed"></canvas></div>

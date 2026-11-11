@@ -1,7 +1,8 @@
 """Extension tests E1-E5, pre-registered in PREREGISTRATION.md Amendment 8 (pushed 2026-11-11T19:30:13+01:00)
 and Amendment 8a (pushed 2026-11-11T20:28:58+01:00). Thresholds are copied from Amendment 8 unchanged.
 
-Inputs (read only): raw_defillama_intents*.json (S1), raw_bigquery_daily_usage.csv (S2), near_daily.csv (Blockworks).
+Inputs (read only): raw_defillama_intents*.json (S1, pulled locally by pull_defillama_intents.py and not committed,
+per DefiLlama's terms; Amendment 8b), raw_bigquery_daily_usage.csv (S2, hash in RAW_PULLS.sha256), near_daily.csv (Blockworks).
 Outputs: stdout (saved by run_all.py as extension_results.txt) and extension_numbers.json.
 Results labelled "Exploratory" are post-hoc, are not in Amendment 8, and do not affect any E1-E5 verdict.
 """
@@ -32,8 +33,9 @@ def s1(name):
     return pd.Series({pd.Timestamp(dt.datetime.fromtimestamp(t, dt.timezone.utc).date()): float(v) for t, v in j["totalDataChart"]}).sort_index()
 
 
-vol = s1("raw_defillama_intents.json").loc[:BW_END]
-dl_rev = s1("raw_defillama_intents_revenue.json").loc[:BW_END]
+S1_START = "2024-12-10"  # first day of the original S1 pull; pinned so a re-pull with more history gives the same inputs (Amendment 8b)
+vol = s1("raw_defillama_intents.json").loc[S1_START:BW_END]
+dl_rev = s1("raw_defillama_intents_revenue.json").loc[:BW_END]  # only used where Blockworks Intents revenue exists (from 2025-09-23)
 s2 = pd.read_csv(os.path.join(D, "raw_bigquery_daily_usage.csv"), parse_dates=["block_date"]).set_index("block_date")
 s2 = s2[s2.index != S2_EXCLUDE]
 signers = s2.active_signers.astype(float)

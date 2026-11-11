@@ -14,7 +14,7 @@
   - H2: activity led price in the fit period but failed out of sample (R-squared -76.2%).
 - **A data-definition break:** on 2026-04-02 Blockworks active addresses fell 89.4% while on-chain signers fell 8.1%, so the drop is probably a Blockworks definition change (E4).
 
-**Reproduce:** `pip install -r requirements.txt` then `python run_all.py` (rebuilds every number and the dashboard from the files in this repo). **Read:** [THESIS.md](THESIS.md) · [live dashboard](https://bennytimz.github.io/price-is-not-revenue/dashboard.html)
+**Reproduce:** `pip install -r requirements.txt` then `python run_all.py` (rebuilds every number and the dashboard from the files in this repo; the first run also pulls DefiLlama's free API, which is not redistributed here). **Read:** [THESIS.md](THESIS.md) · [live dashboard](https://bennytimz.github.io/price-is-not-revenue/dashboard.html)
 
 ---
 
@@ -40,9 +40,10 @@ Submission for the NEAR Hackathon, Investment Thesis track. Built by Benny (GitH
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
 | `analysis_extension.py` | Public-source cross-checks E1 to E5 (pre-registered, Amendment 8) plus labelled exploratory checks; writes `extension_results.txt` and `extension_numbers.json` |
-| `pull_defillama_intents.py` | Pulls NEAR Intents daily volume, fees and revenue from DefiLlama's free API into `raw_defillama_intents*.json` |
+| `pull_defillama_intents.py` | Pulls NEAR Intents daily volume, fees and revenue from DefiLlama's free API into local `raw_defillama_intents*.json` files, which are not committed (see Data terms) |
 | `pull_bigquery_daily_usage.sql` | The BigQuery query behind `raw_bigquery_daily_usage.csv` (daily transactions and distinct signers) |
-| `RAW_PULLS.sha256` | SHA-256 hashes of the public-source raw files, checked by `analysis_extension.py` before it runs |
+| `RAW_PULLS.sha256` | SHA-256 hash of `raw_bigquery_daily_usage.csv`, checked by `analysis_extension.py` before it runs |
+| `extension_expected.json` | The E1 to E3 and X1 values first published, with tolerances; `verify_data.py --extension` compares each run with them |
 | `optional_intents_explorer_sample.py` | Intents Explorer sampler (S3). Written from the docs, not run |
 | `optional_bigquery_daily_usage.sql` | Earlier draft of the BigQuery query, with a freshness check; superseded by `pull_bigquery_daily_usage.sql` |
 | `PREREGISTRATION.md` | Pre-registration with amendments 1 to 8a and a data correction log |
@@ -64,17 +65,19 @@ Requires Python 3.12 or later (the pinned numpy 2.5.4 and scipy 1.18.1 require 3
 Expected output (the last 10 lines `python run_all.py` prints, copied from a real run):
 
 ```
-All data checks passed.
---> analysis_confirmatory.py
 buybacks / retained revenue: median 0.72; last 30d buyback run-rate $16.9M/yr
 --> scenarios.py
 active     -0.76 -0.72  0.32    1.00
 --> analysis_extension.py
 SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent
+--> verify_data.py --extension
+Extension check: E1-E3 and X1 within tolerance of the committed values; all verdicts unchanged.
 --> build_dashboard.py
-dashboard.html written 26608 bytes
+dashboard.html written 26669 bytes
 Done. Open dashboard.html.
 ```
+
+On the first run `run_all.py` also prints `--> pull_defillama_intents.py` and `DefiLlama pull done: 3 local files (not committed)` at the start.
 
 Verdicts in `extension_results.txt`:
 
@@ -86,7 +89,7 @@ VERDICT E4: probably a Blockworks definition change
 VERDICT E5: inconsistent
 ```
 
-This runs `verify_data.py`, `analysis_confirmatory.py`, `scenarios.py`, `analysis_extension.py` and `build_dashboard.py`, rewrites `confirmatory_results.txt`, `scenarios_results.txt`, `extension_results.txt` and `dashboard.html` (plus the three `*_numbers.json` files), and reads only from this folder. It never re-pulls data. The source for the data is Blockworks, which needs an API key to re-pull, so the committed CSVs are the reproducible input. Each dashboard chart names the code and data file behind it.
+This runs `verify_data.py`, `analysis_confirmatory.py`, `scenarios.py`, `analysis_extension.py` and `build_dashboard.py`, rewrites `confirmatory_results.txt`, `scenarios_results.txt`, `extension_results.txt` and `dashboard.html` (plus the three `*_numbers.json` files). It reads only from this folder, with one exception: if the local DefiLlama files are missing (they are not in the repository, see Data terms), it first pulls them from DefiLlama's free API, which needs an internet connection but no key. The source for the data is Blockworks, which needs an API key to re-pull, so the committed CSVs are the reproducible input. Each dashboard chart names the code and data file behind it.
 
 On Windows, Python may write CRLF line endings; the outputs are byte-identical to the committed ones after normalising to LF (tested: all seven output files match).
 
@@ -99,13 +102,13 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 | Can a stranger re-pull the data? | Blockworks: only with a Blockworks API key; it is a third-party source and the pull went through a chat assistant. Public sources: yes, see below. |
 | Is there an independent public-source check? | Yes, two sources (tests E1 to E5 in `extension_results.txt`). The third planned source, Intents Explorer sampling (S3), was not run. |
 | Does the dashboard work offline? | Yes. Chart.js is bundled in `chart.umd.js`. |
-| Are the raw exports in the repo? | Yes. Blockworks exports are in the `raw_near_*.csv` and `raw_peers_*.csv` files exactly as received, and `python build_clean_data.py` rebuilds every baseline CSV from them. Public-source pulls are saved unmodified as `raw_defillama_intents*.json` and `raw_bigquery_daily_usage.csv`, with hashes in `RAW_PULLS.sha256`. |
+| Are the raw exports in the repo? | Yes. Blockworks exports are in the `raw_near_*.csv` and `raw_peers_*.csv` files exactly as received, and `python build_clean_data.py` rebuilds every baseline CSV from them. The BigQuery pull is saved unmodified as `raw_bigquery_daily_usage.csv`, with its hash in `RAW_PULLS.sha256`. The raw DefiLlama data is not included (see Data terms); `run_all.py` pulls it locally. |
 
 ### Public sources and how to re-pull them
 
 | Source | What | Raw file | How to re-pull |
 |---|---|---|---|
-| S1, DefiLlama free API (no key) | NEAR Intents daily volume, fees and revenue | `raw_defillama_intents.json`, `raw_defillama_intents_fees.json`, `raw_defillama_intents_revenue.json` | `python pull_defillama_intents.py --force` (endpoints `api.llama.fi/summary/dexs/near-intents` and `api.llama.fi/summary/fees/near-intents`) |
+| S1, DefiLlama free API (no key) | NEAR Intents daily volume, fees and revenue | Not in the repository; pulled into local `raw_defillama_intents*.json` files that git ignores | Automatic: `run_all.py` pulls them if missing. Manual: `python pull_defillama_intents.py` (add `--force` to replace local copies). Endpoints `api.llama.fi/summary/dexs/near-intents` and `api.llama.fi/summary/fees/near-intents` |
 | S2, NEAR public BigQuery dataset | Daily transactions and distinct `signer_account_id` | `raw_bigquery_daily_usage.csv` | Run `pull_bigquery_daily_usage.sql` in the BigQuery web console and download the result as CSV (see below) |
 | S3, Intents Explorer API | Sampled swaps | none | Not run |
 
@@ -118,7 +121,9 @@ WHERE block_date >= '2024-01-01'
 GROUP BY block_date ORDER BY block_date
 ```
 
-A re-pull returns later days and possibly revised history, so its hashes will not match `RAW_PULLS.sha256`. The committed raw files are what the results were computed from. `--force` overwrites them, so copy them first if you want to compare.
+The tests use fixed date windows, so later days in a re-pull do not change them. A source can still revise history:
+- **BigQuery:** a re-pull's hash will not match `RAW_PULLS.sha256`. The committed CSV is what the results were computed from.
+- **DefiLlama:** `verify_data.py` checks that the pull covers the test dates, and `verify_data.py --extension` compares E1 to E3 and X1 with the published values within the tolerances in `extension_expected.json`. It warns, rather than fails, if they differ.
 
 ## Where the data came from and how it was checked
 
@@ -149,9 +154,15 @@ Known gaps and choices:
 - The public-source tests E1 to E5 are reported as they came out, including E3 (not supported) and E5 (inconsistent). Checks added afterwards are labelled exploratory in `extension_results.txt` and do not change any verdict.
 - Limitations are listed in `THESIS.md`. The largest are a single regime, an Intents volume series whose definition DefiLlama does not document, and a break in Blockworks active addresses on 2026-04-02 that is probably a definition change (E4).
 
-## License and data rights
+## License
 
-The MIT licence in `LICENSE` covers the code and the writing in this repository. It does not grant any rights to the data. The Blockworks-derived CSV files (`near_*.csv`, `peers_weekly.csv` and the `raw_near_*` and `raw_peers_*` exports) are included only so the analysis can be reproduced; Blockworks' own terms apply to that data. The DefiLlama and BigQuery pulls are subject to their providers' terms.
+The MIT licence in `LICENSE` covers the code and the writing in this repository. It does not grant any rights to the data.
+
+## Data terms
+
+- **DefiLlama: raw data is not included.** DefiLlama's terms (https://defillama.com/terms) do not allow its data to be republished or mirrored without permission. The raw DefiLlama responses are therefore not in this repository or its git history (`PREREGISTRATION.md`, Amendment 8b). To re-pull, run `python run_all.py`, which fetches them from DefiLlama's free API into local files that git ignores, or run `python pull_defillama_intents.py` directly. The repository publishes only aggregates computed from them: window means, take rates, ratios and correlations.
+- **Blockworks:** the Blockworks-derived CSV files (`near_*.csv`, `peers_weekly.csv` and the `raw_near_*` and `raw_peers_*` exports) are included only so the analysis can be reproduced. Whether Blockworks' terms allow this still needs checking.
+- **BigQuery:** `raw_bigquery_daily_usage.csv` is a daily aggregate of NEAR's public BigQuery dataset and is subject to that dataset's terms.
 
 ## AI use
 

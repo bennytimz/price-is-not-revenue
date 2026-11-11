@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 venv/
 .env
+# DefiLlama raw data: pulled locally, not redistributed (DefiLlama terms; Amendment 8b)
+raw_defillama_*.json
