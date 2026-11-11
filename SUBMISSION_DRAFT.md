@@ -37,7 +37,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | # | Claim (used in) | Supporting file and line |
 |---|---|---|
 | 1 | NEAR is an option on Intents revenue, not a cash-flow story (a, b) | `THESIS.md:3` (the thesis statement; an interpretation of rows 5 to 8) |
-| 2 | The original hypotheses were written down before the confirmatory data was analysed, but the repository was created afterwards, so git history can't prove that order (a "pre-registered tests", b) | `PREREGISTRATION.md:1` onward (dated amendments); `THESIS.md:96` ("The repository was created after the baseline analysis, so git history cannot prove that order") |
+| 2 | The original hypotheses were written down before the confirmatory data was analysed, but the repository was created afterwards, so git history can't prove that order (a "pre-registered tests", b) | `PREREGISTRATION.md:1` onward (dated amendments); `THESIS.md:102` ("The repository was created after the baseline analysis, so git history cannot prove that order") |
 | 3 | Every result is reported, including failures (b) | `PREREGISTRATION.md:38` (Rules for reporting); failures in rows 11 to 13 below |
 | 4 | Retained Intents revenue was 92% of protocol revenue in October 2026 (a thread 1, b) | `scenarios_results.txt:18` (share_intents 0.92) |
 | 5 | New supply is worth $137M a year at $4.28 (a thread 1, b) | `scenarios_results.txt:30` |
@@ -51,11 +51,11 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 13 | Blockworks active addresses dropped 89.4% on 2026-04-02 (a thread 3, b) | `extension_results.txt:38` (X2, exploratory) |
 | 14 | On-chain signers fell 8.1%, so the drop is probably a definition change (a thread 3, b) | `extension_results.txt:28-29` (E4) |
 | 15 | DefiLlama's Intents revenue totals 0.998 of Blockworks' (b, labelled exploratory) | `extension_results.txt:37` (X1) |
-| 16 | Everything rebuilds with `python run_all.py` from files in the repo (b) | `run_all.py`; `README.md:17` |
+| 16 | Everything rebuilds with `python run_all.py` from files in the repo (b) | `run_all.py`; `README.md:64` |
 | 17 | Each dashboard chart names the script and data behind it (b) | `dashboard_template.html`, the `class="src"` line under each chart |
-| 18 | Limit: one market regime (b) | `THESIS.md:92` |
-| 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:88`; the `methodology` field is empty in DefiLlama's `/summary/dexs/near-intents` response (pulled locally by `pull_defillama_intents.py`, which flags it; the raw file is not redistributed) |
-| 20 | Limit: Blockworks data needs an API key to re-pull (b) | `THESIS.md:96` |
+| 18 | Limit: one market regime (b) | `THESIS.md:98` |
+| 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:94`; the `methodology` field is empty in DefiLlama's `/summary/dexs/near-intents` response (pulled locally by `pull_defillama_intents.py`, which flags it; the raw file is not redistributed) |
+| 20 | Limit: Blockworks data needs an API key to re-pull (b) | `THESIS.md:102` |
 | 21 | Research, not investment advice (b) | `THESIS.md:5` |
 
 ## (d) Form-fields checklist

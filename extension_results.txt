@@ -43,5 +43,7 @@ Exploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)
    X4 (Exploratory, not pre-registered, not a forecast; arithmetic only) daily Intents volume needed for $191M/yr of retained revenue (the scenarios.py break-even):
       at window A take rate (2.61 bp): $2.01B/day = 12.5x window B volume
       at window B take rate (5.13 bp): $1.02B/day = 6.3x window B volume
+   X5 (Exploratory, not pre-registered, not a forecast) trailing-91-day annualised, 2026-08-03 to 2026-11-01 (the scenarios.py run-rate window):
+      DefiLlama gross Intents fees $70.5M/yr | Blockworks retained Intents revenue $18.9M/yr | DefiLlama revenue $19.1M/yr | retained / gross 26.8%
 
 SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent

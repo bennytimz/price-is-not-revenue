@@ -8,6 +8,12 @@
 
 In October 2026, 92% of NEAR's protocol revenue came from one source, revenue retained from NEAR Intents, which recently grew about fourfold. That revenue is real, but it is volatile, it does not move one-for-one with NEAR's price, and at today's rate of new token supply it would have to grow roughly nine times before buybacks offset dilution. NEAR is therefore best treated as an **option on Intents monetisation**, not a business valued on cash flow. The numbers that would change this view are fixed in advance.
 
+**Two different numbers: gross Intents fees and retained revenue to NEAR.**
+- *Gross Intents fees* are everything charged on NEAR Intents swaps: NEAR's protocol fee plus the affiliate (distribution) fees that front-ends collect, as DefiLlama defines them.
+- *Retained revenue to NEAR* is the part that ends up in NEAR-owned revenue wallets. Blockworks calls it retained Intents revenue, and it is the figure this thesis uses.
+
+Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retained revenue to $18.9M, which is 26.8% of gross (exploratory X5). Every P/S figure and the 9.4x break-even use protocol revenue (gas fees plus retained revenue), never gross fees.
+
 ## Evidence for
 
 **1. The revenue base changed, and the new source is large.** Until 2025-09-22 protocol revenue equals gas fees exactly. Afterwards retained Intents revenue appears and dominates: 53% of revenue in October 2025, 91% or more from April 2026. Blockworks' methodology describes network revenue as base-chain fees plus retained Intents revenue. Retained Intents revenue averaged about $0.48M a month from October 2025 to August 2026, then $1.78M in September 2026 and $2.20M in October. An independent public source agrees on the level (post-hoc check X1): over 406 days, DefiLlama's daily Intents revenue sums to 0.998 of Blockworks' retained Intents revenue, with a daily rank correlation of 0.71.

@@ -183,6 +183,18 @@ P(f"   X4 (Exploratory, not pre-registered, not a forecast; arithmetic only) dai
   f"(the scenarios.py break-even):")
 P(f"      at window A take rate ({trA * 1e4:.2f} bp): ${needA / 1e9:.2f}B/day = {needA / out['E2']['vol_B']:.1f}x window B volume")
 P(f"      at window B take rate ({trB * 1e4:.2f} bp): ${needB / 1e9:.2f}B/day = {needB / out['E2']['vol_B']:.1f}x window B volume")
+# X5: gross Intents fees (DefiLlama) vs retained revenue to NEAR (Blockworks), same window as scenarios.py run-rates
+RR_END = pd.Timestamp("2026-11-01")
+w91 = slice(RR_END - pd.Timedelta(days=90), RR_END)
+fees = s1("raw_defillama_intents_fees.json").loc[w91]
+assert len(fees) == 91 and fees.notna().all(), "X5: DefiLlama fees do not cover the 91-day window"
+gross_ann, retained_ann, dl_rev_ann = fees.mean() * 365, nd.intents.loc[w91].mean() * 365, dl_rev.loc[w91].mean() * 365
+P(f"   X5 (Exploratory, not pre-registered, not a forecast) trailing-91-day annualised, {w91.start.date()} to {w91.stop.date()} (the scenarios.py run-rate window):")
+P(f"      DefiLlama gross Intents fees ${gross_ann / 1e6:.1f}M/yr | Blockworks retained Intents revenue ${retained_ann / 1e6:.1f}M/yr | "
+  f"DefiLlama revenue ${dl_rev_ann / 1e6:.1f}M/yr | retained / gross {retained_ann / gross_ann:.1%}")
+out["exploratory_X5"] = {"window": [str(w91.start.date()), str(w91.stop.date())], "gross_fees_annualised_defillama": gross_ann,
+                         "retained_revenue_annualised_blockworks": retained_ann, "revenue_annualised_defillama": dl_rev_ann,
+                         "retained_over_gross": retained_ann / gross_ann}
 out["exploratory"] = {"X1_spearman_defillama_rev_vs_blockworks_intents": rx1, "X1_total_ratio": ratio, "X1_n_days": len(x1),
                       "X2_blockworks_active_drop": bdrop, "X2_median_before": float(bpre.median()), "X2_median_after": float(bpost.median()),
                       "X3_means": {c: x3[c].to_dict() for c in x3.columns}, "X3_index": {c: x3i[c].to_dict() for c in x3i.columns},

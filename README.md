@@ -69,6 +69,14 @@ A pre-registered, reproducible test of whether NEAR Intents can carry NEAR's val
 
 Submission for the NEAR Hackathon, Investment Thesis track. Built by Benny (GitHub: Bennytimz) with AI assistance. Research only, not investment advice.
 
+## Gross Intents fees vs retained revenue to NEAR
+
+These are different numbers:
+- **Gross Intents fees** are everything charged on NEAR Intents swaps: NEAR's protocol fee plus the affiliate (distribution) fees that front-ends collect, as DefiLlama defines them.
+- **Retained revenue to NEAR** is the part that ends up in NEAR-owned revenue wallets. Blockworks calls it retained Intents revenue, and it is the figure used throughout.
+
+Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retained revenue to $18.9M, which is 26.8% of gross (exploratory X5 in `extension_results.txt`). Every P/S figure and the 9.4x break-even use protocol revenue (gas fees plus retained revenue), never gross fees.
+
 ## Start here (2 minutes)
 
 1. `THESIS.md`: the claim, the evidence for and against, what would change my mind, and what I could not compute.
@@ -90,7 +98,7 @@ Submission for the NEAR Hackathon, Investment Thesis track. Built by Benny (GitH
 | `pull_defillama_intents.py` | Pulls NEAR Intents daily volume, fees and revenue from DefiLlama's free API into local `raw_defillama_intents*.json` files, which are not committed (see Data terms) |
 | `pull_bigquery_daily_usage.sql` | The BigQuery query behind `raw_bigquery_daily_usage.csv` (daily transactions and distinct signers) |
 | `RAW_PULLS.sha256` | SHA-256 hash of `raw_bigquery_daily_usage.csv`, checked by `analysis_extension.py` before it runs |
-| `extension_expected.json` | The E1 to E3 and X1 values first published, with tolerances; `verify_data.py --extension` compares each run with them |
+| `extension_expected.json` | The E1 to E3, X1 and X5 values first published, with tolerances; `verify_data.py --extension` compares each run with them |
 | `optional_intents_explorer_sample.py` | Intents Explorer sampler (S3). Written from the docs, not run |
 | `optional_bigquery_daily_usage.sql` | Earlier draft of the BigQuery query, with a freshness check; superseded by `pull_bigquery_daily_usage.sql` |
 | `PREREGISTRATION.md` | Pre-registration with amendments 1 to 8a and a data correction log |
@@ -112,15 +120,15 @@ Requires Python 3.12 or later (the pinned numpy 2.5.4 and scipy 1.18.1 require 3
 Expected output (the last 10 lines `python run_all.py` prints, copied from a real run):
 
 ```
-buybacks / retained revenue: median 0.72; last 30d buyback run-rate $16.9M/yr
---> scenarios.py
 active     -0.76 -0.72  0.32    1.00
 --> analysis_extension.py
 SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent
 --> verify_data.py --extension
-Extension check: E1-E3 and X1 within tolerance of the committed values; all verdicts unchanged.
+Extension check: E1-E3, X1 and X5 within tolerance of the committed values; all verdicts unchanged.
+--> build_scorecard.py
+scorecard: 10 rows written to scorecard.json and README.md
 --> build_dashboard.py
-dashboard.html written 26669 bytes
+dashboard.html written 36173 bytes
 Done. Open dashboard.html.
 ```
 
@@ -170,7 +178,7 @@ GROUP BY block_date ORDER BY block_date
 
 The tests use fixed date windows, so later days in a re-pull do not change them. A source can still revise history:
 - **BigQuery:** a re-pull's hash will not match `RAW_PULLS.sha256`. The committed CSV is what the results were computed from.
-- **DefiLlama:** `verify_data.py` checks that the pull covers the test dates, and `verify_data.py --extension` compares E1 to E3 and X1 with the published values within the tolerances in `extension_expected.json`. It warns, rather than fails, if they differ.
+- **DefiLlama:** `verify_data.py` checks that the pull covers the test dates, and `verify_data.py --extension` compares E1 to E3, X1 and X5 with the published values within the tolerances in `extension_expected.json`. It warns, rather than fails, if they differ.
 
 ## Where the data came from and how it was checked
 

@@ -1,5 +1,5 @@
 {
-  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b.",
+  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b. X5 values added when X5 was first committed.",
   "checks": [
     [
       "E1.spearman",
@@ -84,6 +84,18 @@
       0.998429,
       "abs",
       0.005
+    ],
+    [
+      "exploratory_X5.gross_fees_annualised_defillama",
+      70513904.78022,
+      "rel",
+      0.01
+    ],
+    [
+      "exploratory_X5.retained_over_gross",
+      0.26794,
+      "abs",
+      0.01
     ]
   ],
   "verdicts": {

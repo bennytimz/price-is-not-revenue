@@ -39,7 +39,7 @@ if "--extension" in sys.argv:
         if not ok:
             warn.append(f"{k} verdict")
     print(f"Extension check: WARNING, {len(warn)} differ from the committed values: {', '.join(warn)}" if warn
-          else "Extension check: E1-E3 and X1 within tolerance of the committed values; all verdicts unchanged.")
+          else "Extension check: E1-E3, X1 and X5 within tolerance of the committed values; all verdicts unchanged.")
     sys.exit(0)
 
 T = json.load(open(f"{D}/SOURCE_TOTALS.json"))
@@ -78,7 +78,7 @@ if os.path.exists(man):
 # DefiLlama (S1), pulled locally: plausibility instead of a hash (Amendment 8b)
 NEED = {"raw_defillama_intents.json": ("2024-12-10", "2026-11-04"),          # E1-E3 volume
         "raw_defillama_intents_revenue.json": ("2025-09-23", "2026-11-04"),  # X1
-        "raw_defillama_intents_fees.json": (None, None)}                     # not used by any test
+        "raw_defillama_intents_fees.json": ("2026-08-03", "2026-11-01")}     # X5 (exploratory)
 for name, (lo, hi) in NEED.items():
     path = os.path.join(D, name)
     if not os.path.exists(path):

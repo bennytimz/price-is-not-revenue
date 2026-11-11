@@ -66,6 +66,16 @@
     "threshold": 0.6,
     "verdict": "inconsistent"
   },
+  "exploratory_X5": {
+    "window": [
+      "2026-08-03",
+      "2026-11-01"
+    ],
+    "gross_fees_annualised_defillama": 70513904.78022,
+    "retained_revenue_annualised_blockworks": 18893481.781849,
+    "revenue_annualised_defillama": 19101264.230769,
+    "retained_over_gross": 0.26794
+  },
   "exploratory": {
     "X1_spearman_defillama_rev_vs_blockworks_intents": 0.709875,
     "X1_total_ratio": 0.998429,
