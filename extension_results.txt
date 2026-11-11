@@ -1,0 +1,40 @@
+EXTENSION TESTS E1-E5 (pre-registered: PREREGISTRATION.md Amendment 8 and 8a)
+S1 DefiLlama volume used 2024-12-10 to 2026-11-04 | S2 BigQuery used 2024-01-01 to 2026-11-10 (2026-11-11 excluded, Amendment 8a) | Blockworks 2024-01-01 to 2026-11-04
+
+E1 (pre-registered) revenue as a proxy for Intents activity
+   rule: Spearman(daily S1 volume, daily retained Intents revenue) >= 0.50 on >= 120 overlapping days -> usable proxy
+   days 406 (2025-09-23 to 2026-11-04) | Spearman 0.813
+   VERDICT E1: usable proxy
+
+E2 (pre-registered) volume or take rate
+   rule: share = ln(volume ratio) / ln(revenue ratio), window B (2026-09-17..10-15) over A (2026-08-07..09-02), mean daily values;
+         >= 0.70 volume-driven | <= 0.30 take-rate-driven | otherwise mixed
+   window A: volume $98,994,033/day, revenue $25,791/day, take rate 2.61 bp (revenue days missing: 0)
+   window B: volume $161,029,475/day, revenue $82,640/day, take rate 5.13 bp (revenue days missing: 0)
+   volume ratio 1.627 | revenue ratio 3.204 | volume share 0.418
+   VERDICT E2: mixed
+
+E3 (pre-registered, exploratory per Amendment 8) does Intents volume lead on-chain usage better than price?
+   rule: rho(4-wk log change in volume, next 4-wk log change in usage) - rho(4-wk NEAR price return, same) >= 0.15
+         and 7-day block-bootstrap 95% interval of the difference excludes zero -> leads better than price; otherwise not supported
+   usage series: S2 distinct signers (weekly mean) | weeks ending 2025-01-19 to 2026-10-04 | n=90 (overlapping windows)
+   rho volume +0.178 | rho price +0.336 | difference -0.158 | bootstrap 95% interval [-0.445, +0.124] (10000 draws, seed 20261111)
+   significance is not claimed (overlapping windows)
+   VERDICT E3: not supported
+
+E4 (pre-registered) is the 2026-04-02 break real on-chain?
+   rule: median daily S2 distinct signers, 28 days after vs 28 days before 2026-04-02: drop >= 50% real on-chain;
+         drop < 20% probably a Blockworks definition change; otherwise inconclusive; cannot test if S2 lacks 2026-03-01..05-31
+   before 2026-03-05..2026-04-01 median 141,830 | after 2026-04-02..2026-04-29 median 130,282 | drop 8.1%
+   VERDICT E4: probably a Blockworks definition change
+
+E5 (pre-registered) definition check
+   rule: Spearman(daily change in S2 distinct signers, daily change in Blockworks active addresses) >= 0.60 -> consistent definitions
+   days 1038 of daily changes (2024-01-02 to 2026-11-04) | Spearman 0.479
+   VERDICT E5: inconsistent
+
+Exploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)
+   X1 DefiLlama daily revenue vs Blockworks retained Intents revenue: days 406 (2025-09-23 to 2026-11-04) | Spearman 0.710 | DefiLlama total / Blockworks total 0.998
+   X2 Blockworks active addresses over the E4 windows: median before 2,363,792 | after 250,503 | drop 89.4%
+
+SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent

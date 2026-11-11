@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-for script, out in (("verify_data.py", None), ("analysis_confirmatory.py", "confirmatory_results.txt"), ("scenarios.py", "scenarios_results.txt"), ("build_dashboard.py", None)):
+for script, out in (("verify_data.py", None), ("analysis_confirmatory.py", "confirmatory_results.txt"), ("scenarios.py", "scenarios_results.txt"), ("build_dashboard.py", None), ("analysis_extension.py", "extension_results.txt")):
     print(f"--> {script}")
     r = subprocess.run([sys.executable, os.path.join(HERE, script)], capture_output=True, text=True, cwd=HERE)
     if r.returncode != 0:

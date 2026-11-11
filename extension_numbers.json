@@ -1,0 +1,75 @@
+{
+  "inputs": {
+    "s1_volume_days": [
+      "2024-12-10",
+      "2026-11-04"
+    ],
+    "s2_days": [
+      "2024-01-01",
+      "2026-11-10"
+    ],
+    "blockworks_days": [
+      "2024-01-01",
+      "2026-11-04"
+    ]
+  },
+  "E1": {
+    "n_days": 406,
+    "spearman": 0.812585,
+    "threshold": 0.5,
+    "verdict": "usable proxy"
+  },
+  "E2": {
+    "vol_A": 98994033.074074,
+    "vol_B": 161029475.37931,
+    "rev_A": 25790.71175,
+    "rev_B": 82639.685585,
+    "take_rate_bp_A": 2.605279,
+    "take_rate_bp_B": 5.13196,
+    "volume_ratio": 1.626658,
+    "revenue_ratio": 3.204242,
+    "volume_share": 0.417809,
+    "rev_missing_days_A": 0,
+    "rev_missing_days_B": 0,
+    "thresholds": [
+      0.3,
+      0.7
+    ],
+    "verdict": "mixed"
+  },
+  "E3": {
+    "usage": "S2 active_signers",
+    "n_weeks": 90,
+    "rho_volume": 0.177643,
+    "rho_price": 0.335967,
+    "difference": -0.158324,
+    "boot_ci95": [
+      -0.445168,
+      0.124297
+    ],
+    "threshold_diff": 0.15,
+    "verdict": "not supported"
+  },
+  "E4": {
+    "median_before": 141830.0,
+    "median_after": 130281.5,
+    "drop": 0.081425,
+    "thresholds": [
+      0.2,
+      0.5
+    ],
+    "verdict": "probably a Blockworks definition change"
+  },
+  "E5": {
+    "n_days": 1038,
+    "spearman": 0.47947,
+    "threshold": 0.6,
+    "verdict": "inconsistent"
+  },
+  "exploratory": {
+    "X1_spearman_defillama_rev_vs_blockworks_intents": 0.709875,
+    "X1_total_ratio": 0.998429,
+    "X1_n_days": 406,
+    "X2_blockworks_active_drop": 0.894025
+  }
+}
