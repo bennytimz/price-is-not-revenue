@@ -73,9 +73,18 @@ def main():
             print(f"{name}: saved {len(body)} bytes from {url} at {dt.datetime.now(dt.timezone.utc):%Y-%m-%dT%H:%M:%SZ}")
         hashes.append(f"{hashlib.sha256(body).hexdigest()}  {name}\n")
         summarise(name, body)
-    with open(os.path.join(D, MANIFEST), "w", newline="\n") as f:
-        f.writelines(hashes)
-    print(f"{MANIFEST} written ({len(hashes)} files)")
+    # Update only this script's lines; keep every other line (e.g. the BigQuery pull) in place.
+    mine = {ln.split("  ", 1)[1]: ln for ln in hashes}
+    mpath = os.path.join(D, MANIFEST)
+    old = open(mpath, encoding="utf-8").read().splitlines(keepends=True) if os.path.exists(mpath) else []
+    out = []
+    for ln in old:
+        key = ln.split("  ", 1)[1] if "  " in ln else None
+        out.append(mine.pop(key) if key in mine else (ln if ln.endswith("\n") else ln + "\n"))
+    out.extend(mine.values())
+    with open(mpath, "w", newline="\n") as f:
+        f.writelines(out)
+    print(f"{MANIFEST} written ({len(hashes)} files updated, {len(out) - len(hashes)} other lines kept)")
 
 
 if __name__ == "__main__":
