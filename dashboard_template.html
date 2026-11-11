@@ -15,7 +15,7 @@ code{font-size:.78rem}.box{position:relative;height:270px;border:1px solid var(-
 input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 </style></head><body><main>
 <h1>Price Is Not Revenue: the 9.4x Question</h1>
-<p class="sub">Blockworks data, checked against source totals. Rebuild everything with <code>python run_all.py</code>. Research, not investment advice.</p>
+<p class="sub">Blockworks data, checked against source totals; sections 6 and 7 are public-source cross-checks (DefiLlama, NEAR BigQuery) pre-registered in Amendment 8. Rebuild everything with <code>python run_all.py</code>. Research, not investment advice.</p>
 
 <h2>1. Where revenue comes from</h2>
 <div class="box"><canvas id="c1" role="img" aria-label="Monthly revenue by source"></canvas></div>
@@ -30,7 +30,7 @@ input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 <h2>3. Does Intents revenue come with more on-chain usage?</h2>
 <div class="box"><canvas id="c3" role="img" aria-label="Usage metrics by phase, indexed"></canvas></div>
 <p class="says">During the September rally Intents revenue rose to 3.2 times its August level and gas fees to 4.9 times, but active addresses fell to 87% of it, so revenue growth did not come with more active accounts.</p>
-<p class="src">Code: <code>scenarios.py</code> section 7 (post-hoc). Data: <code>near_daily.csv</code>. Index: 2026-08-07 to 2026-09-02 = 100. Active addresses break on 2026-04-02 for an unknown reason.</p>
+<p class="src">Code: <code>scenarios.py</code> section 7 (post-hoc). Data: <code>near_daily.csv</code>. Index: 2026-08-07 to 2026-09-02 = 100. Blockworks active addresses have a definition break on 2026-04-02 (section 7); all three windows are after it.</p>
 
 <h2>4. Can revenue ever cover new supply? (sensitivity, not a forecast)</h2>
 <div class="panel">
@@ -44,18 +44,31 @@ input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 <div class="box"><canvas id="c5" role="img" aria-label="28-day average Intents revenue"></canvas></div>
 <p class="says">The 28-day average of retained Intents revenue is $67K a day; the pre-registered thresholds are $100K for 84 days (strengthens) and $30K for 56 days (weakens).</p>
 <p class="src">Code: <code>build_dashboard.py</code>. Thresholds: <code>PREREGISTRATION.md</code>, Amendment 7.</p>
+
+<h2>6. Did the revenue jump come from volume or take rate? (E2, pre-registered)</h2>
+<div class="box"><canvas id="c6" role="img" aria-label="Intents volume, retained revenue and take rate, rally window indexed to August window"></canvas></div>
+<p class="says">From the August window to the September&ndash;October rally, Intents volume rose 1.627 times but retained revenue rose 3.204 times because the take rate went from 2.61 to 5.13 basis points, so the pre-registered verdict is &ldquo;mixed&rdquo; (volume share 0.418).</p>
+<p class="src">Code: <code>analysis_extension.py</code>, E2. Data: <code>raw_defillama_intents.json</code> (DefiLlama free API, <code>/summary/dexs/near-intents</code>, pulled by <code>pull_defillama_intents.py</code>) and <code>near_daily.csv</code>. Mean daily values; window A 2026-08-07 to 2026-09-02 = 100, window B 2026-09-17 to 2026-10-15.</p>
+
+<h2>7. Is the April 2026 activity break real on chain? (E4, E5, pre-registered)</h2>
+<div class="box"><canvas id="c7" role="img" aria-label="Daily on-chain distinct signers versus Blockworks active addresses around 2026-04-02, indexed"></canvas></div>
+<p class="says">Around 2026-04-02 on-chain distinct signers fell 8.1% while Blockworks active addresses fell 89.4%, so the break is probably a Blockworks definition change (E4), and over the whole period the daily changes of the two agree too weakly to call the definitions consistent (E5, Spearman 0.479 against 0.60).</p>
+<p class="src">Code: <code>analysis_extension.py</code>, E4, E5 and X2. Query: <code>pull_bigquery_daily_usage.sql</code> (NEAR public BigQuery dataset, <code>WHERE block_date &gt;= '2024-01-01'</code>). Data: <code>raw_bigquery_daily_usage.csv</code>, <code>near_daily.csv</code>. Each line is indexed to its own median over the 28 days before 2026-04-02 = 100; percentages are 28-day medians before and after.</p>
 </main>
 <script>
 (function(){
-var M=__MONTHS__, SER=__SERIES__, MOD=__MODEL__, PS=__PS__, PH=__PHASE__;
+var M=__MONTHS__, SER=__SERIES__, MOD=__MODEL__, PS=__PS__, PH=__PHASE__, X2=__EXT2__, X4=__EXT4__;
 var cs=getComputedStyle(document.documentElement),A=cs.getPropertyValue('--a').trim(),B=cs.getPropertyValue('--b').trim(),C=cs.getPropertyValue('--c').trim(),MU=cs.getPropertyValue('--mu').trim(),LN=cs.getPropertyValue('--ln').trim();
 function usd(v){return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+Math.round(v)}
+function usdFull(v){return '$'+Math.round(v).toLocaleString('en-US')}
 var base={responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{labels:{color:MU,boxWidth:12}}}};
+function withTip(o,label){o.plugins=Object.assign({},base.plugins,o.plugins||{},{tooltip:{callbacks:{label:label}}});return o}
+function usdTip(c){return c.dataset.label+': '+usdFull(c.parsed.y)}
 var xs={ticks:{color:MU,maxTicksLimit:7,maxRotation:0},grid:{display:false}};
 new Chart(document.getElementById('c1'),{type:'bar',data:{labels:M.map(function(r){return r[0]}),datasets:[
 {label:'Gas fees',data:M.map(function(r){return r[1]}),backgroundColor:A,stack:'s'},
 {label:'Intents (retained)',data:M.map(function(r){return r[2]}),backgroundColor:B,stack:'s'}]},
-options:Object.assign({},base,{scales:{x:Object.assign({stacked:true},xs),y:{stacked:true,ticks:{color:MU,callback:usd},grid:{color:LN}}}})});
+options:withTip(Object.assign({},base,{scales:{x:Object.assign({stacked:true},xs),y:{stacked:true,ticks:{color:MU,callback:usd},grid:{color:LN}}}}),usdTip)});
 new Chart(document.getElementById('c2'),{type:'bar',data:{labels:PS.map(function(r){return r[0]}),datasets:[{data:PS.map(function(r){return r[1]}),backgroundColor:PS.map(function(r){return r[0].indexOf('NEAR')===0?B:C})}]},
 options:Object.assign({},base,{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{type:'logarithmic',min:50,ticks:{color:MU,callback:function(v){return [100,300,1000,3000].indexOf(v)>=0?v+'x':''}},grid:{color:LN}},y:{ticks:{color:MU},grid:{display:false}}}})});
 var names={intents_usd:'Intents revenue',gas_usd:'Gas fees (USD)',gas_near:'Gas fees (NEAR)',transactions:'Transactions',active_addresses:'Active addresses'};
@@ -78,6 +91,17 @@ new Chart(document.getElementById('c5'),{type:'line',data:{labels:L,datasets:[
 {label:'28-day average',data:SER.map(function(r){return r[1]}),borderColor:B,borderWidth:1.8,pointRadius:0},
 {label:'Strengthens: $100K for 84 days',data:line(100000),borderColor:A,borderDash:[5,4],borderWidth:1.2,pointRadius:0},
 {label:'Weakens: $30K for 56 days',data:line(30000),borderColor:C,borderDash:[5,4],borderWidth:1.2,pointRadius:0}]},
-options:Object.assign({},base,{interaction:{mode:'index',intersect:false},scales:{x:xs,y:{ticks:{color:MU,callback:usd},grid:{color:LN}}}})});
+options:withTip(Object.assign({},base,{interaction:{mode:'index',intersect:false},scales:{x:xs,y:{ticks:{color:MU,callback:usd},grid:{color:LN}}}}),usdTip)});
+function e2raw(i,v){return i===2?v.toFixed(2)+' bp':usdFull(v)+'/day'}
+new Chart(document.getElementById('c6'),{type:'bar',data:{labels:X2.labels,datasets:[
+{label:'Aug 7-Sep 2 (A)',data:X2.a,backgroundColor:C,raw:X2.raw_a},
+{label:'Sep 17-Oct 15 (B)',data:X2.b,backgroundColor:B,raw:X2.raw_b}]},
+options:withTip(Object.assign({},base,{scales:{x:{ticks:{color:MU},grid:{display:false}},y:{ticks:{color:MU},grid:{color:LN},title:{display:true,text:'index, A = 100',color:MU}}}}),
+function(c){return c.dataset.label+': '+e2raw(c.dataIndex,c.dataset.raw[c.dataIndex])+' (index '+c.parsed.y.toFixed(0)+')'})});
+new Chart(document.getElementById('c7'),{type:'line',data:{labels:X4.dates,datasets:[
+{label:'On-chain distinct signers (BigQuery)',data:X4.s2,borderColor:A,borderWidth:1.6,pointRadius:0,spanGaps:false},
+{label:'Blockworks active addresses',data:X4.bw,borderColor:B,borderWidth:1.6,pointRadius:0,spanGaps:false}]},
+options:withTip(Object.assign({},base,{interaction:{mode:'index',intersect:false},scales:{x:xs,y:{min:0,ticks:{color:MU},grid:{color:LN},title:{display:true,text:'index, 28 days before 2026-04-02 = 100',color:MU}}}}),
+function(c){return c.dataset.label+': '+c.parsed.y.toFixed(0)})});
 })();
 </script></body></html>

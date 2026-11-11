@@ -36,5 +36,12 @@ E5 (pre-registered) definition check
 Exploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)
    X1 DefiLlama daily revenue vs Blockworks retained Intents revenue: days 406 (2025-09-23 to 2026-11-04) | Spearman 0.710 | DefiLlama total / Blockworks total 0.998
    X2 Blockworks active addresses over the E4 windows: median before 2,363,792 | after 250,503 | drop 89.4%
+   X3 (Exploratory, not pre-registered, not a forecast) mean daily values in the dashboard section 3 windows, indexed to pre = 100:
+      S2 distinct signers      pre 80,140 = 100 | rally 76,279 = 95 | pullback 52,239 = 65
+      Intents revenue (USD)    pre 25,791 = 100 | rally 82,640 = 320 | pullback 56,341 = 218
+      S1 Intents volume (USD)  pre 98,994,033 = 100 | rally 161,029,475 = 163 | pullback 121,133,717 = 122
+   X4 (Exploratory, not pre-registered, not a forecast; arithmetic only) daily Intents volume needed for $191M/yr of retained revenue (the scenarios.py break-even):
+      at window A take rate (2.61 bp): $2.01B/day = 12.5x window B volume
+      at window B take rate (5.13 bp): $1.02B/day = 6.3x window B volume
 
 SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent

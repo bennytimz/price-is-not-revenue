@@ -70,6 +70,47 @@
     "X1_spearman_defillama_rev_vs_blockworks_intents": 0.709875,
     "X1_total_ratio": 0.998429,
     "X1_n_days": 406,
-    "X2_blockworks_active_drop": 0.894025
+    "X2_blockworks_active_drop": 0.894025,
+    "X2_median_before": 2363791.5,
+    "X2_median_after": 250503.0,
+    "X3_means": {
+      "pre (Aug 7-Sep 2)": {
+        "s2_signers": 80139.888889,
+        "intents_usd": 25790.71175,
+        "s1_volume_usd": 98994033.074074
+      },
+      "rally (Sep 17-Oct 15)": {
+        "s2_signers": 76279.206897,
+        "intents_usd": 82639.685585,
+        "s1_volume_usd": 161029475.37931
+      },
+      "pullback (Oct 16-Nov 3)": {
+        "s2_signers": 52238.947368,
+        "intents_usd": 56341.172593,
+        "s1_volume_usd": 121133716.631579
+      }
+    },
+    "X3_index": {
+      "pre (Aug 7-Sep 2)": {
+        "s2_signers": 100.0,
+        "intents_usd": 100.0,
+        "s1_volume_usd": 100.0
+      },
+      "rally (Sep 17-Oct 15)": {
+        "s2_signers": 95.182571,
+        "intents_usd": 320.424215,
+        "s1_volume_usd": 162.66584
+      },
+      "pullback (Oct 16-Nov 3)": {
+        "s2_signers": 65.184702,
+        "intents_usd": 218.455284,
+        "s1_volume_usd": 122.364665
+      }
+    },
+    "X4_target_usd_per_year": 191000000.0,
+    "X4_volume_needed_per_day_at_A": 2008566399.220498,
+    "X4_volume_needed_per_day_at_B": 1019664324.409664,
+    "X4_multiple_of_B_volume_at_A": 12.473284,
+    "X4_multiple_of_B_volume_at_B": 6.33216
   }
 }

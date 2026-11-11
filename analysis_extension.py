@@ -161,8 +161,31 @@ bwa = nd.active.astype(float)
 bpre, bpost = bwa.loc[BREAK - pd.Timedelta(days=28):BREAK - pd.Timedelta(days=1)], bwa.loc[BREAK:BREAK + pd.Timedelta(days=27)]
 bdrop = 1 - float(bpost.median()) / float(bpre.median())
 P(f"   X2 Blockworks active addresses over the E4 windows: median before {bpre.median():,.0f} | after {bpost.median():,.0f} | drop {bdrop:.1%}")
+
+# X3: same three windows as scenarios.py section 7 (dashboard section 3)
+PH = {"pre (Aug 7-Sep 2)": ("2026-08-07", "2026-09-02"), "rally (Sep 17-Oct 15)": ("2026-09-17", "2026-10-15"),
+      "pullback (Oct 16-Nov 3)": ("2026-10-16", "2026-11-03")}
+x3 = pd.DataFrame({lab: {"s2_signers": signers.loc[a:b].mean(), "intents_usd": nd.intents.loc[a:b].mean(), "s1_volume_usd": vol.loc[a:b].mean()}
+                   for lab, (a, b) in PH.items()})
+x3i = x3.div(x3.iloc[:, 0], axis=0) * 100
+P("   X3 (Exploratory, not pre-registered, not a forecast) mean daily values in the dashboard section 3 windows, indexed to pre = 100:")
+for k, lab in (("s2_signers", "S2 distinct signers"), ("intents_usd", "Intents revenue (USD)"), ("s1_volume_usd", "S1 Intents volume (USD)")):
+    P(f"      {lab:24s} " + " | ".join(f"{c.split(' ')[0]} {x3.loc[k, c]:,.0f} = {x3i.loc[k, c]:.0f}" for c in x3.columns))
+
+# X4: arithmetic only, using the break-even revenue in scenario_numbers.json
+S = json.load(open(os.path.join(D, "scenario_numbers.json"), encoding="utf-8"))
+target = S["breakeven_rev_M"] * 1e6
+trA, trB = out["E2"]["rev_A"] / out["E2"]["vol_A"], out["E2"]["rev_B"] / out["E2"]["vol_B"]
+needA, needB = target / 365 / trA, target / 365 / trB
+P(f"   X4 (Exploratory, not pre-registered, not a forecast; arithmetic only) daily Intents volume needed for ${S['breakeven_rev_M']}M/yr of retained revenue "
+  f"(the scenarios.py break-even):")
+P(f"      at window A take rate ({trA * 1e4:.2f} bp): ${needA / 1e9:.2f}B/day = {needA / out['E2']['vol_B']:.1f}x window B volume")
+P(f"      at window B take rate ({trB * 1e4:.2f} bp): ${needB / 1e9:.2f}B/day = {needB / out['E2']['vol_B']:.1f}x window B volume")
 out["exploratory"] = {"X1_spearman_defillama_rev_vs_blockworks_intents": rx1, "X1_total_ratio": ratio, "X1_n_days": len(x1),
-                      "X2_blockworks_active_drop": bdrop}
+                      "X2_blockworks_active_drop": bdrop, "X2_median_before": float(bpre.median()), "X2_median_after": float(bpost.median()),
+                      "X3_means": {c: x3[c].to_dict() for c in x3.columns}, "X3_index": {c: x3i[c].to_dict() for c in x3i.columns},
+                      "X4_target_usd_per_year": target, "X4_volume_needed_per_day_at_A": needA, "X4_volume_needed_per_day_at_B": needB,
+                      "X4_multiple_of_B_volume_at_A": needA / out["E2"]["vol_B"], "X4_multiple_of_B_volume_at_B": needB / out["E2"]["vol_B"]}
 
 P("\nSUMMARY " + " | ".join(f"{k}: {out[k]['verdict']}" for k in ["E1", "E2", "E3", "E4", "E5"]))
 
