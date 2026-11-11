@@ -38,22 +38,22 @@ daily = daily.rename(columns={"price_usd": "price", "circulating_market_cap_usd"
 daily["date"] = pd.to_datetime(daily["date"])
 daily = daily.sort_values("date")
 assert daily.date.is_unique and (daily.date.diff().dropna() == pd.Timedelta(days=1)).all(), "daily dates not contiguous"
-daily[["date", "price", "mcap", "rev", "fees", "active", "tx"]].to_csv(f"{D}/near_daily.csv", index=False, date_format="%Y-%m-%d")
+daily[["date", "price", "mcap", "rev", "fees", "active", "tx"]].to_csv(f"{D}/near_daily.csv", index=False, date_format="%Y-%m-%d", lineterminator="\n")
 
 peers = pd.concat([read_raw(f"peers_batch{i}.csv", "week_ending") for i in (1, 2)], ignore_index=True)
 peers = peers.rename(columns={"week_ending": "week", "close_price_usd": "price", "close_market_cap_usd": "mcap",
                               "weekly_protocol_revenue_usd": "rev", "weekly_transaction_fees_usd": "fees"})
 peers = peers.sort_values(["asset", "week"])
 assert peers.duplicated(["asset", "week"]).sum() == 0
-peers[["week", "asset", "price", "mcap", "rev", "fees"]].to_csv(f"{D}/peers_weekly.csv", index=False)
+peers[["week", "asset", "price", "mcap", "rev", "fees"]].to_csv(f"{D}/peers_weekly.csv", index=False, lineterminator="\n")
 
 sup = read_raw("near_total_supply_weekly.csv", "week_ending")[["week_ending", "total_supply"]]
-sup.to_csv(f"{D}/near_total_supply_weekly.csv", index=False)
+sup.to_csv(f"{D}/near_total_supply_weekly.csv", index=False, lineterminator="\n")
 bb = read_raw("near_buybacks_daily.csv", "date")[["date", "buybacks_usd"]]
-bb.to_csv(f"{D}/near_buybacks_daily.csv", index=False)
+bb.to_csv(f"{D}/near_buybacks_daily.csv", index=False, lineterminator="\n")
 
 files = ["near_daily.csv", "peers_weekly.csv", "near_total_supply_weekly.csv", "near_buybacks_daily.csv"]
-with open(f"{D}/MANIFEST.sha256", "w") as f:
+with open(f"{D}/MANIFEST.sha256", "w", newline="\n") as f:
     for name in files:
         f.write(f"{hashlib.sha256(open(os.path.join(D, name), 'rb').read()).hexdigest()}  {name}\n")
 print(f"daily {len(daily)} rows | peers {len(peers)} rows | supply {len(sup)} rows | buybacks {len(bb)} rows | manifest written")

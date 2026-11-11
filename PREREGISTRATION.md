@@ -185,3 +185,13 @@ No hypothesis test had been run when this amendment was written.
 
 **Post-hoc analyses (not in this document before the tests; exploratory)**
 - Monthly revenue composition, the link between Intents revenue and absolute daily price moves, the concentration of Intents revenue in the top 10% of days, and the revenue-multiple and price sensitivity grid. All are in scenarios.py and labelled there.
+
+## Data correction log (2026-11-11)
+
+Appended after the confirmatory tests. No earlier text in this document is changed.
+
+- The committed clean data files were first typed by hand from the raw exports.
+- On 2026-11-11 they were rebuilt from the seven raw files (`raw_*.csv`) with `build_clean_data.py`. This fixed the blank 2024 `tx` column in `near_daily.csv` (366 days now filled; 2025 and 2026 values unchanged) and the rounded peer values in `peers_weekly.csv` from the week ending 2025-07-06 (now full precision).
+- Results are unchanged apart from one SUI p-value: the SUI holdout p-value in `confirmatory_results.txt` moves from 0.938 to 0.939. The unrounded peer P/S values in `confirmatory_numbers.json` move by less than 1 part in 10 million. `scenarios_results.txt` and `dashboard.html` are unchanged.
+- No hypothesis, threshold or verdict changed.
+- `build_clean_data.py` now writes LF line endings, so `MANIFEST.sha256` matches on every operating system. No cleaning rule changed.
