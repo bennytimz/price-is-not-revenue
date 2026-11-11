@@ -51,7 +51,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 13 | Blockworks active addresses dropped 89.4% on 2026-04-02 (a thread 3, b) | `extension_results.txt:38` (X2, exploratory) |
 | 14 | On-chain signers fell 8.1%, so the drop is probably a definition change (a thread 3, b) | `extension_results.txt:28-29` (E4) |
 | 15 | DefiLlama's Intents revenue totals 0.998 of Blockworks' (b, labelled exploratory) | `extension_results.txt:37` (X1) |
-| 16 | Everything rebuilds with `python run_all.py` from files in the repo (b) | `run_all.py`; `README.md:64` |
+| 16 | Everything rebuilds with `python run_all.py` from files in the repo (b) | `run_all.py`; `README.md:36` |
 | 17 | Each dashboard chart names the script and data behind it (b) | `dashboard_template.html`, the `class="src"` line under each chart |
 | 18 | Limit: one market regime (b) | `THESIS.md:98` |
 | 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:94`; the `methodology` field is empty in DefiLlama's `/summary/dexs/near-intents` response (pulled locally by `pull_defillama_intents.py`, which flags it; the raw file is not redistributed) |
