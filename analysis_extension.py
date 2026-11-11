@@ -2,7 +2,8 @@
 and Amendment 8a (pushed 2026-11-11T20:28:58+01:00). Thresholds are copied from Amendment 8 unchanged.
 
 Inputs (read only): raw_defillama_intents*.json (S1, pulled locally by pull_defillama_intents.py and not committed,
-per DefiLlama's terms; Amendment 8b), raw_bigquery_daily_usage.csv (S2, hash in RAW_PULLS.sha256), near_daily.csv (Blockworks).
+per DefiLlama's terms; Amendment 8b), raw_bigquery_daily_usage.csv (S2, hash in RAW_PULLS.sha256), near_daily.csv (Blockworks),
+raw_bigquery_intents_contract.csv (S4, hash in RAW_PULLS.sha256; tests F1 and F2, pre-registered in Amendment 9).
 Outputs: stdout (saved by run_all.py as extension_results.txt) and extension_numbers.json.
 Results labelled "Exploratory" are post-hoc, are not in Amendment 8, and do not affect any E1-E5 verdict.
 """
@@ -152,6 +153,39 @@ P(f"   days {len(dd)} of daily changes ({dd.index.min().date()} to {dd.index.max
 P(f"   VERDICT E5: {v5}")
 out["E5"] = {"n_days": len(dd), "spearman": r5, "threshold": 0.6, "verdict": v5}
 
+# ---------- F1 / F2 (pre-registered, Amendment 9) ----------
+S4_PULL_DAY = pd.Timestamp("2026-11-11")  # UTC day of the S4 pull (file saved 2026-11-11 23:34 UTC); excluded per Amendment 9
+s4 = pd.read_csv(os.path.join(D, "raw_bigquery_intents_contract.csv"), parse_dates=["block_date"]).set_index("block_date")
+s4 = s4[s4.index != S4_PULL_DAY]
+calls = s4.intents_calls.astype(float)
+P("\nF1 (pre-registered, Amendment 9) do daily intents.near calls (S4) track DefiLlama Intents volume (S1)?")
+P(f"   S4 BigQuery used {calls.index.min().date()} to {calls.index.max().date()} (pull day {S4_PULL_DAY.date()} UTC excluded)")
+P("   caveat declared in advance: calls to the settlement contract are a proxy for swap activity, not swaps; one call may settle several intents")
+P("   rule: Spearman(daily S4 call count, daily S1 DefiLlama volume) over >= 120 overlapping days; >= 0.50 -> S4 tracks volume, otherwise S4 does not track volume")
+f1 = pd.concat([calls, s1("raw_defillama_intents.json")], axis=1, keys=["calls", "vol"]).dropna()
+if len(f1) >= 120:
+    rf1 = float(spearmanr(f1.calls, f1.vol)[0])
+    vf1 = "S4 tracks volume" if rf1 >= 0.50 else "S4 does not track volume"
+    P(f"   days {len(f1)} ({f1.index.min().date()} to {f1.index.max().date()}) | Spearman {rf1:.3f}")
+else:
+    rf1, vf1 = None, "cannot test (fewer than 120 overlapping days)"
+    P(f"   days {len(f1)}")
+P(f"   VERDICT F1: {vf1}")
+out["F1"] = {"n_days": len(f1), "days": [str(f1.index.min().date()), str(f1.index.max().date())], "spearman": rf1, "threshold": 0.5, "verdict": vf1}
+
+P("\nF2 (pre-registered, Amendment 9) did on-chain Intents calls rise with the Sep-Oct revenue jump?")
+P("   rule: mean daily S4 call count, window B (2026-09-17..10-15) over window A (2026-08-07..09-02); >= 2.0 on-chain Intents calls rose broadly")
+P("         with revenue | <= 1.3 calls did not rise materially | otherwise in between; labelled proxy not validated if F1 says S4 does not track volume")
+cA, cB = calls.loc["2026-08-07":"2026-09-02"], calls.loc["2026-09-17":"2026-10-15"]
+assert len(cA) == 27 and len(cB) == 29, "F2: S4 does not cover both windows"
+rf2 = cB.mean() / cA.mean()
+vf2 = "on-chain Intents calls rose broadly with revenue" if rf2 >= 2.0 else "calls did not rise materially" if rf2 <= 1.3 else "in between"
+if vf1 == "S4 does not track volume":
+    vf2 += " (proxy not validated)"
+P(f"   window A mean {cA.mean():,.0f} calls/day ({len(cA)} days) | window B mean {cB.mean():,.0f} calls/day ({len(cB)} days) | ratio {rf2:.3f}")
+P(f"   VERDICT F2: {vf2}")
+out["F2"] = {"calls_A": cA.mean(), "calls_B": cB.mean(), "ratio": rf2, "thresholds": [1.3, 2.0], "verdict": vf2}
+
 # ---------- Exploratory (post-hoc, not in Amendment 8; no effect on any verdict) ----------
 P("\nExploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)")
 x1 = pd.concat([dl_rev, nd.intents], axis=1, keys=["dl", "bw"]).dropna()
@@ -201,7 +235,7 @@ out["exploratory"] = {"X1_spearman_defillama_rev_vs_blockworks_intents": rx1, "X
                       "X4_target_usd_per_year": target, "X4_volume_needed_per_day_at_A": needA, "X4_volume_needed_per_day_at_B": needB,
                       "X4_multiple_of_B_volume_at_A": needA / out["E2"]["vol_B"], "X4_multiple_of_B_volume_at_B": needB / out["E2"]["vol_B"]}
 
-P("\nSUMMARY " + " | ".join(f"{k}: {out[k]['verdict']}" for k in ["E1", "E2", "E3", "E4", "E5"]))
+P("\nSUMMARY " + " | ".join(f"{k}: {out[k]['verdict']}" for k in ["E1", "E2", "E3", "E4", "E5", "F1", "F2"]))
 
 
 def clean(o):

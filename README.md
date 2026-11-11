@@ -31,6 +31,8 @@
 | E3 | Intents volume leads on-chain usage better than the NEAR price does. | difference -0.158 | **not supported** |
 | E4 | The 2026-04-02 drop in Blockworks active addresses is real on chain. | signers drop 8.1% | **probably a Blockworks definition change** |
 | E5 | Blockworks active addresses and on-chain signers measure the same thing. | Spearman 0.479 | **inconsistent** |
+| F1 | Daily calls to the Intents settlement contract (intents.near) track DefiLlama Intents volume. | Spearman 0.774 | **S4 tracks volume** |
+| F2 | On-chain Intents calls rose with the Sep-Oct revenue jump. | calls B/A 1.157 | **calls did not rise materially** |
 <!-- scorecard:end -->
 
 **Reproduce:** `pip install -r requirements.txt` then `python run_all.py` (rebuilds every number and the dashboard from the files in this repo; the first run also pulls DefiLlama's free API, which is not redistributed here). **Read:** [THESIS.md](THESIS.md) · [live dashboard](https://bennytimz.github.io/price-is-not-revenue/dashboard.html)
@@ -66,10 +68,11 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `scenarios.py` | Revenue composition, run-rates, dilution, sensitivity grid and the post-hoc usage check |
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
-| `analysis_extension.py` | Public-source cross-checks E1 to E5 (pre-registered, Amendment 8) plus labelled exploratory checks; writes `extension_results.txt` and `extension_numbers.json` |
+| `analysis_extension.py` | Public-source cross-checks E1 to E5 (pre-registered, Amendment 8) and F1 to F2 (pre-registered, Amendment 9) plus labelled exploratory checks; writes `extension_results.txt` and `extension_numbers.json` |
 | `pull_defillama_intents.py` | Pulls NEAR Intents daily volume, fees and revenue from DefiLlama's free API into local `raw_defillama_intents*.json` files, which are not committed (see Data terms) |
+| `pull_bigquery_intents_contract.sql` | The BigQuery query behind `raw_bigquery_intents_contract.csv` (daily `intents.near` calls and distinct signers; S4, Amendment 9) |
 | `pull_bigquery_daily_usage.sql` | The BigQuery query behind `raw_bigquery_daily_usage.csv` (daily transactions and distinct signers) |
-| `RAW_PULLS.sha256` | SHA-256 hash of `raw_bigquery_daily_usage.csv`, checked by `analysis_extension.py` before it runs |
+| `RAW_PULLS.sha256` | SHA-256 hashes of `raw_bigquery_daily_usage.csv` and `raw_bigquery_intents_contract.csv`, checked by `analysis_extension.py` before it runs |
 | `extension_expected.json` | The E1 to E3, X1 and X5 values first published, with tolerances; `verify_data.py --extension` compares each run with them |
 | `build_scorecard.py` | Builds the verdict scorecard from the results files and `PREREGISTRATION.md` (no typed numbers) |
 | `SCORECARD.md`, `scorecard.json` | Generated full scorecard: claim, pre-registered threshold, result, verdict and source for H1 to H5 and E1 to E5 |
@@ -96,13 +99,13 @@ Expected output (the last 10 lines `python run_all.py` prints, copied from a rea
 ```
 active     -0.76 -0.72  0.32    1.00
 --> analysis_extension.py
-SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent
+SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent | F1: S4 tracks volume | F2: calls did not rise materially
 --> verify_data.py --extension
-Extension check: E1-E3, X1 and X5 within tolerance of the committed values; all verdicts unchanged.
+Extension check: E1-E3, F1-F2, X1 and X5 within tolerance of the committed values; all verdicts unchanged.
 --> build_scorecard.py
-scorecard: 10 rows written to scorecard.json, SCORECARD.md and README.md
+scorecard: 12 rows written to scorecard.json, SCORECARD.md and README.md
 --> build_dashboard.py
-dashboard.html written 36227 bytes
+dashboard.html written 37424 bytes
 Done. Open dashboard.html.
 ```
 
@@ -129,7 +132,7 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 | Do the committed files rebuild every number and chart? | Yes. A fresh clone of the public repo was run in a fresh virtual environment (Python 3.13, Windows) with the pinned `requirements.txt`; `verify_data.py` passed and every output file matched the committed one after line-ending normalisation. |
 | Do the data files match what the source reported? | Yes, checked by `verify_data.py` (row counts, date continuity, revenue totals) and by `MANIFEST.sha256` (file hashes). The totals in `SOURCE_TOTALS.json` are the ones reported at pull time. |
 | Can a stranger re-pull the data? | Blockworks: only with a Blockworks API key; it is a third-party source and the pull went through a chat assistant. Public sources: yes, see below. |
-| Is there an independent public-source check? | Yes, two sources (tests E1 to E5 in `extension_results.txt`). The third planned source, Intents Explorer sampling (S3), was not run. |
+| Is there an independent public-source check? | Yes, two sources (tests E1 to E5 and F1 to F2 in `extension_results.txt`). The third planned source, Intents Explorer sampling (S3), was not run. |
 | Does the dashboard work offline? | Yes. Chart.js is bundled in `chart.umd.js`. |
 | Are the raw exports in the repo? | Yes. Blockworks exports are in the `raw_near_*.csv` and `raw_peers_*.csv` files exactly as received, and `python build_clean_data.py` rebuilds every baseline CSV from them. The BigQuery pull is saved unmodified as `raw_bigquery_daily_usage.csv`, with its hash in `RAW_PULLS.sha256`. The raw DefiLlama data is not included (see Data terms); `run_all.py` pulls it locally. |
 
@@ -139,6 +142,7 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 |---|---|---|---|
 | S1, DefiLlama free API (no key) | NEAR Intents daily volume, fees and revenue | Not in the repository; pulled into local `raw_defillama_intents*.json` files that git ignores | Automatic: `run_all.py` pulls them if missing. Manual: `python pull_defillama_intents.py` (add `--force` to replace local copies). Endpoints `api.llama.fi/summary/dexs/near-intents` and `api.llama.fi/summary/fees/near-intents` |
 | S2, NEAR public BigQuery dataset | Daily transactions and distinct `signer_account_id` | `raw_bigquery_daily_usage.csv` | Run `pull_bigquery_daily_usage.sql` in the BigQuery web console and download the result as CSV (see below) |
+| S4, NEAR public BigQuery dataset (Amendment 9) | Daily calls to the Intents settlement contract `intents.near` and their distinct signers; tests F1 and F2 | `raw_bigquery_intents_contract.csv` | Run `pull_bigquery_intents_contract.sql` in the BigQuery web console and download the result as CSV |
 | S3, Intents Explorer API | Sampled swaps | none | Not run |
 
 The BigQuery query (it processed 123 GB when run on 2026-11-11; the `block_date` filter matters because the table is partitioned on it, and without it the query scans the whole table):

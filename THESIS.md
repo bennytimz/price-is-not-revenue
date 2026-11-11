@@ -54,6 +54,15 @@ So the thesis does not rest on Blockworks alone, I added two free public sources
   - **Caveat on E3's interval.** Its 95% bootstrap interval, -0.445 to +0.124, resamples single weeks, while the 4-week windows overlap. That interval is probably too narrow, which is why Amendment 8 claims no significance. The verdict fails on the size condition in any case.
 - **E5:** Blockworks' active addresses and on-chain distinct signers do not move together closely enough, day to day, to be treated as the same measure.
 
+**Settlement-contract checks (pre-registered, Amendment 9).** A third public series, S4, counts daily calls to NEAR Intents' settlement contract, `intents.near`, in NEAR's public BigQuery dataset. Amendment 9 fixed the tests before the data was pulled, and the day of the pull (2026-11-11 UTC) is excluded.
+
+| Test | Question | Result | Verdict |
+|---|---|---|---|
+| F1 | Do daily contract calls track DefiLlama Intents volume? | Spearman 0.774 over 679 days (needs 0.50) | **S4 tracks volume** |
+| F2 | Did contract calls rise with the Sep-Oct revenue jump? | 58,532 to 67,746 calls a day, ratio 1.157 (1.3 or lower means no material rise) | **calls did not rise materially** |
+
+In plain English: day to day, the number of settlement calls moves with Intents volume, so it is a usable on-chain proxy. But from the August window to the rally window, calls rose only 1.157 times, while volume rose 1.627 times and retained revenue 3.204 times (E2). The September-October jump came with very little extra on-chain settlement activity. As Amendment 9 declared in advance, calls are a proxy for swaps, not swaps: one call may settle several intents.
+
 **Blockworks active addresses has a definition break at 2026-04-02.** Three results support this:
 - **E4:** across the 28 days either side of the date, the public on-chain count of distinct signers fell 8.1%.
 - **X2 (exploratory):** over the same days, Blockworks active addresses fell 89.4% (median 2,363,792 to 250,503).

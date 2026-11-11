@@ -33,6 +33,19 @@ E5 (pre-registered) definition check
    days 1038 of daily changes (2024-01-02 to 2026-11-04) | Spearman 0.479
    VERDICT E5: inconsistent
 
+F1 (pre-registered, Amendment 9) do daily intents.near calls (S4) track DefiLlama Intents volume (S1)?
+   S4 BigQuery used 2025-01-01 to 2026-11-10 (pull day 2026-11-11 UTC excluded)
+   caveat declared in advance: calls to the settlement contract are a proxy for swap activity, not swaps; one call may settle several intents
+   rule: Spearman(daily S4 call count, daily S1 DefiLlama volume) over >= 120 overlapping days; >= 0.50 -> S4 tracks volume, otherwise S4 does not track volume
+   days 679 (2025-01-01 to 2026-11-10) | Spearman 0.774
+   VERDICT F1: S4 tracks volume
+
+F2 (pre-registered, Amendment 9) did on-chain Intents calls rise with the Sep-Oct revenue jump?
+   rule: mean daily S4 call count, window B (2026-09-17..10-15) over window A (2026-08-07..09-02); >= 2.0 on-chain Intents calls rose broadly
+         with revenue | <= 1.3 calls did not rise materially | otherwise in between; labelled proxy not validated if F1 says S4 does not track volume
+   window A mean 58,532 calls/day (27 days) | window B mean 67,746 calls/day (29 days) | ratio 1.157
+   VERDICT F2: calls did not rise materially
+
 Exploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)
    X1 DefiLlama daily revenue vs Blockworks retained Intents revenue: days 406 (2025-09-23 to 2026-11-04) | Spearman 0.710 | DefiLlama total / Blockworks total 0.998
    X2 Blockworks active addresses over the E4 windows: median before 2,363,792 | after 250,503 | drop 89.4%
@@ -46,4 +59,4 @@ Exploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)
    X5 (Exploratory, not pre-registered, not a forecast) trailing-91-day annualised, 2026-08-03 to 2026-11-01 (the scenarios.py run-rate window):
       DefiLlama gross Intents fees $70.5M/yr | Blockworks retained Intents revenue $18.9M/yr | DefiLlama revenue $19.1M/yr | retained / gross 26.8%
 
-SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent
+SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent | F1: S4 tracks volume | F2: calls did not rise materially

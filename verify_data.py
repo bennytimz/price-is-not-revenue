@@ -7,7 +7,7 @@ source reported on 2026-11-05, not that Blockworks is right. A Blockworks key is
 
 DefiLlama raw files are not in the repository (DefiLlama's terms; Amendment 8b). They are pulled locally by
 pull_defillama_intents.py, so they cannot be checked against a fixed hash. Instead this script checks that they
-parse and cover the dates the tests use, and --extension compares the E1-E3 and X1 numbers with the values first
+parse and cover the dates the tests use, and --extension compares the E1-E3, F1-F2, X1 and X5 numbers with the values first
 committed (extension_expected.json) within stated tolerances.
 """
 import datetime as dt
@@ -39,7 +39,7 @@ if "--extension" in sys.argv:
         if not ok:
             warn.append(f"{k} verdict")
     print(f"Extension check: WARNING, {len(warn)} differ from the committed values: {', '.join(warn)}" if warn
-          else "Extension check: E1-E3, X1 and X5 within tolerance of the committed values; all verdicts unchanged.")
+          else "Extension check: E1-E3, F1-F2, X1 and X5 within tolerance of the committed values; all verdicts unchanged.")
     sys.exit(0)
 
 T = json.load(open(f"{D}/SOURCE_TOTALS.json"))
@@ -76,7 +76,7 @@ if os.path.exists(man):
         check(f"sha256 {f}", hashlib.sha256(open(os.path.join(D, f), "rb").read()).hexdigest() == h)
 
 # DefiLlama (S1), pulled locally: plausibility instead of a hash (Amendment 8b)
-NEED = {"raw_defillama_intents.json": ("2024-12-10", "2026-11-04"),          # E1-E3 volume
+NEED = {"raw_defillama_intents.json": ("2024-12-10", "2026-11-10"),          # E1-E3 volume; F1 to 2026-11-10
         "raw_defillama_intents_revenue.json": ("2025-09-23", "2026-11-04"),  # X1
         "raw_defillama_intents_fees.json": ("2026-08-03", "2026-11-01")}     # X5 (exploratory)
 for name, (lo, hi) in NEED.items():

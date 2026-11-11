@@ -1,5 +1,5 @@
 {
-  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b. X5 values added when X5 was first committed.",
+  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b. X5 values added when X5 was first committed. F1 and F2 (Amendment 9) added when first committed.",
   "checks": [
     [
       "E1.spearman",
@@ -96,6 +96,24 @@
       0.26794,
       "abs",
       0.01
+    ],
+    [
+      "F1.spearman",
+      0.773828,
+      "abs",
+      0.02
+    ],
+    [
+      "F1.n_days",
+      679,
+      "abs",
+      0
+    ],
+    [
+      "F2.ratio",
+      1.157414,
+      "rel",
+      0.01
     ]
   ],
   "verdicts": {
@@ -103,6 +121,8 @@
     "E2": "mixed",
     "E3": "not supported",
     "E4": "probably a Blockworks definition change",
-    "E5": "inconsistent"
+    "E5": "inconsistent",
+    "F1": "S4 tracks volume",
+    "F2": "calls did not rise materially"
   }
 }
