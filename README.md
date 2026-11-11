@@ -1,5 +1,23 @@
 # Price Is Not Revenue: the 9.4x Question
 
+## Summary for judges
+
+**Claim:** NEAR is an option on NEAR Intents revenue, not yet a cash-flow story: the revenue is real but would need to grow about 9.4 times before buybacks offset new token supply.
+
+- **Revenue is now Intents:** retained Intents revenue was 92% of NEAR's protocol revenue in October 2026, and an independent DefiLlama pull totals 0.998 of Blockworks' figure (X1).
+- **Dilution dwarfs revenue:** new supply is worth $137M a year at $4.28, against $20.3M a year of trailing-91-day revenue. Buybacks offset it only at 9.4 times that run-rate ($191M a year).
+- **Valuation depends on the definition:** NEAR is 276 times sales on total revenue (peer median 647x) but 3928 times on gas fees alone.
+- **The Sep-Oct revenue jump was only partly volume (E2: mixed):** volume rose 1.627 times, revenue 3.204 times, because the take rate went from 2.61 to 5.13 basis points.
+- **Tests that failed:**
+  - E3: Intents volume did not lead on-chain usage better than price (+0.178 against +0.336), so it is not supported.
+  - E5: Blockworks active addresses and on-chain signers are inconsistent (0.479 against a 0.60 bar).
+  - H2: activity led price in the fit period but failed out of sample (R-squared -76.2%).
+- **A data-definition break:** on 2026-04-02 Blockworks active addresses fell 89.4% while on-chain signers fell 8.1%, so the drop is probably a Blockworks definition change (E4).
+
+**Reproduce:** `pip install -r requirements.txt` then `python run_all.py` (rebuilds every number and the dashboard from the files in this repo). **Read:** [THESIS.md](THESIS.md) · [live dashboard](https://bennytimz.github.io/price-is-not-revenue/dashboard.html)
+
+---
+
 A pre-registered, reproducible test of whether NEAR Intents can carry NEAR's valuation. NEAR is an option on Intents revenue, not yet a cash-flow story.
 
 Submission for the NEAR Hackathon, Investment Thesis track. Built by Benny (GitHub: Bennytimz) with AI assistance. Research only, not investment advice.
