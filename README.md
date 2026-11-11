@@ -21,11 +21,11 @@
 
 - **H1: USD revenue growth is mostly the NEAR price passing through.**
   - Threshold: Rejected if the elasticity 95% CI excludes 1, or the token-denominated trend is positive with p < 0.05. Otherwise not rejected.
-  - Result: gas fees elasticity 1.63 CI[1.50,1.76] n=949; total revenue elasticity 0.48 CI[0.37,0.59]; Intents revenue elasticity 0.02 CI[-0.67,0.70]; token-denominated gas fees trend/block -3.9% p=0.000
-  - Verdict: **no verdict line in confirmatory_results.txt; THESIS.md: rejected on all three bases** (confirmatory_results.txt (H1); THESIS.md)
+  - Result: gas fees elasticity 1.63 CI[1.50,1.76] n=949; total revenue elasticity 0.48 CI[0.37,0.59]; Intents revenue elasticity 0.02 CI[-0.67,0.70]; token-denominated gas fees trend/block -3.9% p<0.001
+  - Verdict: **rejected on all three bases (Amendment 8c applies the H1 rule to the printed numbers)** (confirmatory_results.txt (H1); PREREGISTRATION.md Amendment 8c)
 - **H2: On-chain activity leads the NEAR price.**
   - Threshold: Supported only if fit-period p < 0.05, the holdout out-of-sample R-squared is above 0, and the sign is unchanged in the holdout. If it holds for NEAR but not for peers, it is reported as likely spurious.
-  - Result: NEAR fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p=0.000 (n=53); peers meeting all conditions: 0 of 5
+  - Result: NEAR fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p<0.001 (n=53); peers meeting all conditions: 0 of 5
   - Verdict: **meets all conditions: False** (confirmatory_results.txt (H2))
 - **H3: NEAR is expensive relative to peers.**
   - Threshold: Supported if NEAR is above the peer median and above its own 75th percentile. Rejected if below the peer median.
@@ -34,7 +34,7 @@
 - **H4: NEAR usage is not being monetised.**
   - Threshold: Supported if active addresses trend up (p < 0.05) and revenue per active address trends down (p < 0.05). Rejected if revenue per active address is flat or rising.
   - Result: pre-break n=29 blocks | active addresses +0.9%/block p=0.376 | revenue per active address -2.8%/block p=0.082 (Blockworks active addresses, before the 2026-04-02 definition break)
-  - Verdict: **no verdict line in confirmatory_results.txt; THESIS.md: not supported** (confirmatory_results.txt (H4); THESIS.md)
+  - Verdict: **not supported (Amendment 8c applies the H4 rule to the printed numbers)** (confirmatory_results.txt (H4); PREREGISTRATION.md Amendment 8c)
 - **H5: Retained revenue covers only a small fraction of the value of new token supply.**
   - Threshold: Supported if the ratio is below 50% in at least 80% of months in the confirmatory sample. Amendment 7: reported as descriptive, not as a test
   - Result: revenue / net new supply: 2025-06-29 2%, 2025-12-28 11%, 2026-03-29 18%, 2026-06-28 12%, 2026-10-25 13%
@@ -82,7 +82,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 1. `THESIS.md`: the claim, the evidence for and against, what would change my mind, and what I could not compute.
 2. `dashboard.html`: six charts and an interactive dilution sensitivity; sections 6 and 7 are the public-source cross-checks. Open it in a browser; it needs no server.
 3. `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`: the exact script output behind every number.
-4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 8a (including claims I withdrew) and a data correction log.
+4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 8c (including claims I withdrew) and a data correction log.
 
 ## What is in this repo
 
@@ -101,7 +101,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `extension_expected.json` | The E1 to E3, X1 and X5 values first published, with tolerances; `verify_data.py --extension` compares each run with them |
 | `optional_intents_explorer_sample.py` | Intents Explorer sampler (S3). Written from the docs, not run |
 | `optional_bigquery_daily_usage.sql` | Earlier draft of the BigQuery query, with a freshness check; superseded by `pull_bigquery_daily_usage.sql` |
-| `PREREGISTRATION.md` | Pre-registration with amendments 1 to 8a and a data correction log |
+| `PREREGISTRATION.md` | Pre-registration with amendments 1 to 8c and a data correction log |
 | `LICENSE` | MIT licence for the code and writing (see data rights below) |
 | `near_daily.csv` | NEAR daily: price, circulating market cap, protocol revenue, transaction fees, active addresses, transactions (2024-01-01 to 2026-11-04) |
 | `peers_weekly.csv` | SOL, ETH, SUI, APT, AVAX weekly: price, market cap, protocol revenue, transaction fees |

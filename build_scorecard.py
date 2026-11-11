@@ -1,8 +1,9 @@
 """Verdict scorecard for H1-H5 and E1-E5, generated from the results files (no typed numbers).
 
 Thresholds are quoted from PREREGISTRATION.md (H1-H5) and from the "rule:" lines of extension_results.txt (E1-E5).
-Results and verdicts are copied from confirmatory_results.txt and extension_results.txt. Where a results file prints
-no verdict line (H1, H4), the scorecard says so and quotes the verdict as worded in THESIS.md, labelled as such.
+Results and verdicts are copied from confirmatory_results.txt and extension_results.txt. confirmatory_results.txt
+prints no verdict line for H1 or H4; their verdicts are taken from PREREGISTRATION.md Amendment 8c, which applies the
+written H1 and H4 rules to the printed numbers. In the scorecard only, p-values printed as 0.000 are shown as p<0.001.
 Writes scorecard.json (read by build_dashboard.py) and the block between the scorecard markers in README.md.
 """
 import json
@@ -11,7 +12,11 @@ import re
 
 D = os.path.dirname(os.path.abspath(__file__))
 rd = lambda f: open(os.path.join(D, f), encoding="utf-8").read()
-CONF, EXT, PRE, THESIS = rd("confirmatory_results.txt"), rd("extension_results.txt"), rd("PREREGISTRATION.md"), rd("THESIS.md")
+CONF, EXT, PRE = rd("confirmatory_results.txt"), rd("extension_results.txt"), rd("PREREGISTRATION.md")
+_a8c = PRE.split("## Amendment 8c", 1)
+if len(_a8c) != 2:
+    raise SystemExit("scorecard: Amendment 8c not found in PREREGISTRATION.md")
+A8C = _a8c[1]  # verdict wording for H1 and H4, which confirmatory_results.txt does not print
 
 
 def line(text, pattern):
@@ -46,8 +51,8 @@ h1 = [grab(CONF, r"^A gas fees  \[all days\] (elasticity [^|]*?)\s*\|"), grab(CO
       grab(CONF, r"^C non-fee \(Intents\) revenue since \S+ (elasticity .*?) n="), grab(CONF, r"^A token-denominated gas fees, .*?: (trend/block \S+ p=\S+)")]
 rows.append(dict(id="H1", claim="USD revenue growth is mostly the NEAR price passing through.", threshold=pre_rule("H1"),
                  result=f"gas fees {h1[0]}; total revenue {h1[1]}; Intents revenue {h1[2]}; token-denominated gas fees {h1[3]}",
-                 verdict="no verdict line in confirmatory_results.txt; THESIS.md: " + grab(THESIS, r"H1 \(revenue is price pass-through\) was (rejected[^.]*)\."),
-                 source="confirmatory_results.txt (H1); THESIS.md"))
+                 verdict=grab(A8C, r"H1: (rejected on all three bases)") + " (Amendment 8c applies the H1 rule to the printed numbers)",
+                 source="confirmatory_results.txt (H1); PREREGISTRATION.md Amendment 8c"))
 # ---- H2 ----
 near = line(CONF, r"^NEAR\s+fit beta.*$")
 peers = re.findall(r"^(?:APT|AVAX|ETH|SOL|SUI)\s+fit beta.*meets all conditions: (\w+)$", CONF, re.M)
@@ -62,8 +67,8 @@ rows.append(dict(id="H3", claim="NEAR is expensive relative to peers.", threshol
 # ---- H4 (no verdict line) ----
 rows.append(dict(id="H4", claim="NEAR usage is not being monetised.", threshold=pre_rule("H4"),
                  result=grab(CONF, r"^\[excl\] (pre-break .*?)$") + " (Blockworks active addresses, before the 2026-04-02 definition break)",
-                 verdict="no verdict line in confirmatory_results.txt; THESIS.md: " + grab(THESIS, r"H4 \(usage not monetised\) was (not supported)"),
-                 source="confirmatory_results.txt (H4); THESIS.md"))
+                 verdict=grab(A8C, r"H4: (not supported)") + " (Amendment 8c applies the H4 rule to the printed numbers)",
+                 source="confirmatory_results.txt (H4); PREREGISTRATION.md Amendment 8c"))
 # ---- H5 (descriptive) ----
 h5 = re.findall(r"^(\d{4}-\d{2}-\d{2}): trailing-90d annualised revenue .*? -> (\d+%)$", CONF, re.M)
 rows.append(dict(id="H5", claim="Retained revenue covers only a small fraction of the value of new token supply.",
@@ -85,6 +90,10 @@ results = {"E1": grab(EXT, r"^\s+(days \d+ \(.*?\) \| Spearman \S+)$"),
 for e in ("E1", "E2", "E3", "E4", "E5"):
     rows.append(dict(id=e, claim=claims[e], threshold=ext_rule(e), result=results[e], verdict=ext_verdict(e),
                      source=f"extension_results.txt ({e})"))
+
+# Display only: a p-value printed as 0.000 means it rounds to zero at three decimals, so show it as p<0.001
+for r in rows:
+    r["result"] = re.sub(r"p=0\.000\b", "p<0.001", r["result"])
 
 json.dump(rows, open(os.path.join(D, "scorecard.json"), "w", encoding="utf-8", newline="\n"), indent=1)
 

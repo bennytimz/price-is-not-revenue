@@ -225,3 +225,7 @@ S2 excludes 2026-11-11, the day of the pull, because it is a partial day; this w
 ## Amendment 8b (2026-11-11): DefiLlama raw data no longer published
 
 DefiLlama’s terms do not allow its data to be republished or mirrored without permission, so the raw DefiLlama responses (S1) are removed from the repository and from its git history. This changes rule 1 of Amendment 8 for S1 only: the raw S1 responses are no longer kept in the repository with SHA-256 hashes. Instead pull_defillama_intents.py pulls them locally (free API, no key), erify_data.py checks their row counts and date coverage, and the E1 to E3 and X1 numbers are compared with the values first committed, within stated tolerances (extension_expected.json). The test windows were already fixed by date and are unchanged; the S1 volume series is now also cut to start on 2024-12-10, the first day of the original pull. No test, threshold or verdict rule changes. S2 (BigQuery) is unaffected and keeps its hash.
+
+## Amendment 8c (2026-11-12)
+
+confirmatory_results.txt prints no verdict line for H1 or H4. The verdicts below apply the rules written in H1 and H4 to the printed numbers; no result, threshold or rule changes. H1: rejected on all three bases (A gas fees, B total revenue, C Intents revenue), because each elasticity 95% CI excludes 1. H4: not supported, because the support conditions are not met (active-address trend p=0.376; revenue-per-active-address trend p=0.082).

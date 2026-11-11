@@ -3,15 +3,15 @@
   "id": "H1",
   "claim": "USD revenue growth is mostly the NEAR price passing through.",
   "threshold": "Rejected if the elasticity 95% CI excludes 1, or the token-denominated trend is positive with p < 0.05. Otherwise not rejected.",
-  "result": "gas fees elasticity 1.63 CI[1.50,1.76] n=949; total revenue elasticity 0.48 CI[0.37,0.59]; Intents revenue elasticity 0.02 CI[-0.67,0.70]; token-denominated gas fees trend/block -3.9% p=0.000",
-  "verdict": "no verdict line in confirmatory_results.txt; THESIS.md: rejected on all three bases",
-  "source": "confirmatory_results.txt (H1); THESIS.md"
+  "result": "gas fees elasticity 1.63 CI[1.50,1.76] n=949; total revenue elasticity 0.48 CI[0.37,0.59]; Intents revenue elasticity 0.02 CI[-0.67,0.70]; token-denominated gas fees trend/block -3.9% p<0.001",
+  "verdict": "rejected on all three bases (Amendment 8c applies the H1 rule to the printed numbers)",
+  "source": "confirmatory_results.txt (H1); PREREGISTRATION.md Amendment 8c"
  },
  {
   "id": "H2",
   "claim": "On-chain activity leads the NEAR price.",
   "threshold": "Supported only if fit-period p < 0.05, the holdout out-of-sample R-squared is above 0, and the sign is unchanged in the holdout. If it holds for NEAR but not for peers, it is reported as likely spurious.",
-  "result": "NEAR fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p=0.000 (n=53); peers meeting all conditions: 0 of 5",
+  "result": "NEAR fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p<0.001 (n=53); peers meeting all conditions: 0 of 5",
   "verdict": "meets all conditions: False",
   "source": "confirmatory_results.txt (H2)"
  },
@@ -28,8 +28,8 @@
   "claim": "NEAR usage is not being monetised.",
   "threshold": "Supported if active addresses trend up (p < 0.05) and revenue per active address trends down (p < 0.05). Rejected if revenue per active address is flat or rising.",
   "result": "pre-break n=29 blocks | active addresses +0.9%/block p=0.376 | revenue per active address -2.8%/block p=0.082 (Blockworks active addresses, before the 2026-04-02 definition break)",
-  "verdict": "no verdict line in confirmatory_results.txt; THESIS.md: not supported",
-  "source": "confirmatory_results.txt (H4); THESIS.md"
+  "verdict": "not supported (Amendment 8c applies the H4 rule to the printed numbers)",
+  "source": "confirmatory_results.txt (H4); PREREGISTRATION.md Amendment 8c"
  },
  {
   "id": "H5",
