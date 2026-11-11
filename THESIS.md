@@ -6,7 +6,7 @@
 
 ## The claim
 
-About 93% of NEAR's protocol revenue now comes from one source, revenue retained from NEAR Intents, which recently grew about fourfold. That revenue is real, but it is volatile, it does not move one-for-one with NEAR's price, and at today's rate of new token supply it would have to grow roughly nine times before buybacks offset dilution. NEAR is therefore best treated as an **option on Intents monetisation**, not a business valued on cash flow. The numbers that would change this view are fixed in advance.
+In October 2026, 92% of NEAR's protocol revenue came from one source, revenue retained from NEAR Intents, which recently grew about fourfold. That revenue is real, but it is volatile, it does not move one-for-one with NEAR's price, and at today's rate of new token supply it would have to grow roughly nine times before buybacks offset dilution. NEAR is therefore best treated as an **option on Intents monetisation**, not a business valued on cash flow. The numbers that would change this view are fixed in advance.
 
 ## Evidence for
 

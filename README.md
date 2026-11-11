@@ -59,6 +59,33 @@ pip install -r requirements.txt
 python run_all.py
 ```
 
+Requires Python 3.12 or later (the pinned numpy 2.5.4 and scipy 1.18.1 require 3.12; pandas 3.0.6 requires 3.11). Tested on 3.13.
+
+Expected output (the last 10 lines `python run_all.py` prints, copied from a real run):
+
+```
+All data checks passed.
+--> analysis_confirmatory.py
+buybacks / retained revenue: median 0.72; last 30d buyback run-rate $16.9M/yr
+--> scenarios.py
+active     -0.76 -0.72  0.32    1.00
+--> analysis_extension.py
+SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent
+--> build_dashboard.py
+dashboard.html written 26608 bytes
+Done. Open dashboard.html.
+```
+
+Verdicts in `extension_results.txt`:
+
+```
+VERDICT E1: usable proxy
+VERDICT E2: mixed
+VERDICT E3: not supported
+VERDICT E4: probably a Blockworks definition change
+VERDICT E5: inconsistent
+```
+
 This runs `verify_data.py`, `analysis_confirmatory.py`, `scenarios.py`, `analysis_extension.py` and `build_dashboard.py`, rewrites `confirmatory_results.txt`, `scenarios_results.txt`, `extension_results.txt` and `dashboard.html` (plus the three `*_numbers.json` files), and reads only from this folder. It never re-pulls data. The source for the data is Blockworks, which needs an API key to re-pull, so the committed CSVs are the reproducible input. Each dashboard chart names the code and data file behind it.
 
 On Windows, Python may write CRLF line endings; the outputs are byte-identical to the committed ones after normalising to LF (tested: all seven output files match).
@@ -67,7 +94,7 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 
 | Question | Status |
 |---|---|
-| Do the committed files rebuild every number and chart? | Yes. `python run_all.py` was run from a clean copy in a fresh virtual environment with the pinned `requirements.txt`, and every output file was byte-identical to the committed one. |
+| Do the committed files rebuild every number and chart? | Yes. A fresh clone of the public repo was run in a fresh virtual environment (Python 3.13, Windows) with the pinned `requirements.txt`; `verify_data.py` passed and every output file matched the committed one after line-ending normalisation. |
 | Do the data files match what the source reported? | Yes, checked by `verify_data.py` (row counts, date continuity, revenue totals) and by `MANIFEST.sha256` (file hashes). The totals in `SOURCE_TOTALS.json` are the ones reported at pull time. |
 | Can a stranger re-pull the data? | Blockworks: only with a Blockworks API key; it is a third-party source and the pull went through a chat assistant. Public sources: yes, see below. |
 | Is there an independent public-source check? | Yes, two sources (tests E1 to E5 in `extension_results.txt`). The third planned source, Intents Explorer sampling (S3), was not run. |
