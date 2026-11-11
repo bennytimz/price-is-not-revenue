@@ -1,0 +1,43 @@
+name: reproduce
+
+# Rebuilds every number from the committed files on a clean machine.
+# Fails only if verify_data.py fails, or if confirmatory_results.txt or scenarios_results.txt differ from the
+# committed versions after line-ending normalisation (.gitattributes stores text with LF).
+# Tolerance warnings on the live DefiLlama pull are reported as warnings and never fail the run.
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: "3.13"
+
+      - name: Install pinned requirements
+        run: python -m pip install -r requirements.txt
+
+      - name: Run the full pipeline (does not fail the job by itself)
+        run: |
+          python run_all.py 2>&1 | tee run_all.log || true
+          if grep -q "Extension check: WARNING" run_all.log; then
+            echo "::warning::DefiLlama re-pull: some E1-E3/X1 numbers differ from the committed values (see verify_data.py --extension above). Not a failure."
+          fi
+
+      - name: "Gate 1: verify_data.py must pass"
+        run: python verify_data.py
+
+      - name: "Gate 2: baseline results must match the committed files"
+        run: |
+          python analysis_confirmatory.py > confirmatory_results.txt
+          python scenarios.py > scenarios_results.txt
+          git diff --exit-code --stat -- confirmatory_results.txt scenarios_results.txt
+          echo "confirmatory_results.txt and scenarios_results.txt match the committed versions."

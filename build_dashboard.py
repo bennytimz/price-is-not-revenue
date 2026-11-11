@@ -42,7 +42,17 @@ bwi = (nd.active.loc[win] / E["exploratory"]["X2_median_before"] * 100).round(1)
 ext4 = dict(dates=[d.strftime("%Y-%m-%d") for d in s2i.index], s2=[None if pd.isna(v) else float(v) for v in s2i],
             bw=[None if pd.isna(v) else float(v) for v in bwi.reindex(s2i.index)])
 
+# Verdict scorecard (build_scorecard.py), rendered as static HTML so it reads without JavaScript
+import html as H
+cards = []
+for r in json.load(open(os.path.join(HERE, "scorecard.json"), encoding="utf-8")):
+    cards.append(f'<div class="card"><h3>{r["id"]}: {H.escape(r["claim"])}</h3>'
+                 f'<p><span>Threshold</span> {H.escape(r["threshold"])}</p><p><span>Result</span> {H.escape(r["result"])}</p>'
+                 f'<p><span>Verdict</span> <b>{H.escape(r["verdict"])}</b></p><p class="src">{H.escape(r["source"])}</p></div>')
+score_html = "\n".join(cards)
+
 html = open(os.path.join(HERE, "dashboard_template.html")).read()
+html = html.replace("__SCOREHTML__", score_html)
 for k, v in (("__MONTHS__", months), ("__SERIES__", series), ("__PS__", ps), ("__MODEL__", model), ("__PHASE__", phase),
              ("__EXT2__", ext2), ("__EXT4__", ext4)):
     html = html.replace(k, json.dumps(v))

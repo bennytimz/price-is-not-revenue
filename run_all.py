@@ -18,7 +18,7 @@ steps = []
 if not all(os.path.exists(os.path.join(HERE, f)) for f in DEFILLAMA):
     steps.append((["pull_defillama_intents.py"], None))
 steps += [(["verify_data.py"], None), (["analysis_confirmatory.py"], "confirmatory_results.txt"), (["scenarios.py"], "scenarios_results.txt"),
-          (["analysis_extension.py"], "extension_results.txt"), (["verify_data.py", "--extension"], None), (["build_dashboard.py"], None)]
+          (["analysis_extension.py"], "extension_results.txt"), (["verify_data.py", "--extension"], None), (["build_scorecard.py"], None), (["build_dashboard.py"], None)]
 for args, out in steps:
     print(f"--> {' '.join(args)}")
     r = subprocess.run([sys.executable, os.path.join(HERE, args[0])] + args[1:], capture_output=True, text=True, cwd=HERE)
