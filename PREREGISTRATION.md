@@ -217,3 +217,7 @@ Purpose: add first-party public data so the thesis does not rest on Blockworks a
 1. Raw pulls are saved unmodified with SHA-256 hashes in the manifest. No outlier removal.
 2. New analysis lives in `analysis_extension.py` and `extension_results.txt`. The confirmatory scripts and results are not changed.
 3. This amendment is committed and pushed before any new data is pulled, so the git timestamp can show the order.
+
+## Amendment 8a (2026-11-11)
+
+S2 excludes 2026-11-11, the day of the pull, because it is a partial day; this was decided before any extension test was run. S1’s last day (2026-11-10) is not used in any test, since Blockworks data ends 2026-11-04.
