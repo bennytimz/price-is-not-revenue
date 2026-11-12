@@ -67,6 +67,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 29 | Bear case: at window A's 2.61 bp the same revenue needs $2.01B a day, 12.5x window B's volume (THESIS:22) | `extension_results.txt:12` (2.61 bp), `:57` (X4, window A) |
 | 30 | Valuation: 276x sales on total revenue, below the peer median of 647x; 3,928x on gas fees alone (THESIS:23) | `confirmatory_results.txt:29-30`, `:33`, `:35` (H3) |
 | 31 | Dashboard tiles: $20.3M/yr run-rate, 9.4x, 276x, 92% Intents share in Oct 2026 (read from `scenario_numbers.json` by `build_dashboard.py`) | `scenarios_results.txt:26` ($20.3M, 276x), `:43` (9.4x), `:18` (0.92) |
+| 32 | Six dated forward predictions (P1 to P6), resolved on 2027-03-31 and published whatever the outcome (not yet in a or b) | `PREDICTIONS.md`; `PREREGISTRATION.md` Amendment 10; both committed together in `808c329` (2026-11-12T02:10:07+01:00). Anchors: `scenarios_results.txt:47-48`, `extension_results.txt:12-13`, `:40`, `:50`, `:60`, `:62`; P4's upper threshold is a judgement call |
 
 ## (d) Form-fields checklist
 

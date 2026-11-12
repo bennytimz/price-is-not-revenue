@@ -58,7 +58,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 1. `THESIS.md`: the claim, the evidence for and against, what would change my mind, and what I could not compute.
 2. `dashboard.html`: six charts and an interactive dilution sensitivity; sections 6 and 7 are the public-source cross-checks. Open it in a browser; it needs no server.
 3. `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`: the exact script output behind every number.
-4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 9 (including claims I withdrew) and a data correction log.
+4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 10 (including claims I withdrew) and a data correction log.
 
 ## What is in this repo
 
@@ -80,7 +80,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `SCORECARD.md`, `scorecard.json` | Generated full scorecard: claim, pre-registered threshold, result, verdict and source for H1 to H5 and E1 to E5 |
 | `optional_intents_explorer_sample.py` | Intents Explorer sampler (S3). Written from the docs, not run |
 | `optional_bigquery_daily_usage.sql` | Earlier draft of the BigQuery query, with a freshness check; superseded by `pull_bigquery_daily_usage.sql` |
-| `PREREGISTRATION.md` | Pre-registration with amendments 1 to 9 and a data correction log |
+| `PREREGISTRATION.md` | Pre-registration with amendments 1 to 10 and a data correction log |
 | `LICENSE` | MIT licence for the code and writing (see data rights below) |
 | `near_daily.csv` | NEAR daily: price, circulating market cap, protocol revenue, transaction fees, active addresses, transactions (2024-01-01 to 2026-11-04) |
 | `peers_weekly.csv` | SOL, ETH, SUI, APT, AVAX weekly: price, market cap, protocol revenue, transaction fees |
