@@ -18,7 +18,7 @@ Drafts for Benny to review. Nothing here has been posted or submitted. Placehold
 
 ## (b) Project description for the form field "What did you build?"
 
-1,946 characters (the field takes 20 to 2,000).
+1,991 characters (the field takes 20 to 2,000).
 
 ```
 Price Is Not Revenue: the 9.4x Question asks whether NEAR Intents revenue can carry NEAR's valuation. Every result is reported, including failures. The original hypotheses were written before the confirmatory data was analysed, but the repository came later, so git history can't prove that order. The public-data extension tests (E1 to E5) are different: they were committed to git (Amendment 8, commit 30ea2ce) before the DefiLlama and BigQuery data was pulled.
@@ -27,7 +27,7 @@ Main finding: NEAR is best treated as an option on Intents revenue, not a busine
 
 Public-source cross-checks, pre-registered before the data was pulled, use DefiLlama and NEAR's public BigQuery dataset. The September-October revenue jump was mixed: the take rate went from 2.61 to 5.13 basis points. Daily calls to the intents.near settlement contract track volume (Spearman 0.774) but rose only about 1.16x while volume rose 1.63x and revenue 3.20x (F1, F2; one call can settle several intents). Two tests failed: Intents volume did not lead on-chain usage better than price (E3), and Blockworks active addresses are inconsistent with on-chain signers (E5). Blockworks' 89.4% drop in active addresses on 2026-04-02 is probably a definition change, since on-chain signers fell 8.1% (E4). An exploratory check finds DefiLlama's Intents revenue totals 0.998 of Blockworks' figure.
 
-Everything rebuilds with one command (python run_all.py), and each dashboard chart links the script and data behind it. Limits: one market regime, an Intents volume series whose definition DefiLlama does not document, and Blockworks data that needs an API key to re-pull. Research, not investment advice.
+Everything rebuilds with one command (python run_all.py), and each dashboard chart links the script and data behind it. Six dated predictions resolve on 2027-03-31. Limits: one market regime, an Intents volume series whose definition DefiLlama does not document, and Blockworks data that needs an API key to re-pull. Research, not investment advice.
 ```
 
 ## (c) Claims audit
@@ -67,7 +67,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 29 | Bear case: at window A's 2.61 bp the same revenue needs $2.01B a day, 12.5x window B's volume (THESIS:24) | `extension_results.txt:12` (2.61 bp), `:57` (X4, window A) |
 | 30 | Valuation: 276x sales on total revenue, below the peer median of 647x; 3,928x on gas fees alone (THESIS:25) | `confirmatory_results.txt:29-30`, `:33`, `:35` (H3) |
 | 31 | Dashboard tiles: $20.3M/yr run-rate, 9.4x, 276x, 92% Intents share in Oct 2026 (read from `scenario_numbers.json` by `build_dashboard.py`) | `scenarios_results.txt:26` ($20.3M, 276x), `:43` (9.4x), `:18` (0.92) |
-| 32 | Six dated forward predictions (P1 to P6), resolved on 2027-03-31 and published whatever the outcome (not yet in a or b) | `PREDICTIONS.md`; `PREREGISTRATION.md` Amendment 10; both committed together in `808c329` (2026-11-12T02:10:07+01:00). Anchors: `scenarios_results.txt:47-48`, `extension_results.txt:12-13`, `:40`, `:50`, `:60`, `:62`; P4's upper threshold is a judgement call |
+| 32 | Six dated forward predictions (P1 to P6), resolved on 2027-03-31 and published whatever the outcome (b) | `PREDICTIONS.md`; `PREREGISTRATION.md` Amendment 10; both committed together in `808c329` (2026-11-12T02:10:07+01:00). Anchors: `scenarios_results.txt:47-48`, `extension_results.txt:12-13`, `:40`, `:50`, `:60`, `:62`; P4's upper threshold is a judgement call |
 | 33 | All Blockworks data was pulled through ChatGPT's Blockworks MCP with fixed rules (raw CSV only, no interpolation, gaps blank, row count and sum reported); every raw file matches its recorded row count and sum (not yet in a or b) | `DATA_PROVENANCE.md` (verbatim prompts; peer files match prompt B by their headers); `SOURCE_TOTALS.json`; `verify_data.py` ("All data checks passed.") |
 | 34 | The BigQuery series can be re-pulled and the re-pull matches the committed pulls (not yet in a or b) | `pull_bigquery.py`; README reproduce section. Run on 2026-11-12: dry run 132.3 GB (`pull_bigquery_daily_usage.sql`) and 125.9 GB (`pull_bigquery_intents_contract.sql`), both under the 150 GB cap and both with the end date capped at 2026-11-04; `--run` printed MATCH for both (1,039 and 673 rows, identical first and last dates, identical column sums, 0 differing days). The re-pull files (`repull_*.csv`) are git-ignored, not committed |
 | 35 | Key figures, verdicts and prediction anchors agree across all documents | `check_consistency.py` (CI gate 3); "All key figures, verdicts and prediction anchors agree across documents." Tested by planting three errors in a copy (a 9.5x, a wrong E3 verdict, a wrong P5 anchor): all three were caught |
@@ -89,5 +89,5 @@ Fields as listed by Benny from the live submission form. Values in square bracke
 | NEAR wallet address | [WALLET ADDRESS] | Benny supplies; a named account such as `your-team.near` |
 | Repository link (must be public) | https://github.com/bennytimz/price-is-not-revenue | ready; the repo is public |
 | Demo post link | [X POST LINK] | Benny supplies after posting (a); must be a public X post with the demo video or screenshots |
-| What did you build? (20 to 2,000 characters) | Section (b), 1,946 characters | ready |
+| What did you build? (20 to 2,000 characters) | Section (b), 1,991 characters | ready |
 | Consent checkbox | [Benny ticks it] | Benny reads and ticks it on the form |
