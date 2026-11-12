@@ -69,7 +69,7 @@ input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 <h2>4. Can revenue ever cover new supply? (sensitivity, not a forecast)</h2>
 <div class="panel">
 <div class="row"><label for="m">Revenue vs 91-day run-rate</label><input id="m" type="range" min="1" max="12" step="0.5" value="1"><output id="mo"></output></div>
-<div class="row"><label for="p">NEAR price</label><input id="p" type="range" min="1" max="10" step="0.25" value="4.25"><output id="po"></output></div>
+<div class="row"><label for="p">NEAR price</label><input id="p" type="range" min="1" max="10" step="0.01" value="4.28"><output id="po"></output></div>
 <div class="grid" id="g"></div></div>
 <p class="says">At today's rate of new supply, buybacks only offset dilution if revenue grows about 9.4 times; a higher NEAR price makes it harder, not easier.</p>
 <p class="src">Code: <code>scenarios.py</code> sections 3 to 5. Data: <code>near_total_supply_weekly.csv</code>, <code>near_buybacks_daily.csv</code>. Net new supply held at about 31.9M NEAR a year; buybacks at the median 72% of Intents revenue since 2026-04-23; revenue held in dollars.</p>
