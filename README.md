@@ -2,11 +2,18 @@
 
 [![reproduce](https://github.com/bennytimz/price-is-not-revenue/actions/workflows/reproduce.yml/badge.svg)](https://github.com/bennytimz/price-is-not-revenue/actions/workflows/reproduce.yml)
 
-> **My call:** Do not value NEAR on cash flow today. Treat it as an option on Intents monetisation: it earns a position only if retained revenue keeps compounding toward the break-even, and the thresholds in THESIS.md say when I change my mind. Research opinion, not investment advice.
+> **My call:** NEAR's protocol revenue, mostly retained Intents revenue (about $20M a year), covers about 15% of the value of new token supply; I would not value NEAR on cash flow until revenue approaches about $191M a year (9.4x), and the dated thresholds in THESIS.md and PREDICTIONS.md say when I would change my mind.
 
 ## Summary for judges
 
 **Claim:** NEAR is an option on NEAR Intents revenue, not yet a cash-flow story: the revenue is real but would need to grow about 9.4 times before buybacks offset new token supply.
+
+**Test labels:**
+- **H1 to H5:** confirmatory tests, written down before the long history was analysed.
+- **E1 to E5 and F1 to F2:** public-source cross-checks, committed to git (Amendments 8 and 9) before their data was pulled.
+- **X1 to X8:** exploratory checks, not pre-registered.
+
+"Amendment" refers to a dated entry in `PREREGISTRATION.md`.
 
 - **Revenue is now Intents:** retained Intents revenue was 92% of NEAR's protocol revenue in October 2026, and an independent DefiLlama pull totals 0.998 of Blockworks' figure (X1).
 - **Dilution dwarfs revenue:** new supply is worth $137M a year at $4.28, against $20.3M a year of trailing-91-day revenue. Buybacks offset it only at 9.4 times that run-rate ($191M a year).
@@ -59,6 +66,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 2. `dashboard.html`: six charts and an interactive dilution sensitivity; sections 6 and 7 are the public-source cross-checks. Open it in a browser; it needs no server.
 3. `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`: the exact script output behind every number.
 4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 10 (including claims I withdrew) and a data correction log.
+5. `SCORECARD.md`: every test with its threshold, result and verdict. `PREDICTIONS.md`: six dated predictions that resolve on 2027-03-31. `DATA_PROVENANCE.md`: how the Blockworks data was pulled, with the exact prompts.
 
 ## What is in this repo
 
@@ -70,6 +78,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `scenarios.py` | Revenue composition, run-rates, dilution, sensitivity grid and the post-hoc usage check |
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
 | `pull_bigquery.py`, `requirements-bigquery.txt` | Optional re-pull of the two BigQuery series (dry run by default; `--run` writes `repull_*.csv` and compares with the committed pulls up to 2026-11-04) |
+| `check_consistency.py` | Checks that key figures (9.4x, $191M, $137M, 276x, 72%, 92%, the run-rate and others), all verdicts and the prediction anchors agree across THESIS, README, the submission draft, PREDICTIONS, SCORECARD and the dashboard; CI fails if any disagree |
 | `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
 | `analysis_extension.py` | Public-source cross-checks E1 to E5 (pre-registered, Amendment 8) and F1 to F2 (pre-registered, Amendment 9) plus labelled exploratory checks; writes `extension_results.txt` and `extension_numbers.json` |

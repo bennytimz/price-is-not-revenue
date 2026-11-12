@@ -1,6 +1,6 @@
 # Price Is Not Revenue: the 9.4x Question
 
-> **My call:** Do not value NEAR on cash flow today. Treat it as an option on Intents monetisation: it earns a position only if retained revenue keeps compounding toward the break-even, and the thresholds below say when I change my mind. Research opinion, not investment advice.
+> **My call:** NEAR's protocol revenue, mostly retained Intents revenue (about $20M a year), covers about 15% of the value of new token supply; I would not value NEAR on cash flow until revenue approaches about $191M a year (9.4x), and the dated thresholds below say when I would change my mind.
 
 **NEAR is an option on Intents revenue, not yet a cash-flow story.**
 
@@ -17,6 +17,8 @@ In October 2026, 92% of NEAR's protocol revenue came from one source, revenue re
 Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retained revenue to $18.9M, which is 26.8% of gross (exploratory X5). Every P/S figure and the 9.4x break-even use protocol revenue (gas fees plus retained revenue), never gross fees.
 
 ## What you would have to believe
+
+Window A is 2026-08-07 to 2026-09-02, before the revenue surge; window B is 2026-09-17 to 2026-10-15, the rally (the same windows as E2).
 
 - **The bull case: revenue grows about ninefold.** For buybacks to offset new supply, revenue must reach $191M a year (9.4 times the trailing-91-day run-rate) at the observed 72% buyback share, or $137M a year (6.7 times) if 100% of it went to buybacks (X7). At window B's take rate, $191M a year means about $1.02B a day of Intents volume, 6.3 times window B's volume (X4).
 - **The bear case: the take rate falls back.** If the take rate returns to window A's 2.61 basis points, the same $191M a year needs $2.01B a day of Intents volume, 12.5 times window B's volume (X4).

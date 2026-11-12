@@ -1,8 +1,9 @@
 name: reproduce
 
 # Rebuilds every number from the committed files on a clean machine.
-# Fails only if verify_data.py fails, or if confirmatory_results.txt or scenarios_results.txt differ from the
-# committed versions after line-ending normalisation (.gitattributes stores text with LF).
+# Fails only if verify_data.py fails, if confirmatory_results.txt or scenarios_results.txt differ from the
+# committed versions after line-ending normalisation (.gitattributes stores text with LF), or if
+# check_consistency.py finds a key figure or verdict that disagrees between documents.
 # Tolerance warnings on the live DefiLlama pull are reported as warnings and never fail the run.
 
 on:
@@ -41,3 +42,6 @@ jobs:
           python scenarios.py > scenarios_results.txt
           git diff --exit-code --stat -- confirmatory_results.txt scenarios_results.txt
           echo "confirmatory_results.txt and scenarios_results.txt match the committed versions."
+
+      - name: "Gate 3: key figures and verdicts agree across THESIS, README, submission draft, predictions and dashboard"
+        run: python check_consistency.py
