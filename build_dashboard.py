@@ -53,6 +53,14 @@ score_html = "\n".join(cards)
 
 html = open(os.path.join(HERE, "dashboard_template.html")).read()
 html = html.replace("__SCOREHTML__", score_html)
+
+# Headline tiles, read from scenario_numbers.json (scenarios.py); no typed numbers
+oct26 = S["monthly"]["2026-10"]
+tiles = [(f"${S['runrate_91d']['total']:.1f}M/yr", "Protocol revenue, trailing-91-day run-rate"),
+         (f"{S['breakeven_multiple']}x", f"Revenue growth needed for buybacks to offset new supply (at the observed {S['buyback_share']:.0%} buyback share)"),
+         (f"{S['grid']['1']['ps_at_current_mcap']:.0f}x", "Price to sales on total protocol revenue"),
+         (f"{oct26['intents'] / (oct26['gas'] + oct26['intents']):.0%}", "Intents share of protocol revenue, October 2026")]
+html = html.replace("__TILES__", "\n".join(f'<div class="tile"><b>{v}</b><span>{H.escape(t)}</span></div>' for v, t in tiles))
 for k, v in (("__MONTHS__", months), ("__SERIES__", series), ("__PS__", ps), ("__MODEL__", model), ("__PHASE__", phase),
              ("__EXT2__", ext2), ("__EXT4__", ext4)):
     html = html.replace(k, json.dumps(v))

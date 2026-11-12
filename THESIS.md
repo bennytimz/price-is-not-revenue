@@ -1,5 +1,7 @@
 # Price Is Not Revenue: the 9.4x Question
 
+> **My call:** Do not value NEAR on cash flow today. Treat it as an option on Intents monetisation: it earns a position only if retained revenue keeps compounding toward the break-even, and the thresholds below say when I change my mind. Research opinion, not investment advice.
+
 **NEAR is an option on Intents revenue, not yet a cash-flow story.**
 
 *Investment Thesis track. Data as of 2026-11-04. Research, not investment advice. Every number here is in `confirmatory_results.txt`, `scenarios_results.txt` or `extension_results.txt`; `python run_all.py` rebuilds them and the dashboard from the data files in this folder.*
@@ -13,6 +15,12 @@ In October 2026, 92% of NEAR's protocol revenue came from one source, revenue re
 - *Retained revenue to NEAR* is the part that ends up in NEAR-owned revenue wallets. Blockworks calls it retained Intents revenue, and it is the figure this thesis uses.
 
 Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retained revenue to $18.9M, which is 26.8% of gross (exploratory X5). Every P/S figure and the 9.4x break-even use protocol revenue (gas fees plus retained revenue), never gross fees.
+
+## What you would have to believe
+
+- **The bull case: revenue grows about ninefold.** For buybacks to offset new supply, revenue must reach $191M a year (9.4 times the trailing-91-day run-rate) at the observed 72% buyback share, or $137M a year (6.7 times) if 100% of it went to buybacks (X7). At window B's take rate, $191M a year means about $1.02B a day of Intents volume, 6.3 times window B's volume (X4).
+- **The bear case: the take rate falls back.** If the take rate returns to window A's 2.61 basis points, the same $191M a year needs $2.01B a day of Intents volume, 12.5 times window B's volume (X4).
+- **Valuation: the problem is dilution, not the multiple.** On total revenue NEAR trades at 276 times sales, below the peer median of 647 times (H3 (c)). So the bear case is dilution, not an expensive multiple. On gas fees alone, though, it is 3,928 times, above every peer (H3 (a)).
 
 ## Evidence for
 

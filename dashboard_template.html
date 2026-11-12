@@ -13,11 +13,18 @@ code{font-size:.78rem}.box{position:relative;height:270px;border:1px solid var(-
 .row label{width:170px;color:var(--mu)}.row input{flex:1}.row output{width:80px;text-align:right;font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.k{border:1px solid var(--ln);padding:8px 10px}.k b{display:block;font-size:1.2rem;font-variant-numeric:tabular-nums}.k span{font-size:.78rem;color:var(--mu)}
 input:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0 4px}
+.tile{border:1px solid var(--ln);background:var(--sf);padding:8px 10px}.tile b{display:block;font-size:1.5rem;line-height:1.2}
+.tile span{display:block;font-size:.78rem;color:var(--mu)}
 .sc{display:grid;gap:8px}.card{border:1px solid var(--ln);background:var(--sf);padding:8px 10px;overflow-wrap:anywhere}
 .card h3{font-size:.92rem;margin:0 0 4px}.card p{font-size:.82rem;margin:2px 0}.card p span{display:inline-block;min-width:68px;color:var(--mu)}
 .links{font-size:.76rem;margin:2px 0 0}.links a{color:var(--c)}
 </style></head><body><main>
 <h1>Price Is Not Revenue: the 9.4x Question</h1>
+<div class="tiles">
+__TILES__
+</div>
+<p class="links">Headline numbers: <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/scenarios.py">scenarios.py</a>, <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/scenarios_results.txt">scenarios_results.txt</a></p>
 <p class="sub">Blockworks data, checked against source totals; sections 6 and 7 are public-source cross-checks (DefiLlama, NEAR BigQuery) pre-registered in Amendment 8. Rebuild everything with <code>python run_all.py</code>. Research, not investment advice.</p>
 
 <h2>Verdict scorecard</h2>
