@@ -1,0 +1,63 @@
+Demo build report (2026-11-12 21:12:38)
+Voice en-US-AvaMultilingualNeural at rate -5%; 1920x1080 at 60 fps
+
+Scenes (scene = line audio + 0.5 s; the end card also holds 1.5 s more):
+  scene 1: starts   0.00 s, lasts  6.19 s (line audio 5.69 s)
+  scene 2: starts   6.19 s, lasts 11.56 s (line audio 11.06 s)
+  scene 3: starts  17.75 s, lasts 15.07 s (line audio 14.57 s)
+  scene 4: starts  32.82 s, lasts  9.91 s (line audio 9.41 s)
+  scene 5: starts  42.73 s, lasts  9.60 s (line audio 9.10 s)
+  scene 6: starts  52.32 s, lasts 12.12 s (line audio 11.62 s)
+  scene 7: starts  64.44 s, lasts  6.44 s (line audio 4.44 s)
+  total 70.88 s
+
+Loudness (ffmpeg ebur128, integrated LUFS / true peak dBTP):
+  voice track: -16.0 LUFS / -1.2 dBTP
+  music A: before ducking -34.0 LUFS (18.0 LU below voice); after ducking -39.9 LUFS (23.9 LU below voice)
+           ducking: -9.48 dB while words are spoken, -1.94 dB elsewhere
+  mix A: -16.0 LUFS / -1.2 dBTP
+  music B: before ducking -34.0 LUFS (18.0 LU below voice); after ducking -40.3 LUFS (24.3 LU below voice)
+           ducking: -9.46 dB while words are spoken, -1.94 dB elsewhere
+  mix B: -16.0 LUFS / -1.2 dBTP
+
+Files:
+  price-is-not-revenue-demo-A.mp4: 70.88 s, 32.9 MB, audio -16.0 LUFS / -1.2 dBTP; frames 4253 (expected 4253), unexplained changes 2, spikes 41
+  price-is-not-revenue-demo-B.mp4: 70.88 s, 32.89 MB, audio -16.0 LUFS / -1.2 dBTP; frames 4253 (expected 4253), unexplained changes 2, spikes 41
+  price-is-not-revenue-demo-nomusic.mp4: 70.88 s, 32.72 MB, audio -16.0 LUFS / -1.2 dBTP; frames 4253 (expected 4253), unexplained changes 2, spikes 41
+
+Captions: 22, at most 9 words, 54 px; issues: none
+  a word starts at most 0.093 s before its caption is fully visible; a word ends at most 0.093 s after its caption starts fading
+  [  0.22 -   2.91] NEAR's price is not NEAR's revenue.
+  [  2.91 -   5.93] This is the 9.4x question.
+  [  6.41 -   9.25] Every test in the scorecard was set in advance
+  [  9.25 -  12.72] and every result is shown, including the failures.
+  [ 12.72 -  15.00] The idea that Intents volume leads
+  [ 15.00 -  17.46] on-chain usage was not supported.
+  [ 17.97 -  21.84] NEAR's protocol revenue is about $20 million a year
+  [ 21.84 -  24.07] and it covers about 15%
+  [ 24.07 -  26.48] of the value of new token supply.
+  [ 26.48 -  28.92] For buybacks to offset dilution
+  [ 29.00 -  32.52] revenue would need to grow about 9.4 times.
+  [ 33.04 -  36.49] My call: don't value NEAR on cash flow yet.
+  [ 36.49 -  39.12] Treat it as an option on Intents revenue
+  [ 39.12 -  42.45] and watch the thresholds that would change my mind.
+  [ 42.95 -  47.93] Six dated predictions resolve on March 31, 2027.
+  [ 47.93 -  52.04] Everything rebuilds with one command, and the checks pass.
+  [ 52.54 -  56.81] An honest limit: the baseline comes from Blockworks.
+  [ 56.81 -  59.68] I cross-checked revenue against DefiLlama
+  [ 59.68 -  61.44] and the on-chain data re-pulls
+  [ 61.44 -  64.17] from BigQuery with an exact match.
+  [ 64.66 -  66.53] Price is not revenue.
+  [ 66.53 -  69.11] The code and data are on GitHub.
+
+Clips (render time, screenshots per page, scroll position errors):
+  scene 1: 372 frames, 38.0 s; {}
+  scene 2: 694 frames, 54.0 s; {"scorecard": {"screenshots": 206, "scroll_errors": []}}
+  scene 3: 904 frames, 45.4 s; {"scenarios_results.txt": {"screenshots": 68, "scroll_errors": []}}
+  scene 4: 594 frames, 41.7 s; {"THESIS.md": {"screenshots": 89, "scroll_errors": []}}
+  scene 5: 576 frames, 45.5 s; {"PREDICTIONS.md": {"screenshots": 69, "scroll_errors": []}, "terminal": {"screenshots": 77, "scroll_errors": []}}
+  scene 6: 727 frames, 46.4 s; {"DATA_PROVENANCE.md": {"screenshots": 133, "scroll_errors": []}}
+  scene 7: 386 frames, 38.7 s; {}
+Frame check price-is-not-revenue-demo-A.mp4: max change on static frames 0.695, largest change 21.28 at 0.2 s; unexplained [(52.5333, 0.695), (54.3333, 0.377)]; spikes [(7.4, 2.6, 0.01), (9.4667, 2.72, 0.68), (11.45, 2.35, 0.59), (12.5333, 2.66, 0.69), (22.2833, 2.07, 0.01)]
+Frame check price-is-not-revenue-demo-B.mp4: max change on static frames 0.695, largest change 21.28 at 0.2 s; unexplained [(52.5333, 0.695), (54.3333, 0.377)]; spikes [(7.4, 2.6, 0.01), (9.4667, 2.72, 0.68), (11.45, 2.35, 0.59), (12.5333, 2.66, 0.69), (22.2833, 2.07, 0.01)]
+Frame check price-is-not-revenue-demo-nomusic.mp4: max change on static frames 0.695, largest change 21.28 at 0.2 s; unexplained [(52.5333, 0.695), (54.3333, 0.377)]; spikes [(7.4, 2.6, 0.01), (9.4667, 2.72, 0.68), (11.45, 2.35, 0.59), (12.5333, 2.66, 0.69), (22.2833, 2.07, 0.01)]

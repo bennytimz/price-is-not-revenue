@@ -16,8 +16,8 @@ ffmpeg must be on PATH, or install it with `pip install imageio-ffmpeg`. The ter
 | `narration.txt` | The seven narration lines, one per scene. Every number was checked against `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`. |
 | `make_demo.py` | Voice (edge-tts, `en-US-AvaMultilingualNeural`, rate -5%, one file per line), timeline, Playwright capture, captions, mixing, checks |
 | `music.py` | Two original lo-fi instrumentals at 90 BPM (kick, hi-hat, pad, bass), synthesised with numpy; no samples |
-| `demo_report.txt` | Measured scene durations, loudness (ffmpeg ebur128), file sizes and frame checks from the last build |
-| `price-is-not-revenue-demo-A.mp4`, `-B.mp4`, `-nomusic.mp4` | The outputs: music version A, music version B, voice only |
+| `demo_report.txt` | Measured scene durations, loudness (ffmpeg ebur128), file sizes and frame checks from the committed build (2026-11-12); a rebuild overwrites it |
+| `price-is-not-revenue-demo-A.mp4`, `-B.mp4`, `-nomusic.mp4` | The outputs (music version A, music version B, voice only): produced locally by the build, not committed (git-ignored) |
 
 **What is real.** Every page is loaded live in Chromium (Playwright) and screenshotted frame by frame while the script scrolls it: the dashboard at https://bennytimz.github.io/price-is-not-revenue/dashboard.html and the files on GitHub. The highlighted lines in `scenarios_results.txt` use GitHub's own line-link highlighting (`#L33-L45`). The terminal window shows the real output of the two commands, captured when the video is built and replayed with sped-up typing. The end card is a plain title card. No number on screen is typed into the script.
 
