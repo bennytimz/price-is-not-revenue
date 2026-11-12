@@ -3,4 +3,6 @@
 -- About 100 GB processed, exact figure not recorded.
 -- The result was downloaded from the console as CSV and saved unmodified as raw_bigquery_intents_contract.csv
 -- (SHA-256 in RAW_PULLS.sha256). The day of the pull is excluded in analysis_extension.py (Amendment 9).
+-- Note added 2026-11-12: a dry run of this query on 2026-11-12 (pull_bigquery.py, end date capped at 2026-11-04) measured
+-- 125.9 GB processed, so the original run probably processed at least that much; "about 100 GB" above is left as written.
 SELECT block_date, COUNT(*) AS intents_calls, COUNT(DISTINCT signer_account_id) AS signers FROM bigquery-public-data.crypto_near_mainnet_us.transactions WHERE block_date >= '2025-01-01' AND receiver_account_id = 'intents.near' GROUP BY block_date ORDER BY block_date
