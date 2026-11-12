@@ -68,6 +68,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 30 | Valuation: 276x sales on total revenue, below the peer median of 647x; 3,928x on gas fees alone (THESIS:23) | `confirmatory_results.txt:29-30`, `:33`, `:35` (H3) |
 | 31 | Dashboard tiles: $20.3M/yr run-rate, 9.4x, 276x, 92% Intents share in Oct 2026 (read from `scenario_numbers.json` by `build_dashboard.py`) | `scenarios_results.txt:26` ($20.3M, 276x), `:43` (9.4x), `:18` (0.92) |
 | 32 | Six dated forward predictions (P1 to P6), resolved on 2027-03-31 and published whatever the outcome (not yet in a or b) | `PREDICTIONS.md`; `PREREGISTRATION.md` Amendment 10; both committed together in `808c329` (2026-11-12T02:10:07+01:00). Anchors: `scenarios_results.txt:47-48`, `extension_results.txt:12-13`, `:40`, `:50`, `:60`, `:62`; P4's upper threshold is a judgement call |
+| 33 | All Blockworks data was pulled through ChatGPT's Blockworks MCP with fixed rules (raw CSV only, no interpolation, gaps blank, row count and sum reported); every raw file matches its recorded row count and sum (not yet in a or b) | `DATA_PROVENANCE.md` (verbatim prompts; peer files match prompt B by their headers); `SOURCE_TOTALS.json`; `verify_data.py` ("All data checks passed.") |
 
 ## (d) Form-fields checklist
 

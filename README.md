@@ -69,6 +69,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `analysis_confirmatory.py` | The four pre-registered tests, plus descriptive H5 |
 | `scenarios.py` | Revenue composition, run-rates, dilution, sensitivity grid and the post-hoc usage check |
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
+| `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
 | `analysis_extension.py` | Public-source cross-checks E1 to E5 (pre-registered, Amendment 8) and F1 to F2 (pre-registered, Amendment 9) plus labelled exploratory checks; writes `extension_results.txt` and `extension_numbers.json` |
 | `pull_defillama_intents.py` | Pulls NEAR Intents daily volume, fees and revenue from DefiLlama's free API into local `raw_defillama_intents*.json` files, which are not committed (see Data terms) |
@@ -162,7 +163,7 @@ The tests use fixed date windows, so later days in a re-pull do not change them.
 
 ## Where the data came from and how it was checked
 
-The baseline series come from Blockworks, pulled through the Blockworks MCP in ChatGPT; the CSV files here are rebuilt from the raw exports by `build_clean_data.py`. The public-source cross-checks are described above. Because values passed through a chat assistant, every series was checked against the row counts and revenue totals the assistant reported, and against a second independent pull where one existed.
+The baseline series come from Blockworks, pulled through the Blockworks MCP in ChatGPT; the CSV files here are rebuilt from the raw exports by `build_clean_data.py`. The exact prompts, and the row count and sum check for each raw file, are in [DATA_PROVENANCE.md](DATA_PROVENANCE.md). The public-source cross-checks are described above. Because values passed through a chat assistant, every series was checked against the row counts and revenue totals the assistant reported, and against a second independent pull where one existed.
 
 | Series | Rows | Check |
 |---|---|---|
