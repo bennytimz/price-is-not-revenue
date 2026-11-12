@@ -69,6 +69,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `analysis_confirmatory.py` | The four pre-registered tests, plus descriptive H5 |
 | `scenarios.py` | Revenue composition, run-rates, dilution, sensitivity grid and the post-hoc usage check |
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
+| `pull_bigquery.py`, `requirements-bigquery.txt` | Optional re-pull of the two BigQuery series (dry run by default; `--run` writes `repull_*.csv` and compares with the committed pulls up to 2026-11-04) |
 | `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
 | `analysis_extension.py` | Public-source cross-checks E1 to E5 (pre-registered, Amendment 8) and F1 to F2 (pre-registered, Amendment 9) plus labelled exploratory checks; writes `extension_results.txt` and `extension_numbers.json` |
@@ -127,6 +128,11 @@ VERDICT E5: inconsistent
 This runs `verify_data.py`, `analysis_confirmatory.py`, `scenarios.py`, `analysis_extension.py` and `build_dashboard.py`, rewrites `confirmatory_results.txt`, `scenarios_results.txt`, `extension_results.txt` and `dashboard.html` (plus the three `*_numbers.json` files). It reads only from this folder, with one exception: if the local DefiLlama files are missing (they are not in the repository, see Data terms), it first pulls them from DefiLlama's free API, which needs an internet connection but no key. The source for the data is Blockworks, which needs an API key to re-pull, so the committed CSVs are the reproducible input. Each dashboard chart names the code and data file behind it.
 
 On Windows, Python may write CRLF line endings; the outputs are byte-identical to the committed ones after normalising to LF (tested: all seven output files match).
+
+**Re-pulling the BigQuery series (optional, not needed for `run_all.py`).** `pull_bigquery.py` runs the two committed queries (`pull_bigquery_daily_usage.sql` and `pull_bigquery_intents_contract.sql`) against NEAR's public BigQuery dataset, with the end date capped at 2026-11-04 so the result is comparable with the committed pulls.
+- Setup: `pip install -r requirements-bigquery.txt`, Google application-default credentials (for example `gcloud auth application-default login`, which opens a browser), and a project in the `GCP_PROJECT` environment variable or in `gcloud config`. No credentials are stored in this repository.
+- `python pull_bigquery.py` is a dry run: it prints the bytes each query would process and runs nothing. It refuses to go further if either query exceeds `--max-gb` (default 150).
+- `python pull_bigquery.py --run` executes both queries (BigQuery bills the processed bytes to your project) and writes `repull_bigquery_daily_usage.csv` and `repull_bigquery_intents_contract.csv`, which git ignores. It never overwrites the committed `raw_*.csv` files. It then compares them with the committed pulls for days up to 2026-11-04 (row counts, column sums, first and last dates, and any days that differ) and prints MATCH or DIFFER. Days the committed pulls have after 2026-11-04 are left out of the comparison.
 
 ## What is and is not reproducible
 

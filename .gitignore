@@ -4,3 +4,7 @@ venv/
 .env
 # DefiLlama raw data: pulled locally, not redistributed (DefiLlama terms; Amendment 8b)
 raw_defillama_*.json
+# BigQuery re-pulls (pull_bigquery.py --run) and any Google credentials: never committed
+repull_*.csv
+*credentials*.json
+*service-account*.json
