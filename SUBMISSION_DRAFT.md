@@ -59,7 +59,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 21 | Research, not investment advice (b) | `THESIS.md:5` |
 | 22 | Daily `intents.near` settlement-contract calls track Intents volume, Spearman 0.774 (a thread 2, b) | `extension_results.txt:40-41` (F1); `PREREGISTRATION.md` Amendment 9 |
 | 23 | Calls rose only about 1.16x from window A to window B (a thread 2, b; rounded from ratio 1.157), and one call can settle several intents | `extension_results.txt:46-47` (F2); the caveat is quoted from Amendment 9 |
-| 24 | The S4 tests were pre-registered before the pull (a thread 2 "before each pull", b) | `f7667df` (Amendment 9) committed and pushed 2026-11-12T00:31:34+01:00; the downloaded CSV is timestamped 00:34:46+01:00 (23:34:46 UTC); the pull commit `5434954` is 00:44:56+01:00. The exact query start time is only in BigQuery's query history (Benny can confirm it) |
+| 24 | The S4 tests were pre-registered before the pull (a thread 2 "before each pull", b) | The Amendment 9 commit `f7667df` was committed at 2026-11-12T00:31:34 Lagos time (+01:00) and pushed within seconds. The S4 query text did not exist until it was given to Benny after that push. The CSV was saved at 00:34:46 Lagos time (23:34:46 UTC). BigQuery's query history was not checked, so this order rests on the conversation timeline and is not independently verifiable from the repo. The pull commit `5434954` is 00:44:56+01:00 |
 
 ## (d) Form-fields checklist
 
