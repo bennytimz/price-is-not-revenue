@@ -2,7 +2,7 @@
 
 [![reproduce](https://github.com/bennytimz/price-is-not-revenue/actions/workflows/reproduce.yml/badge.svg)](https://github.com/bennytimz/price-is-not-revenue/actions/workflows/reproduce.yml)
 
-> **My call:** Do not value NEAR on cash flow today. Treat it as an option on Intents monetisation: it earns a position only if retained revenue keeps compounding toward the break-even, and the thresholds below say when I change my mind. Research opinion, not investment advice.
+> **My call:** Do not value NEAR on cash flow today. Treat it as an option on Intents monetisation: it earns a position only if retained revenue keeps compounding toward the break-even, and the thresholds in THESIS.md say when I change my mind. Research opinion, not investment advice.
 
 ## Summary for judges
 
