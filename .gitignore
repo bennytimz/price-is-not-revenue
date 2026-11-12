@@ -8,3 +8,5 @@ raw_defillama_*.json
 repull_*.csv
 *credentials*.json
 *service-account*.json
+demo/build/
+demo/*.mp4

@@ -1,0 +1,7 @@
+NEAR's price is not NEAR's revenue. This is the nine-point-four-x question.
+Every test in the scorecard was set in advance, and every result is shown, including the failures. The idea that Intents volume leads on-chain usage was not supported.
+NEAR's protocol revenue is about twenty million dollars a year, and it covers about fifteen percent of the value of new token supply. For buybacks to offset dilution, revenue would need to grow about nine point four times.
+My call: don't value NEAR on cash flow yet. Treat it as an option on Intents revenue, and watch the thresholds that would change my mind.
+Six dated predictions resolve on March thirty-first, twenty twenty-seven. Everything rebuilds with one command, and the checks pass.
+An honest limit: the baseline comes from Blockworks. I cross-checked revenue against DefiLlama, and the on-chain data re-pulls from BigQuery with an exact match.
+Price is not revenue. The code and data are on GitHub.
