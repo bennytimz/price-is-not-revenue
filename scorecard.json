@@ -5,7 +5,8 @@
   "threshold": "Rejected if the elasticity 95% CI excludes 1, or the token-denominated trend is positive with p < 0.05. Otherwise not rejected.",
   "result": "gas fees elasticity 1.63 CI[1.50,1.76] n=949; total revenue elasticity 0.48 CI[0.37,0.59]; Intents revenue elasticity 0.02 CI[-0.67,0.70]; token-denominated gas fees trend/block -3.9% p<0.001",
   "verdict": "rejected on all three bases (Amendment 8c applies the H1 rule to the printed numbers)",
-  "source": "confirmatory_results.txt (H1); PREREGISTRATION.md Amendment 8c"
+  "source": "confirmatory_results.txt (H1); PREREGISTRATION.md Amendment 8c",
+  "gloss": ""
  },
  {
   "id": "H2",
@@ -13,7 +14,8 @@
   "threshold": "Supported only if fit-period p < 0.05, the holdout out-of-sample R-squared is above 0, and the sign is unchanged in the holdout. If it holds for NEAR but not for peers, it is reported as likely spurious.",
   "result": "NEAR fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p<0.001 (n=53); peers meeting all conditions: 0 of 5",
   "verdict": "meets all conditions: False",
-  "source": "confirmatory_results.txt (H2)"
+  "source": "confirmatory_results.txt (H2)",
+  "gloss": "not supported: the signal reversed out of sample"
  },
  {
   "id": "H3",
@@ -21,7 +23,8 @@
   "threshold": "Supported if NEAR is above the peer median and above its own 75th percentile. Rejected if below the peer median.",
   "result": "(a) NEAR fees vs peers' revenue: NEAR 3928x vs peer median 647x; above own 75th pct: True; (b) fees vs fees: NEAR 3928x vs peer median 1174x; above own 75th pct: True; (c) NEAR total vs peers' revenue [not like-for-like]: NEAR 276x vs peer median 647x; above own 75th pct: False",
   "verdict": "(a) SUPPORTED; (b) SUPPORTED; (c) REJECTED",
-  "source": "confirmatory_results.txt (H3)"
+  "source": "confirmatory_results.txt (H3)",
+  "gloss": ""
  },
  {
   "id": "H4",
@@ -29,7 +32,8 @@
   "threshold": "Supported if active addresses trend up (p < 0.05) and revenue per active address trends down (p < 0.05). Rejected if revenue per active address is flat or rising.",
   "result": "pre-break n=29 blocks | active addresses +0.9%/block p=0.376 | revenue per active address -2.8%/block p=0.082 (Blockworks active addresses, before the 2026-04-02 definition break)",
   "verdict": "not supported (Amendment 8c applies the H4 rule to the printed numbers)",
-  "source": "confirmatory_results.txt (H4); PREREGISTRATION.md Amendment 8c"
+  "source": "confirmatory_results.txt (H4); PREREGISTRATION.md Amendment 8c",
+  "gloss": ""
  },
  {
   "id": "H5",
@@ -37,7 +41,8 @@
   "threshold": "Supported if the ratio is below 50% in at least 80% of months in the confirmatory sample. Amendment 7: reported as descriptive, not as a test",
   "result": "revenue / net new supply: 2025-06-29 2%, 2025-12-28 11%, 2026-03-29 18%, 2026-06-28 12%, 2026-10-25 13%",
   "verdict": "descriptive",
-  "source": "confirmatory_results.txt (H5); PREREGISTRATION.md Amendment 7"
+  "source": "confirmatory_results.txt (H5); PREREGISTRATION.md Amendment 7",
+  "gloss": ""
  },
  {
   "id": "E1",
@@ -45,7 +50,8 @@
   "threshold": "Spearman(daily S1 volume, daily retained Intents revenue) >= 0.50 on >= 120 overlapping days -> usable proxy",
   "result": "days 406 (2025-09-23 to 2026-11-04) | Spearman 0.813",
   "verdict": "usable proxy",
-  "source": "extension_results.txt (E1)"
+  "source": "extension_results.txt (E1)",
+  "gloss": ""
  },
  {
   "id": "E2",
@@ -53,7 +59,8 @@
   "threshold": "share = ln(volume ratio) / ln(revenue ratio), window B (2026-09-17..10-15) over A (2026-08-07..09-02), mean daily values; >= 0.70 volume-driven | <= 0.30 take-rate-driven | otherwise mixed",
   "result": "volume ratio 1.627 | revenue ratio 3.204 | volume share 0.418; take rate 2.61 bp to 5.13 bp",
   "verdict": "mixed",
-  "source": "extension_results.txt (E2)"
+  "source": "extension_results.txt (E2)",
+  "gloss": ""
  },
  {
   "id": "E3",
@@ -61,7 +68,8 @@
   "threshold": "rho(4-wk log change in volume, next 4-wk log change in usage) - rho(4-wk NEAR price return, same) >= 0.15 and 7-day block-bootstrap 95% interval of the difference excludes zero -> leads better than price; otherwise not supported",
   "result": "rho volume +0.178 | rho price +0.336 | difference -0.158 | bootstrap 95% interval [-0.445, +0.124]",
   "verdict": "not supported",
-  "source": "extension_results.txt (E3)"
+  "source": "extension_results.txt (E3)",
+  "gloss": ""
  },
  {
   "id": "E4",
@@ -69,7 +77,8 @@
   "threshold": "median daily S2 distinct signers, 28 days after vs 28 days before 2026-04-02: drop >= 50% real on-chain; drop < 20% probably a Blockworks definition change; otherwise inconclusive; cannot test if S2 lacks 2026-03-01..05-31",
   "result": "drop 8.1% in on-chain distinct signers (Blockworks active addresses: drop 89.4%, exploratory X2)",
   "verdict": "probably a Blockworks definition change",
-  "source": "extension_results.txt (E4)"
+  "source": "extension_results.txt (E4)",
+  "gloss": ""
  },
  {
   "id": "E5",
@@ -77,7 +86,8 @@
   "threshold": "Spearman(daily change in S2 distinct signers, daily change in Blockworks active addresses) >= 0.60 -> consistent definitions",
   "result": "days 1038 of daily changes (2024-01-02 to 2026-11-04) | Spearman 0.479",
   "verdict": "inconsistent",
-  "source": "extension_results.txt (E5)"
+  "source": "extension_results.txt (E5)",
+  "gloss": ""
  },
  {
   "id": "F1",
@@ -85,7 +95,8 @@
   "threshold": "Spearman(daily S4 call count, daily S1 DefiLlama volume) over >= 120 overlapping days; >= 0.50 -> S4 tracks volume, otherwise S4 does not track volume",
   "result": "days 679 (2025-01-01 to 2026-11-10) | Spearman 0.774",
   "verdict": "S4 tracks volume",
-  "source": "extension_results.txt (F1); PREREGISTRATION.md Amendment 9"
+  "source": "extension_results.txt (F1); PREREGISTRATION.md Amendment 9",
+  "gloss": ""
  },
  {
   "id": "F2",
@@ -93,6 +104,7 @@
   "threshold": "mean daily S4 call count, window B (2026-09-17..10-15) over window A (2026-08-07..09-02); >= 2.0 on-chain Intents calls rose broadly with revenue | <= 1.3 calls did not rise materially | otherwise in between; labelled proxy not validated if F1 says S4 does not track volume",
   "result": "window A mean 58,532 calls/day (27 days) | window B mean 67,746 calls/day (29 days) | ratio 1.157",
   "verdict": "calls did not rise materially",
-  "source": "extension_results.txt (F2); PREREGISTRATION.md Amendment 9"
+  "source": "extension_results.txt (F2); PREREGISTRATION.md Amendment 9",
+  "gloss": ""
  }
 ]

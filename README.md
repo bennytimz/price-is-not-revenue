@@ -31,7 +31,7 @@
 | ID | Claim | Key result | Verdict |
 |---|---|---|---|
 | H1 | USD revenue growth is mostly the NEAR price passing through. | elasticity 95% CIs: [1.50,1.76], [0.37,0.59], [-0.67,0.70] | **rejected on all three bases (Amendment 8c)** |
-| H2 | On-chain activity leads the NEAR price. | NEAR holdout OOS R2 -76.2% | **meets all conditions: False** |
+| H2 | On-chain activity leads the NEAR price. | NEAR holdout OOS R2 -76.2% | **meets all conditions: False** (not supported: the signal reversed out of sample) |
 | H3 | NEAR is expensive relative to peers. | NEAR 3928x on gas fees (a), 276x on total revenue (c); peer median 647x | **(a) SUPPORTED; (b) SUPPORTED; (c) REJECTED** |
 | H4 | NEAR usage is not being monetised. | active +0.9%/block p=0.376; revenue/address -2.8%/block p=0.082 | **not supported (Amendment 8c)** |
 | H5 | Retained revenue covers only a small fraction of the value of new token supply. | 2%, 11%, 18%, 12%, 13% | **descriptive** |
@@ -118,7 +118,7 @@ Extension check: E1-E3, F1-F2, X1 and X5-X8 within tolerance of the committed va
 --> build_scorecard.py
 scorecard: 12 rows written to scorecard.json, SCORECARD.md and README.md
 --> build_dashboard.py
-dashboard.html written 38419 bytes
+dashboard.html written 38470 bytes
 Done. Open dashboard.html.
 ```
 

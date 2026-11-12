@@ -155,7 +155,7 @@ for k in ("E1", "E2", "E3", "E4", "E5", "F1", "F2"):
 vfound = 0
 for doc in DOCS:
     raw = rd(doc)
-    rows = re.findall(r"^\|\s*([EFH]\d)\s*\|.*\|\s*\*\*(.+?)\*\*\s*\|\s*$", raw, re.M)
+    rows = re.findall(r"^\|\s*([EFH]\d)\s*\|.*\|\s*\*\*(.+?)\*\*(?: \([^|]*\))?\s*\|\s*$", raw, re.M)
     rows += re.findall(r"^## ([EFH]\d): .*?\n(?:.*\n)*?- \*\*Verdict:\*\* \*\*(.+?)\*\*", raw, re.M)
     rows += re.findall(r"<h3>([EFH]\d): .*?<span>Verdict</span> <b>(.*?)</b>", raw)
     for k, v in rows:

@@ -48,7 +48,7 @@ cards = []
 for r in json.load(open(os.path.join(HERE, "scorecard.json"), encoding="utf-8")):
     cards.append(f'<div class="card"><h3>{r["id"]}: {H.escape(r["claim"])}</h3>'
                  f'<p><span>Threshold</span> {H.escape(r["threshold"])}</p><p><span>Result</span> {H.escape(r["result"])}</p>'
-                 f'<p><span>Verdict</span> <b>{H.escape(r["verdict"])}</b></p><p class="src">{H.escape(r["source"])}</p></div>')
+                 f'<p><span>Verdict</span> <b>{H.escape(r["verdict"])}</b>' + (f' ({H.escape(r["gloss"])})' if r.get("gloss") else '') + f'</p><p class="src">{H.escape(r["source"])}</p></div>')
 score_html = "\n".join(cards)
 
 html = open(os.path.join(HERE, "dashboard_template.html")).read()

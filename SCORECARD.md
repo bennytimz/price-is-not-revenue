@@ -15,7 +15,7 @@ H1 to H5 are the confirmatory tests, E1 to E5 the public-source cross-checks (Am
 
 - **Threshold:** Supported only if fit-period p < 0.05, the holdout out-of-sample R-squared is above 0, and the sign is unchanged in the holdout. If it holds for NEAR but not for peers, it is reported as likely spurious.
 - **Result:** NEAR fit beta +0.419 p=0.018 (n=67) | holdout OOS R2 -76.2% | holdout beta -0.451 p<0.001 (n=53); peers meeting all conditions: 0 of 5
-- **Verdict:** **meets all conditions: False**
+- **Verdict:** **meets all conditions: False** (not supported: the signal reversed out of sample)
 - **Source:** confirmatory_results.txt (H2)
 
 ## H3: NEAR is expensive relative to peers.
