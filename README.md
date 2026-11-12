@@ -133,6 +133,7 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 - Setup: `pip install -r requirements-bigquery.txt`, Google application-default credentials (for example `gcloud auth application-default login`, which opens a browser), and a project in the `GCP_PROJECT` environment variable or in `gcloud config`. No credentials are stored in this repository.
 - `python pull_bigquery.py` is a dry run: it prints the bytes each query would process and runs nothing. It refuses to go further if either query exceeds `--max-gb` (default 150).
 - `python pull_bigquery.py --run` executes both queries (BigQuery bills the processed bytes to your project) and writes `repull_bigquery_daily_usage.csv` and `repull_bigquery_intents_contract.csv`, which git ignores. It never overwrites the committed `raw_*.csv` files. It then compares them with the committed pulls for days up to 2026-11-04 (row counts, column sums, first and last dates, and any days that differ) and prints MATCH or DIFFER. Days the committed pulls have after 2026-11-04 are left out of the comparison.
+- Checked on 2026-11-12: the dry run measured 132.3 GB for `pull_bigquery_daily_usage.sql` and 125.9 GB for `pull_bigquery_intents_contract.sql` (both with the 2026-11-04 cap). `--run` gave **MATCH** for both: 1,039 and 673 rows, the same first and last dates, the same column sums, and no day that differs from the committed pulls.
 
 ## What is and is not reproducible
 
