@@ -120,6 +120,19 @@
     "observed_breakeven_rev_M": 191,
     "observed_breakeven_multiple": 9.4
   },
+  "exploratory_X8": {
+    "block_weeks": 4,
+    "n_weeks": 90,
+    "draws": 10000,
+    "seed": 20261112,
+    "difference": -0.158324,
+    "ci95": [
+      -0.520933,
+      0.153627
+    ],
+    "lo": -0.520933,
+    "hi": 0.153627
+  },
   "exploratory": {
     "X1_spearman_defillama_rev_vs_blockworks_intents": 0.709875,
     "X1_total_ratio": 0.998429,

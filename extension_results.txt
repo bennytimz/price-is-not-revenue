@@ -63,5 +63,6 @@ Exploratory (post-hoc, not pre-registered; does not change any E1-E5 verdict)
       transactions: 653,315 vs 4,400,054 a year earlier (-85.2%) | peak 8,348,636 on 2025-01-01 (-92.2% from peak)
    X7 (Exploratory, not pre-registered, not a forecast; arithmetic only) revenue that offsets net new supply if 100% were spent on buybacks (observed share 0.72 gives $191M/yr, 9.4x):
       $137M/yr = 6.7x the trailing-91-day revenue run-rate ($20.32M/yr) | 7.3x the retained Intents run-rate ($18.89M/yr)
+   X8 (Exploratory, not pre-registered, not a forecast) E3 difference -0.158 with a moving-block bootstrap, 4-week blocks (n=90 weeks): 95% interval [-0.521, +0.154] (10000 draws, seed 20261112); E3 verdict unchanged
 
 SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent | F1: S4 tracks volume | F2: calls did not rise materially

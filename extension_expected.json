@@ -1,5 +1,5 @@
 {
-  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b. X5 values added when X5 was first committed. F1 and F2 (Amendment 9) added when first committed. X6 and X7 (exploratory) added when first committed.",
+  "_note": "Values first committed (commit of T9, extension_numbers.json) for the tests that use DefiLlama data. verify_data.py --extension compares a fresh run with these. Amendment 8b. X5 values added when X5 was first committed. F1 and F2 (Amendment 9) added when first committed. X6 and X7 (exploratory) added when first committed. X8 (exploratory) added when first committed.",
   "checks": [
     [
       "E1.spearman",
@@ -150,6 +150,18 @@
       6.742126,
       "abs",
       0.05
+    ],
+    [
+      "exploratory_X8.lo",
+      -0.520933,
+      "abs",
+      0.03
+    ],
+    [
+      "exploratory_X8.hi",
+      0.153627,
+      "abs",
+      0.03
     ]
   ],
   "verdicts": {

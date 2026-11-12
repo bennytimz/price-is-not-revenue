@@ -249,6 +249,20 @@ P(f"      ${supply_usd_M}M/yr = {supply_usd_M / rr_total:.1f}x the trailing-91-d
 out["exploratory_X7"] = {"breakeven_rev_M_at_100pct": supply_usd_M, "multiple_of_runrate_total": supply_usd_M / rr_total,
                          "multiple_of_runrate_intents": supply_usd_M / rr_intents, "observed_buyback_share": S["buyback_share"],
                          "observed_breakeven_rev_M": S["breakeven_rev_M"], "observed_breakeven_multiple": S["breakeven_multiple"]}
+# X8: moving-block bootstrap of E3's difference, 4-week blocks to match the overlapping 4-week windows (E3 verdict unchanged)
+X8_BLOCK, X8_SEED = 4, 20261112
+rng8, n8 = np.random.default_rng(X8_SEED), len(x)
+starts_max = n8 - X8_BLOCK + 1
+bd8 = np.empty(NBOOT)
+for i in range(NBOOT):
+    st = rng8.integers(0, starts_max, -(-n8 // X8_BLOCK))
+    s = x[(st[:, None] + np.arange(X8_BLOCK)).ravel()[:n8]]
+    bd8[i] = spearmanr(s[:, 0], s[:, 2])[0] - spearmanr(s[:, 1], s[:, 2])[0]
+lo8, hi8 = (float(q) for q in np.nanpercentile(bd8, [2.5, 97.5]))
+P(f"   X8 (Exploratory, not pre-registered, not a forecast) E3 difference {diff:+.3f} with a moving-block bootstrap, {X8_BLOCK}-week blocks "
+  f"(n={n8} weeks): 95% interval [{lo8:+.3f}, {hi8:+.3f}] ({NBOOT} draws, seed {X8_SEED}); E3 verdict unchanged")
+out["exploratory_X8"] = {"block_weeks": X8_BLOCK, "n_weeks": n8, "draws": NBOOT, "seed": X8_SEED, "difference": diff, "ci95": [lo8, hi8],
+                         "lo": lo8, "hi": hi8}
 out["exploratory"] = {"X1_spearman_defillama_rev_vs_blockworks_intents": rx1, "X1_total_ratio": ratio, "X1_n_days": len(x1),
                       "X2_blockworks_active_drop": bdrop, "X2_median_before": float(bpre.median()), "X2_median_after": float(bpost.median()),
                       "X3_means": {c: x3[c].to_dict() for c in x3.columns}, "X3_index": {c: x3i[c].to_dict() for c in x3i.columns},
