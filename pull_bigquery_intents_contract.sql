@@ -1,5 +1,5 @@
 -- S4 (Amendment 9): daily calls to the NEAR Intents settlement contract (intents.near) from the public BigQuery dataset.
--- Run by the author in the BigQuery web console on 2026-11-12 (local time; the downloaded file is timestamped 2026-11-11 23:34 UTC).
+-- Run on 2026-11-12 00:3x Lagos time (2026-11-11 23:3x UTC); results run to 2026-11-11 UTC, and that partial day is excluded from the tests.
 -- About 100 GB processed, exact figure not recorded.
 -- The result was downloaded from the console as CSV and saved unmodified as raw_bigquery_intents_contract.csv
 -- (SHA-256 in RAW_PULLS.sha256). The day of the pull is excluded in analysis_extension.py (Amendment 9).
