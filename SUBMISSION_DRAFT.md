@@ -4,17 +4,19 @@ Drafts for Benny to review. Nothing here has been posted or submitted. Placehold
 
 ## (a) X post
 
-**Main post** (238 characters as written; 242 if the video is uploaded to X and [REPO LINK] is a link; 266 if both are links, since X counts every link as 23 characters):
+**Main post** (239 characters as written; 243 if the video is uploaded to X and [REPO LINK] is a link; 267 if both are links, since X counts every link as 23 characters):
 
-> Does revenue back NEAR's price? Pre-registered tests, checked on public data: NEAR is an option on Intents revenue, not cash flow. Revenue must grow ~9.4x before buybacks offset new supply. @NEARProtocol #NEARHackathon [VIDEO] [REPO LINK]
+> Does revenue back NEAR's price? Tests written down in advance, cross-checked on public data: NEAR is an option on Intents revenue, not cash flow. Revenue must grow ~9.4x before buybacks offset new supply. #NEARHackathon [VIDEO] [REPO LINK]
 
-**Optional reply thread** (208, 275 and 241 characters; X's limit is 280):
+**Optional reply thread** (208, 275, 241 and 207 characters; X's limit is 280):
 
 > 1/ The numbers: retained Intents revenue was 92% of NEAR's protocol revenue in Oct 2026. New supply is worth $137M/yr at $4.28; trailing-91-day revenue is $20.3M/yr. Buybacks offset dilution only at $191M/yr.
 
 > 2/ Public cross-checks (DefiLlama, NEAR BigQuery), pre-registered before each pull: the Sep-Oct revenue jump was mixed. Volume rose 1.63x and revenue 3.20x, but intents.near contract calls only ~1.16x (calls track volume, Spearman 0.774; one call can settle several intents).
 
 > 3/ What failed: Intents volume did not lead on-chain usage better than price (E3), and Blockworks active addresses don't match on-chain signers (E5). Their 89.4% drop on 2026-04-02 is probably a definition change: on-chain signers fell 8.1%.
+
+> 4/ Data note: the baseline is Blockworks data (re-pulling it needs a Blockworks API key). Revenue is cross-checked against DefiLlama (0.998), and the on-chain data re-pulls from BigQuery with an exact match.
 
 ## (b) Project description for the form field "What did you build?"
 
@@ -37,7 +39,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | # | Claim (used in) | Supporting file and line |
 |---|---|---|
 | 1 | NEAR is an option on Intents revenue, not a cash-flow story (a, b) | `THESIS.md:5` (the thesis statement; an interpretation of rows 5 to 8) |
-| 2 | The original hypotheses were written down before the confirmatory data was analysed, but the repository was created afterwards, so git history can't prove that order (a "pre-registered tests", b) | `PREREGISTRATION.md:1` onward (dated amendments); `THESIS.md:129` ("The repository was created after the baseline analysis, so git history cannot prove that order") |
+| 2 | The original hypotheses were written down before the confirmatory data was analysed, but the repository was created afterwards, so git history can't prove that order (a "tests written down in advance", b) | `PREREGISTRATION.md:1` onward (dated amendments); `THESIS.md:129` ("The repository was created after the baseline analysis, so git history cannot prove that order") |
 | 3 | Every result is reported, including failures (b) | `PREREGISTRATION.md:38` (Rules for reporting); failures in rows 11 to 13 below |
 | 4 | Retained Intents revenue was 92% of protocol revenue in October 2026 (a thread 1, b) | `scenarios_results.txt:18` (share_intents 0.92) |
 | 5 | New supply is worth $137M a year at $4.28 (a thread 1, b) | `scenarios_results.txt:30` |
@@ -69,8 +71,9 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 31 | Dashboard tiles: $20.3M/yr run-rate, 9.4x, 276x, 92% Intents share in Oct 2026 (read from `scenario_numbers.json` by `build_dashboard.py`) | `scenarios_results.txt:26` ($20.3M, 276x), `:43` (9.4x), `:18` (0.92) |
 | 32 | Six dated forward predictions (P1 to P6), resolved on 2027-03-31 and published whatever the outcome (b) | `PREDICTIONS.md`; `PREREGISTRATION.md` Amendment 10; both committed together in `808c329` (2026-11-12T02:10:07+01:00). Anchors: `scenarios_results.txt:47-48`, `extension_results.txt:12-13`, `:40`, `:50`, `:60`, `:62`; P4's upper threshold is a judgement call |
 | 33 | All Blockworks data was pulled through ChatGPT's Blockworks MCP with fixed rules (raw CSV only, no interpolation, gaps blank, row count and sum reported); every raw file matches its recorded row count and sum (not yet in a or b) | `DATA_PROVENANCE.md` (verbatim prompts; peer files match prompt B by their headers); `SOURCE_TOTALS.json`; `verify_data.py` ("All data checks passed.") |
-| 34 | The BigQuery series can be re-pulled and the re-pull matches the committed pulls (not yet in a or b) | `pull_bigquery.py`; README reproduce section. Run on 2026-11-12: dry run 132.3 GB (`pull_bigquery_daily_usage.sql`) and 125.9 GB (`pull_bigquery_intents_contract.sql`), both under the 150 GB cap and both with the end date capped at 2026-11-04; `--run` printed MATCH for both (1,039 and 673 rows, identical first and last dates, identical column sums, 0 differing days). The re-pull files (`repull_*.csv`) are git-ignored, not committed |
+| 34 | The BigQuery series can be re-pulled and the re-pull matches the committed pulls (a thread 4) | `pull_bigquery.py`; README reproduce section. Run on 2026-11-12: dry run 132.3 GB (`pull_bigquery_daily_usage.sql`) and 125.9 GB (`pull_bigquery_intents_contract.sql`), both under the 150 GB cap and both with the end date capped at 2026-11-04; `--run` printed MATCH for both (1,039 and 673 rows, identical first and last dates, identical column sums, 0 differing days). The re-pull files (`repull_*.csv`) are git-ignored, not committed |
 | 35 | Key figures, verdicts and prediction anchors agree across all documents | `check_consistency.py` (CI gate 3); "All key figures, verdicts and prediction anchors agree across documents." Tested by planting three errors in a copy (a 9.5x, a wrong E3 verdict, a wrong P5 anchor): all three were caught |
+| 36 | Data note: the baseline is Blockworks data, and re-pulling it needs a Blockworks API key; revenue is cross-checked against DefiLlama (0.998); the on-chain data re-pulls from BigQuery with an exact match (a thread 4) | `extension_results.txt:37` at the T10 commit, line 50 in the current file (X1, exploratory: DefiLlama total / Blockworks total 0.998); BigQuery re-pull MATCH: row 34; API key: `THESIS.md:129`, row 20 |
 
 ## (d) Form-fields checklist
 

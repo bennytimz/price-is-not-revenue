@@ -1,6 +1,6 @@
 # CLAUDE.md: project guide for Claude Code (v2, 2026-11-11)
 
-**Project:** "Price Is Not Revenue: the 9.4x Question" (NEAR Hackathon, Investment Thesis track) (nearhackathon.com), by Benny (GitHub: Bennytimz). Deadline 2026-11-14 (submit by the morning of 11-14; the submission cannot be edited).
+**Project:** "Price Is Not Revenue: the 9.4x Question" (NEAR Hackathon, Investment Thesis track) (nearhackathon.com), by Benny (GitHub: Bennytimz). Deadline 2026-11-14 23:59 UTC. The form has a "Request changes" link, but treat the submission as final.
 **Status:** baseline analysis, thesis and dashboard are FINISHED (see rules). Remaining work: publish, add a small pre-registered public-source extension, polish the presentation, submit.
 **Constraints:** Benny follows step by step and has a limited usage budget. Explain each command before running it. Keep each task short and stop after it.
 
