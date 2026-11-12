@@ -4,9 +4,9 @@ Drafts for Benny to review. Nothing here has been posted or submitted. Placehold
 
 ## (a) X post
 
-**Main post** (239 characters as written; 243 if the video is uploaded to X and [REPO LINK] is a link; 267 if both are links, since X counts every link as 23 characters):
+**Main post** (257 characters in the intended case: the video uploaded directly to X, which adds no characters, and [REPO LINK] as a link, which X counts as 23 characters; this case must stay under 270. For information: 253 as written with both placeholders; 281 if the video were also a link, which is over X's 280 limit, so upload the video to X):
 
-> Does revenue back NEAR's price? Tests written down in advance, cross-checked on public data: NEAR is an option on Intents revenue, not cash flow. Revenue must grow ~9.4x before buybacks offset new supply. #NEARHackathon [VIDEO] [REPO LINK]
+> Does revenue back NEAR's price? Tests written down in advance, cross-checked on public data: NEAR is an option on Intents revenue, not cash flow. Revenue must grow ~9.4x before buybacks offset new supply. @NEARProtocol #NEARHackathon [VIDEO] [REPO LINK]
 
 **Optional reply thread** (208, 275, 241 and 207 characters; X's limit is 280):
 
