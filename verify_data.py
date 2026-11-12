@@ -7,7 +7,7 @@ source reported on 2026-11-05, not that Blockworks is right. A Blockworks key is
 
 DefiLlama raw files are not in the repository (DefiLlama's terms; Amendment 8b). They are pulled locally by
 pull_defillama_intents.py, so they cannot be checked against a fixed hash. Instead this script checks that they
-parse and cover the dates the tests use, and --extension compares the E1-E3, F1-F2, X1 and X5 numbers with the values first
+parse and cover the dates the tests use, and --extension compares the E1-E3, F1-F2, X1 and X5-X7 numbers with the values first
 committed (extension_expected.json) within stated tolerances.
 """
 import datetime as dt
@@ -39,7 +39,7 @@ if "--extension" in sys.argv:
         if not ok:
             warn.append(f"{k} verdict")
     print(f"Extension check: WARNING, {len(warn)} differ from the committed values: {', '.join(warn)}" if warn
-          else "Extension check: E1-E3, F1-F2, X1 and X5 within tolerance of the committed values; all verdicts unchanged.")
+          else "Extension check: E1-E3, F1-F2, X1 and X5-X7 within tolerance of the committed values; all verdicts unchanged.")
     sys.exit(0)
 
 T = json.load(open(f"{D}/SOURCE_TOTALS.json"))

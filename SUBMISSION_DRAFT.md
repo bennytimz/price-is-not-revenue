@@ -37,7 +37,7 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | # | Claim (used in) | Supporting file and line |
 |---|---|---|
 | 1 | NEAR is an option on Intents revenue, not a cash-flow story (a, b) | `THESIS.md:3` (the thesis statement; an interpretation of rows 5 to 8) |
-| 2 | The original hypotheses were written down before the confirmatory data was analysed, but the repository was created afterwards, so git history can't prove that order (a "pre-registered tests", b) | `PREREGISTRATION.md:1` onward (dated amendments); `THESIS.md:111` ("The repository was created after the baseline analysis, so git history cannot prove that order") |
+| 2 | The original hypotheses were written down before the confirmatory data was analysed, but the repository was created afterwards, so git history can't prove that order (a "pre-registered tests", b) | `PREREGISTRATION.md:1` onward (dated amendments); `THESIS.md:119` ("The repository was created after the baseline analysis, so git history cannot prove that order") |
 | 3 | Every result is reported, including failures (b) | `PREREGISTRATION.md:38` (Rules for reporting); failures in rows 11 to 13 below |
 | 4 | Retained Intents revenue was 92% of protocol revenue in October 2026 (a thread 1, b) | `scenarios_results.txt:18` (share_intents 0.92) |
 | 5 | New supply is worth $137M a year at $4.28 (a thread 1, b) | `scenarios_results.txt:30` |
@@ -53,13 +53,15 @@ Line numbers refer to commit `T10: judges summary and submission draft`.
 | 15 | DefiLlama's Intents revenue totals 0.998 of Blockworks' (b, labelled exploratory) | `extension_results.txt:37` (X1) |
 | 16 | Everything rebuilds with `python run_all.py` from files in the repo (b) | `run_all.py`; `README.md:38` |
 | 17 | Each dashboard chart names the script and data behind it (b) | `dashboard_template.html`, the `class="src"` line under each chart |
-| 18 | Limit: one market regime (b) | `THESIS.md:107` |
-| 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:103`; the `methodology` field is empty in DefiLlama's `/summary/dexs/near-intents` response (pulled locally by `pull_defillama_intents.py`, which flags it; the raw file is not redistributed) |
-| 20 | Limit: Blockworks data needs an API key to re-pull (b) | `THESIS.md:111` |
+| 18 | Limit: one market regime (b) | `THESIS.md:115` |
+| 19 | Limit: DefiLlama does not document its Intents volume definition (b) | `THESIS.md:111`; the `methodology` field is empty in DefiLlama's `/summary/dexs/near-intents` response (pulled locally by `pull_defillama_intents.py`, which flags it; the raw file is not redistributed) |
+| 20 | Limit: Blockworks data needs an API key to re-pull (b) | `THESIS.md:119` |
 | 21 | Research, not investment advice (b) | `THESIS.md:5` |
 | 22 | Daily `intents.near` settlement-contract calls track Intents volume, Spearman 0.774 (a thread 2, b) | `extension_results.txt:40-41` (F1); `PREREGISTRATION.md` Amendment 9 |
 | 23 | Calls rose only about 1.16x from window A to window B (a thread 2, b; rounded from ratio 1.157), and one call can settle several intents | `extension_results.txt:46-47` (F2); the caveat is quoted from Amendment 9 |
 | 24 | The S4 tests were pre-registered before the pull (a thread 2 "before each pull", b) | The Amendment 9 commit `f7667df` was committed at 2026-11-12T00:31:34 Lagos time (+01:00) and pushed within seconds. The S4 query text did not exist until it was given to Benny after that push. The CSV was saved at 00:34:46 Lagos time (23:34:46 UTC). BigQuery's query history was not checked, so this order rests on the conversation timeline and is not independently verifiable from the repo. The pull commit `5434954` is 00:44:56+01:00 |
+| 25 | On-chain usage fell: 28-day distinct signers 62,660 vs 261,846 a year earlier (-76.1%), -96.9% from the 2024-07-06 peak; transactions -85.2% year on year, -92.2% from the 2025-01-01 peak; separate from the 2026-04-02 Blockworks break (THESIS only, exploratory X6; not yet in a or b) | `extension_results.txt:61-63` (X6); separation from the break: `extension_results.txt:28-29` (E4, signers fell 8.1%) |
+| 26 | The 9.4x break-even assumes the observed 72% buyback share; at 100% it is $137M a year, 6.7x the run-rate (THESIS only, exploratory X7; not yet in a or b) | `extension_results.txt:64-65` (X7); `scenarios_results.txt:31` (buyback share 0.72) and `:43` (9.4x, $191M) |
 
 ## (d) Form-fields checklist
 

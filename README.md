@@ -101,7 +101,7 @@ active     -0.76 -0.72  0.32    1.00
 --> analysis_extension.py
 SUMMARY E1: usable proxy | E2: mixed | E3: not supported | E4: probably a Blockworks definition change | E5: inconsistent | F1: S4 tracks volume | F2: calls did not rise materially
 --> verify_data.py --extension
-Extension check: E1-E3, F1-F2, X1 and X5 within tolerance of the committed values; all verdicts unchanged.
+Extension check: E1-E3, F1-F2, X1 and X5-X7 within tolerance of the committed values; all verdicts unchanged.
 --> build_scorecard.py
 scorecard: 12 rows written to scorecard.json, SCORECARD.md and README.md
 --> build_dashboard.py

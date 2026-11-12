@@ -229,6 +229,26 @@ P(f"      DefiLlama gross Intents fees ${gross_ann / 1e6:.1f}M/yr | Blockworks r
 out["exploratory_X5"] = {"window": [str(w91.start.date()), str(w91.stop.date())], "gross_fees_annualised_defillama": gross_ann,
                          "retained_revenue_annualised_blockworks": retained_ann, "revenue_annualised_defillama": dl_rev_ann,
                          "retained_over_gross": retained_ann / gross_ann}
+# X6: on-chain usage trend from S2 (committed file), 28-day means as of the last complete day
+X6_ASOF, X6_PREV = pd.Timestamp("2026-11-10"), pd.Timestamp("2025-11-10")
+assert s2.index.max() == X6_ASOF, "X6: S2 must end on 2026-11-10"
+P(f"   X6 (Exploratory, not pre-registered, not a forecast) S2 on-chain usage, 28-day means as of {X6_ASOF.date()} (S2 2026-11-11 excluded):")
+out["exploratory_X6"] = {"asof": str(X6_ASOF.date()), "year_earlier": str(X6_PREV.date())}
+for col, label in (("active_signers", "distinct signers"), ("transactions", "transactions")):
+    m28 = s2[col].astype(float).rolling(28).mean().dropna()
+    now, prev, pk, pkd = m28[X6_ASOF], m28[X6_PREV], m28.max(), m28.idxmax()
+    P(f"      {label}: {now:,.0f} vs {prev:,.0f} a year earlier ({now / prev - 1:+.1%}) | peak {pk:,.0f} on {pkd.date()} ({now / pk - 1:+.1%} from peak)")
+    out["exploratory_X6"].update({f"{col}_mean28_asof": now, f"{col}_mean28_year_earlier": prev, f"{col}_change_yoy": now / prev - 1,
+                                  f"{col}_peak": pk, f"{col}_peak_date": str(pkd.date()), f"{col}_change_from_peak": now / pk - 1})
+# X7: arithmetic only; break-even if 100% of revenue were spent on buybacks (scenario_numbers.json values)
+supply_usd_M, rr_total, rr_intents = S["issuance"]["usd_M_at_spot"], S["runrate_91d"]["total"], S["runrate_91d"]["intents"]
+P(f"   X7 (Exploratory, not pre-registered, not a forecast; arithmetic only) revenue that offsets net new supply if 100% were spent on buybacks"
+  f" (observed share {S['buyback_share']:.2f} gives ${S['breakeven_rev_M']}M/yr, {S['breakeven_multiple']}x):")
+P(f"      ${supply_usd_M}M/yr = {supply_usd_M / rr_total:.1f}x the trailing-91-day revenue run-rate (${rr_total}M/yr) "
+  f"| {supply_usd_M / rr_intents:.1f}x the retained Intents run-rate (${rr_intents}M/yr)")
+out["exploratory_X7"] = {"breakeven_rev_M_at_100pct": supply_usd_M, "multiple_of_runrate_total": supply_usd_M / rr_total,
+                         "multiple_of_runrate_intents": supply_usd_M / rr_intents, "observed_buyback_share": S["buyback_share"],
+                         "observed_breakeven_rev_M": S["breakeven_rev_M"], "observed_breakeven_multiple": S["breakeven_multiple"]}
 out["exploratory"] = {"X1_spearman_defillama_rev_vs_blockworks_intents": rx1, "X1_total_ratio": ratio, "X1_n_days": len(x1),
                       "X2_blockworks_active_drop": bdrop, "X2_median_before": float(bpre.median()), "X2_median_after": float(bpost.median()),
                       "X3_means": {c: x3[c].to_dict() for c in x3.columns}, "X3_index": {c: x3i[c].to_dict() for c in x3i.columns},

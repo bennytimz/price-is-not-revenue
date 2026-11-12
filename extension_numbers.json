@@ -96,6 +96,30 @@
     "revenue_annualised_defillama": 19101264.230769,
     "retained_over_gross": 0.26794
   },
+  "exploratory_X6": {
+    "asof": "2026-11-10",
+    "year_earlier": "2025-11-10",
+    "active_signers_mean28_asof": 62659.928571,
+    "active_signers_mean28_year_earlier": 261845.5,
+    "active_signers_change_yoy": -0.760699,
+    "active_signers_peak": 2019116.607143,
+    "active_signers_peak_date": "2024-07-06",
+    "active_signers_change_from_peak": -0.968967,
+    "transactions_mean28_asof": 653315.464286,
+    "transactions_mean28_year_earlier": 4400054.0,
+    "transactions_change_yoy": -0.851521,
+    "transactions_peak": 8348635.857143,
+    "transactions_peak_date": "2025-01-01",
+    "transactions_change_from_peak": -0.921746
+  },
+  "exploratory_X7": {
+    "breakeven_rev_M_at_100pct": 137,
+    "multiple_of_runrate_total": 6.742126,
+    "multiple_of_runrate_intents": 7.252515,
+    "observed_buyback_share": 0.72,
+    "observed_breakeven_rev_M": 191,
+    "observed_breakeven_multiple": 9.4
+  },
   "exploratory": {
     "X1_spearman_defillama_rev_vs_blockworks_intents": 0.709875,
     "X1_total_ratio": 0.998429,

@@ -80,6 +80,14 @@ In plain English: day to day, the number of settlement calls moves with Intents 
 - **X1:** DefiLlama's daily Intents revenue sums to 0.998 of Blockworks' total over 406 days, with a daily rank correlation of 0.710. This is the independent cross-check of the revenue level.
 - **X3:** in the section-3 windows, Intents volume indexed to 163 in the rally and 122 in the pullback, and distinct signers to 95 and 65.
 - **X4** (arithmetic only): the $191M a year of retained revenue that offsets dilution would take about $1.02B a day of Intents volume at window B's take rate (6.3 times window B's volume), or $2.01B a day at window A's (12.5 times).
+- **X6:** on-chain usage from NEAR's public BigQuery data, as 28-day means to 2026-11-10.
+  - Distinct signers: 62,660, against 261,846 a year earlier (-76.1%) and -96.9% from their peak on 2024-07-06.
+  - Transactions: 653,315, against 4,400,054 a year earlier (-85.2%) and -92.2% from their peak on 2025-01-01.
+- **X7** (arithmetic only): if 100% of revenue went to buybacks, buybacks would offset net new supply at $137M a year, 6.7 times the trailing-91-day run-rate. That is 7.3 times the retained Intents run-rate alone.
+
+**On-chain usage has really fallen (X6).** Over the past year, the public chain data shows a large fall in both distinct signers and transactions. This is separate from the Blockworks definition break at 2026-04-02. Across that date, on-chain signers fell only 8.1% (E4), so the decline in X6 is spread over the year, not a step caused by a change of definition. Intents revenue grew while this broad usage fell.
+
+**The 9.4x assumes buybacks stay at the observed share.** The break-even of $191M a year (9.4 times the run-rate) assumes buybacks stay at 72% of Intents revenue, the median observed so far. If all revenue went to buybacks, the break-even would be $137M a year, 6.7 times the run-rate (X7). Even then, revenue would need to grow several times before buybacks offset dilution.
 
 ## What would change my mind
 
