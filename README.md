@@ -4,8 +4,8 @@
 
 > **My call:** NEAR's protocol revenue, mostly retained Intents revenue (about $20M a year), covers about 15% of the value of new token supply; I would not value NEAR on cash flow until revenue approaches about $191M a year (9.4x), and the dated thresholds in THESIS.md and PREDICTIONS.md say when I would change my mind.
 
-![The top of the dashboard: the title and the four headline tiles (protocol revenue run-rate, revenue growth needed for buybacks to offset new supply, price to sales, Intents share of protocol revenue)](docs/img/dashboard_top.png)
-*The top of the dashboard: the four headline tiles, computed by `scenarios.py`.*
+![The top of the dashboard at phone width: the title and the four headline tiles in two rows (protocol revenue run-rate, revenue growth needed for buybacks to offset new supply, price to sales, Intents share of protocol revenue)](docs/img/dashboard_top_narrow.png)
+*The top of the dashboard: the four headline tiles, computed by `scenarios.py`. [Full-width view](docs/img/dashboard_top.png)*
 
 Live dashboard: https://bennytimz.github.io/price-is-not-revenue/dashboard.html
 
@@ -98,7 +98,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `track_predictions.py`, `predictions_status.json` | Interim status of predictions P1 to P6 (not a resolution): applies the `PREDICTIONS.md` rules to fresh DefiLlama data and the committed BigQuery pulls (`--run` re-pulls BigQuery; dry run first, size cap) and writes a dated snapshot of derived values, shown in the dashboard |
 | `ATTESTATION.md` | On-chain timestamp of PREDICTIONS.md and the data manifest (NEAR testnet): the transaction, how to verify it, and what it does and does not prove |
 | `verify_attestation.py` | Checks that timestamp against the files in this folder through two public archival RPCs (no account or key needed) |
-| `make_screenshots.py`, `docs/img/` | Screenshots of the built dashboard used in this README (Playwright, from disk, 1400 px wide PNGs under 400 KB); optional, not run by `run_all.py` |
+| `make_screenshots.py`, `docs/img/` | Screenshots of the built dashboard used in this README (Playwright, from disk, 1400 px wide PNGs under 400 KB, plus a 720 px wide phone-width version of the top under 150 KB); optional, not run by `run_all.py` |
 | `check_consistency.py` | Checks that key figures (9.4x, $191M, $137M, 276x, 72%, 92%, the run-rate and others), all verdicts and the prediction anchors agree across THESIS, README, the submission draft, PREDICTIONS, SCORECARD and the dashboard; CI fails if any disagree |
 | `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
