@@ -63,7 +63,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 ## Start here (2 minutes)
 
 1. `THESIS.md`: the claim, the evidence for and against, what would change my mind, and what I could not compute.
-2. `dashboard.html`: six charts and an interactive dilution sensitivity; sections 6 and 7 are the public-source cross-checks. Open it in a browser; it needs no server.
+2. `dashboard.html`: six charts and an interactive dilution sensitivity; sections 6 and 7 are the public-source cross-checks, and section 8 shows where the six predictions stand today (interim status, not a resolution). Open it in a browser; it needs no server.
 3. `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`: the exact script output behind every number.
 4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 10 (including claims I withdrew) and a data correction log.
 5. `SCORECARD.md`: every test with its threshold, result and verdict. `PREDICTIONS.md`: six dated predictions that resolve on 2027-03-31. `DATA_PROVENANCE.md`: how the Blockworks data was pulled, with the exact prompts.
@@ -80,6 +80,8 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
 | `pull_bigquery.py`, `requirements-bigquery.txt` | Optional re-pull of the two BigQuery series (dry run by default; `--run` writes `repull_*.csv` and compares with the committed pulls up to 2026-11-04) |
 | `track_predictions.py`, `predictions_status.json` | Interim status of predictions P1 to P6 (not a resolution): applies the `PREDICTIONS.md` rules to fresh DefiLlama data and the committed BigQuery pulls (`--run` re-pulls BigQuery; dry run first, size cap) and writes a dated snapshot of derived values, shown in the dashboard |
+| `ATTESTATION.md` | On-chain timestamp of PREDICTIONS.md and the data manifest (NEAR testnet): the transaction, how to verify it, and what it does and does not prove |
+| `verify_attestation.py` | Checks that timestamp against the files in this folder through two public archival RPCs (no account or key needed) |
 | `check_consistency.py` | Checks that key figures (9.4x, $191M, $137M, 276x, 72%, 92%, the run-rate and others), all verdicts and the prediction anchors agree across THESIS, README, the submission draft, PREDICTIONS, SCORECARD and the dashboard; CI fails if any disagree |
 | `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
@@ -103,9 +105,13 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 ## Reproduce (one command)
 
 ```
-pip install -r requirements.txt
-python run_all.py
+git clone https://github.com/bennytimz/price-is-not-revenue && cd price-is-not-revenue
+python -m venv venv && source venv/bin/activate    # Windows: venv\Scripts\activate
 ```
+
+1. `pip install -r requirements.txt`
+2. `python run_all.py`
+3. `python check_consistency.py` (checks that key figures, verdicts and prediction anchors agree across the documents, and that the expected output below matches the built dashboard; CI runs it too)
 
 Requires Python 3.12 or later (the pinned numpy 2.5.4 and scipy 1.18.1 require 3.12; pandas 3.0.6 requires 3.11). Tested on 3.13.
 
@@ -120,7 +126,7 @@ Extension check: E1-E3, F1-F2, X1 and X5-X8 within tolerance of the committed va
 --> build_scorecard.py
 scorecard: 12 rows written to scorecard.json, SCORECARD.md and README.md
 --> build_dashboard.py
-dashboard.html written 42293 bytes
+dashboard.html written 42888 bytes
 Done. Open dashboard.html.
 ```
 
@@ -136,9 +142,10 @@ VERDICT E4: probably a Blockworks definition change
 VERDICT E5: inconsistent
 ```
 
-This runs `verify_data.py`, `analysis_confirmatory.py`, `scenarios.py`, `analysis_extension.py` and `build_dashboard.py`, rewrites `confirmatory_results.txt`, `scenarios_results.txt`, `extension_results.txt` and `dashboard.html` (plus the three `*_numbers.json` files). It reads only from this folder, with one exception: if the local DefiLlama files are missing (they are not in the repository, see Data terms), it first pulls them from DefiLlama's free API, which needs an internet connection but no key. The source for the data is Blockworks, which needs an API key to re-pull, so the committed CSVs are the reproducible input. Each dashboard chart names the code and data file behind it.
+This runs, in order, `pull_defillama_intents.py` (only if the local DefiLlama files are missing), `verify_data.py`, `analysis_confirmatory.py`, `scenarios.py`, `analysis_extension.py`, `verify_data.py --extension`, `build_scorecard.py` and `build_dashboard.py`. It rewrites `confirmatory_results.txt`, `scenarios_results.txt`, `extension_results.txt`, `confirmatory_numbers.json`, `scenario_numbers.json`, `extension_numbers.json`, `scorecard.json`, `SCORECARD.md`, the scorecard block of `README.md` and `dashboard.html`, plus the local `raw_defillama_*.json` files when it pulls them (not committed). It reads only from this folder, with one exception: if the local DefiLlama files are missing (they are not in the repository, see Data terms), it first pulls them from DefiLlama's free API, which needs an internet connection but no key. The source for the data is Blockworks, which needs an API key to re-pull, so the committed CSVs are the reproducible input. Each dashboard chart names the code and data file behind it.
 
 On Windows, Python may write CRLF line endings; the outputs are byte-identical to the committed ones after normalising to LF (tested: all seven output files match).
+To check: `git add --renormalize .` then `git diff --cached --stat` (no output means every output matches the committed version).
 
 **Re-pulling the BigQuery series (optional, not needed for `run_all.py`).** `pull_bigquery.py` runs the two committed queries (`pull_bigquery_daily_usage.sql` and `pull_bigquery_intents_contract.sql`) against NEAR's public BigQuery dataset, with the end date capped at 2026-11-04 so the result is comparable with the committed pulls.
 - Setup: `pip install -r requirements-bigquery.txt`, Google application-default credentials (for example `gcloud auth application-default login`, which opens a browser), and a project in the `GCP_PROJECT` environment variable or in `gcloud config`. No credentials are stored in this repository.

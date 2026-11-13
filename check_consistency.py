@@ -236,6 +236,17 @@ for k, items in want.items():
         if not card or html.escape(str(p.get(field))) not in card.group(0):
             fails.append(f"dashboard.html: {k} card does not show the snapshot's {field} '{p.get(field)}'")
 
+# ---------- README expected output vs the built dashboard ----------
+# build_dashboard.py prints len(html) as "dashboard.html written N bytes"; rd() reads with universal newlines,
+# so this is the same count on Windows (CRLF on disk) and Linux.
+dash_len = len(rd("dashboard.html"))
+readme_sizes = re.findall(r"dashboard\.html written (\d+) bytes", rd("README.md"))
+if not readme_sizes:
+    fails.append("README.md: expected-output line 'dashboard.html written N bytes' not found")
+for n in readme_sizes:
+    if int(n) != dash_len:
+        fails.append(f"README.md: expected output says 'dashboard.html written {n} bytes' but the built dashboard.html is {dash_len}")
+
 # ---------- report ----------
 print(f"Consistency check: {sum(len(v) for v in found.values())} figure mentions and {vfound} verdicts in {len(DOCS)} documents; "
       f"{len(anchors)} prediction anchors; {pstat} interim-status checks (snapshot {PSN['snapshot_date']}).")
@@ -251,4 +262,5 @@ if fails:
         print("   " + f)
     sys.exit(1)
 print("All key figures, verdicts and prediction anchors agree across documents.")
+print(f"README expected output matches the built dashboard.html ({dash_len} bytes, line endings normalised).")
 print(f"Interim prediction status: predictions_status.json uses the PREDICTIONS.md thresholds and the dashboard shows the {PSN['snapshot_date']} snapshot.")
