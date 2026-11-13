@@ -193,6 +193,9 @@ want = {"P1": [f"${PR['P1']['min']:,.0f} a day", f"{PR['P1']['days']} consecutiv
         "P5": [f"at or below {PR['P5']['low']:,.0f}", f"at or above {PR['P5']['high']:,.0f}", f"{PR['P5']['days']}-day mean"],
         "P6": [f"at or above {PR['P6']['min']:.2f}", PR["P6"]["start"], PR["P6"]["end"], f"({PR['P6']['window_days']} days)"]}
 pstat = 0
+TW = TP.threshold_windows()
+bw_last = rd("near_daily.csv").strip().splitlines()[-1].split(",")[0]
+BW_NOTE = f"DefiLlama series; the ${S['intents_28d_last']:,} in the thesis is Blockworks data to {bw_last}."
 if PSN.get("label") != TP.LABEL:
     fails.append(f"predictions_status.json: label is '{PSN.get('label')}', not '{TP.LABEL}'")
 snap = {p["id"]: p for p in PSN["predictions"]}
@@ -213,10 +216,22 @@ for k, items in want.items():
         pstat += 1
         if it not in p.get("threshold", ""):
             fails.append(f"predictions_status.json: {k} threshold '{p.get('threshold')}' does not contain '{it}' from PREDICTIONS.md")
-    if p.get("status") not in ("on track", "not yet", "cannot resolve"):
-        fails.append(f"predictions_status.json: {k} status '{p.get('status')}' is not one of the three allowed")
+    if p.get("status") not in ("on track", "not yet", "cannot resolve", TP.BASELINE):
+        fails.append(f"predictions_status.json: {k} status '{p.get('status')}' is not one of the four allowed")
+    tw = TW.get(k)
+    pstat += 1
+    if tw and p.get("as_of", "9999") <= tw[1] and (p.get("status") != TP.BASELINE or tw[1] not in p.get("note", "")):
+        fails.append(f"predictions_status.json: {k} threshold was set from data to {tw[1]} and the reading ends {p.get('as_of')}: status must be '{TP.BASELINE}' with a note")
+    if p.get("status") == TP.BASELINE and not (tw and p.get("as_of", "") <= tw[1]):
+        fails.append(f"predictions_status.json: {k} is labelled baseline but its reading includes new data")
     card = re.search(rf'<h3>{k}: .*?</div>', sec, re.S)
-    for field in ("threshold", "current_value", "status", "as_of"):
+    if k in ("P1", "P2"):
+        pstat += 1
+        if not card or html.escape(BW_NOTE) not in card.group(0):
+            fails.append(f"dashboard.html: {k} card does not show the note '{BW_NOTE}'")
+    for field in ("threshold", "current_value", "status", "as_of", "note"):
+        if field == "note" and not p.get("note"):
+            continue
         pstat += 1
         if not card or html.escape(str(p.get(field))) not in card.group(0):
             fails.append(f"dashboard.html: {k} card does not show the snapshot's {field} '{p.get(field)}'")

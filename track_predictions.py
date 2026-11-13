@@ -34,6 +34,12 @@ Status:
                    P6: the proxy holds)
   "not yet"        it is not, or there is no reading in the window yet
   "cannot resolve" more than 5% of the days needed are missing or empty
+  "baseline (threshold set from this window)"
+                   the threshold was computed from data that ends on or after the last day of the current reading,
+                   so the reading contains no new data and is not a test. Applied automatically wherever a
+                   threshold comes from a data window (P3: E2 windows A and B; P4: X5's 91-day window; P5: X6's
+                   28-day mean); P1, P2 (Amendment 7) and P6 (Amendment 9) have fixed thresholds. "On track" and
+                   "not yet" appear only once the reading includes days after that window.
 
 Output: a table on screen and a dated snapshot in predictions_status.json (derived values only). build_dashboard.py
 shows the committed snapshot in the section "Where the predictions stand today".
@@ -61,6 +67,7 @@ LABEL = "interim status, not a resolution"
 DL = {"vol": "raw_defillama_intents.json", "rev": "raw_defillama_intents_revenue.json"}
 BQ = {"usage": ("pull_bigquery_daily_usage.sql", "raw_bigquery_daily_usage.csv", "repull_predictions_daily_usage.csv"),
       "calls": ("pull_bigquery_intents_contract.sql", "raw_bigquery_intents_contract.csv", "repull_predictions_intents_contract.csv")}
+BASELINE = "baseline (threshold set from this window)"
 COMMITTED_PULL_DAY = "2026-11-11"  # both committed BigQuery pulls were run on this UTC day; it is partial
 MAX_MISSING = 0.05
 
@@ -110,6 +117,19 @@ def read_predictions():
     s, e, n = find(b, r"over (\d{4}-\d\d-\d\d) to (\d{4}-\d\d-\d\d) \((\d+) days\)", "P6")
     P["P6"].update(start=s, end=e, window_days=int(n), min=float(find(b, r"At or above (\d\.\d+), the proxy holds", "P6")[0]))
     return P
+
+
+def threshold_windows():
+    """Last day of the data each window-derived threshold was computed from, read from the results files
+    (extension_numbers.json) and, for E2's windows, which that file does not record, from analysis_extension.py."""
+    E = json.load(open(os.path.join(D, "extension_numbers.json"), encoding="utf-8"))
+    m = re.search(r'^A, B = \(("\d{4}-\d\d-\d\d"), ("\d{4}-\d\d-\d\d")\), \(("\d{4}-\d\d-\d\d"), ("\d{4}-\d\d-\d\d")\)',
+                  open(os.path.join(D, "analysis_extension.py"), encoding="utf-8").read(), re.M)
+    if not m:
+        sys.exit("analysis_extension.py: E2 window definition not found; nothing computed")
+    return {"P3": ("E2 windows A and B", m.group(4).strip('"')),
+            "P4": ("X5's 91-day window", E["exploratory_X5"]["window"][1]),
+            "P5": ("X6's 28-day mean", E["exploratory_X6"]["asof"])}
 
 
 # ---------- data ----------
@@ -315,6 +335,11 @@ def main():
             "P3": p3(P, rev, vol), "P4": p4(P, rev), "P5": p5(P, signers), "P6": p6(P, calls, vol)}
     preds = [dict(id=k, title=P[k]["title"], resolution_date=P[k]["resolution_date"], **v) for k, v in rows.items()]
     for p in preds:
+        src = threshold_windows().get(p["id"])
+        if src and p["as_of"] <= src[1]:
+            p["status"] = BASELINE
+            p["note"] = (f"Threshold set from {src[0]}, ending {src[1]}; the current value has no data after that day, "
+                         f"so it is the baseline, not a test. It becomes a test once data after {src[1]} exists.")
         if isinstance(p.get("value"), float):
             p["value"] = round(p["value"], 6)
 
@@ -323,7 +348,8 @@ def main():
                         "bigquery": bq_source},
             "status_definitions": {"on track": "the interim reading is in the outcome the prediction's title names",
                                    "not yet": "it is not, or there is no reading in the window yet",
-                                   "cannot resolve": "more than 5% of the days needed are missing or empty"},
+                                   "cannot resolve": "more than 5% of the days needed are missing or empty",
+                                   BASELINE: "the threshold was set from the same data as the current value, so there is no new data to test yet"},
             "predictions": preds}
     with open(os.path.join(D, "predictions_status.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(snap, f, indent=1, ensure_ascii=False)
@@ -335,11 +361,13 @@ def main():
         print(f"{p['id']}. {p['title']}  [{p['status'].upper()}, as of {p['as_of']}]")
         print(f"    threshold: {p['threshold']}")
         print(f"    current:   {p['current_value']}")
+        if p.get("note"):
+            print(f"    note:      {p['note']}")
         if p["missing_days"]:
             print(f"    missing or empty days: {p['missing_days']} of {p['days_used']}")
-    print(f"\n  {'Pred.':<7}{'Status':<16}As of")
+    print(f"\n  {'Pred.':<7}{'Status':<44}As of")
     for p in preds:
-        print(f"  {p['id']:<7}{p['status']:<16}{p['as_of']}")
+        print(f"  {p['id']:<7}{p['status']:<44}{p['as_of']}")
     print(f"\nWritten predictions_status.json ({LABEL}).")
 
 

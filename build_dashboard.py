@@ -56,16 +56,21 @@ score_html = "\n".join(cards)
 PSF = os.path.join(HERE, "predictions_status.json")
 if os.path.exists(PSF):
     PS_ = json.load(open(PSF, encoding="utf-8"))
+    # P1, P2 read DefiLlama revenue; the thesis figure is the Blockworks 28-day average (scenarios.py), last Blockworks day from near_daily.csv
+    bw_note = (f"DefiLlama series; the ${S['intents_28d_last']:,} in the thesis is Blockworks data to "
+               f"{nd.rev.last_valid_index():%Y-%m-%d}.")
     pcards = "\n".join(
         f'<div class="card"><h3>{p["id"]}: {H.escape(p["title"])}</h3>'
         f'<p><span>Threshold</span> {H.escape(p["threshold"])}</p><p><span>Now</span> {H.escape(p["current_value"])}</p>'
-        f'<p><span>Status</span> <b>{H.escape(p["status"])}</b> (as of {p["as_of"]}; resolves {p["resolution_date"]})</p></div>'
+        + (f'<p class="src">{H.escape(bw_note)}</p>' if p["id"] in ("P1", "P2") else "")
+        + f'<p><span>Status</span> <b>{H.escape(p["status"])}</b> (as of {p["as_of"]}; resolves {p["resolution_date"]})</p>'
+        + (f'<p class="src">{H.escape(p["note"])}</p>' if p.get("note") else "") + '</div>'
         for p in PS_["predictions"])
+    defs = "; ".join(f'&ldquo;{H.escape(k)}&rdquo;: {H.escape(v)}' for k, v in PS_["status_definitions"].items())
     pred_html = (f'<h2>8. Where the predictions stand today ({H.escape(PS_["label"])})</h2>\n'
                  f'<p class="sub">Snapshot of {PS_["snapshot_date"]}: <b>{H.escape(PS_["label"])}</b>. The six predictions in PREDICTIONS.md resolve on '
                  f'2027-03-31 from data pulled on or after 2027-04-07; this applies the same rules to the data available on the snapshot date. '
-                 f'&ldquo;On track&rdquo;: {H.escape(PS_["status_definitions"]["on track"])}; &ldquo;not yet&rdquo;: {H.escape(PS_["status_definitions"]["not yet"])}; '
-                 f'&ldquo;cannot resolve&rdquo;: {H.escape(PS_["status_definitions"]["cannot resolve"])}.</p>\n<div class="sc">\n{pcards}\n</div>\n'
+                 f'{defs}.</p>\n<div class="sc">\n{pcards}\n</div>\n'
                  f'<p class="src">Code: <code>track_predictions.py</code>. Snapshot: <code>predictions_status.json</code> (derived values only). '
                  f'DefiLlama: {H.escape(PS_["sources"]["defillama"])}. BigQuery: {H.escape(PS_["sources"]["bigquery"])}.</p>\n'
                  f'<p class="links">Data and code: <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/track_predictions.py">track_predictions.py</a>, '

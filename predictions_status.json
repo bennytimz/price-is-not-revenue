@@ -9,7 +9,8 @@
  "status_definitions": {
   "on track": "the interim reading is in the outcome the prediction's title names",
   "not yet": "it is not, or there is no reading in the window yet",
-  "cannot resolve": "more than 5% of the days needed are missing or empty"
+  "cannot resolve": "more than 5% of the days needed are missing or empty",
+  "baseline (threshold set from this window)": "the threshold was set from the same data as the current value, so there is no new data to test yet"
  },
  "predictions": [
   {
@@ -79,7 +80,8 @@
    "as_of": "2026-11-10",
    "missing_days": 0,
    "days_used": 28,
-   "status": "on track"
+   "status": "baseline (threshold set from this window)",
+   "note": "Threshold set from X6's 28-day mean, ending 2026-11-10; the current value has no data after that day, so it is the baseline, not a test. It becomes a test once data after 2026-11-10 exists."
   },
   {
    "id": "P6",
