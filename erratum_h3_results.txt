@@ -1,0 +1,11 @@
+H3 as registered (POST-HOC CHECK, Amendment 11): NEAR P/S on 2026-11-04 with trailing 90-day revenue, annualised
+window 2026-08-07 to 2026-11-04: 90 days | missing gas-fee days 0 | missing revenue days 0
+NEAR: on gas fees 3593x | on total protocol revenue 251x
+peer median (from confirmatory_numbers.json, 2026-11-01, 13 weeks; peers cannot be computed on 2026-11-04): protocol revenue 647x | fees only 1174x
+NEAR own history (fees, daily, 90-day): now 3593x | percentile 85% | 75th pct 1262x | 949 earlier days
+NEAR own history (total, daily, 90-day): now 251x | percentile 7% | 75th pct 826x | 769 earlier days
+registered rule: SUPPORTED if above the peer median and above its own 75th percentile; REJECTED if below the peer median
+  (a) NEAR fees vs peers' revenue: NEAR 3593x vs peer median 647x; above own 75th pct: True -> SUPPORTED
+  (b) fees vs fees: NEAR 3593x vs peer median 1174x; above own 75th pct: True -> SUPPORTED
+  (c) NEAR total vs peers' revenue [not like-for-like]: NEAR 251x vs peer median 647x; above own 75th pct: False -> REJECTED
+confirmatory run (2026-11-01, 91 days): (a) SUPPORTED; (b) SUPPORTED; (c) REJECTED

@@ -8,7 +8,7 @@ H1 to H5 are the confirmatory tests, E1 to E5 the public-source cross-checks (Am
 
 - **Threshold:** Rejected if the elasticity 95% CI excludes 1, or the token-denominated trend is positive with p < 0.05. Otherwise not rejected.
 - **Result:** gas fees elasticity 1.63 CI[1.50,1.76] n=949; total revenue elasticity 0.48 CI[0.37,0.59]; Intents revenue elasticity 0.02 CI[-0.67,0.70]; token-denominated gas fees trend/block -3.9% p<0.001
-- **Verdict:** **rejected on all three bases (Amendment 8c applies the H1 rule to the printed numbers)**
+- **Verdict:** **rejected on all three bases (Amendment 8c applies the H1 rule to the printed numbers)** (revenue does not simply track the NEAR price: gas fees moved more than one-for-one with price (elasticity 1.63), total and Intents revenue much less (0.48 and 0.02))
 - **Source:** confirmatory_results.txt (H1); PREREGISTRATION.md Amendment 8c
 
 ## H2: On-chain activity leads the NEAR price.

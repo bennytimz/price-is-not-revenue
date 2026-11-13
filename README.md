@@ -3,6 +3,21 @@
 [![reproduce](https://github.com/bennytimz/price-is-not-revenue/actions/workflows/reproduce.yml/badge.svg)](https://github.com/bennytimz/price-is-not-revenue/actions/workflows/reproduce.yml)
 
 > **My call:** NEAR's protocol revenue, mostly retained Intents revenue (about $20M a year), covers about 15% of the value of new token supply; I would not value NEAR on cash flow until revenue approaches about $191M a year (9.4x), and the dated thresholds in THESIS.md and PREDICTIONS.md say when I would change my mind.
+>
+> **Stance:** not a buy on cash-flow grounds today; watch it, and re-rate when the dated thresholds are hit. Review date: 2027-03-31.
+
+- **NEAR Intents:** a swap service on NEAR; its trades settle through the `intents.near` contract, and it charges fees on each swap.
+- **Retained Intents revenue:** the part of those fees that ends up in NEAR-owned revenue wallets (Blockworks' term; the figure this thesis uses).
+- **Blockworks:** the third-party data source behind the baseline data; re-pulling it needs a Blockworks API key.
+
+| Which number is which | |
+|---|---|
+| $20.3M a year | NEAR protocol revenue (gas fees plus retained Intents revenue), trailing 91 days, annualised (Blockworks) |
+| $18.9M a year | Retained Intents revenue alone, 91 days to 2026-11-01, annualised (Blockworks, X5) |
+| $19.1M a year | DefiLlama's Intents revenue for the same 91 days, annualised: an independent estimate of the line above (X5) |
+| 15% | Protocol revenue as a share of the dollar value of new token supply today |
+| 13% | The same ratio in H5, on 2026-10-25, with trailing 90-day revenue and that quarter's issuance |
+| 11% | Buybacks (72% of Intents revenue) as a share of the dollar value of new token supply |
 
 ![The top of the dashboard at phone width: the title and the four headline tiles in two rows (protocol revenue run-rate, revenue growth needed for buybacks to offset new supply, price to sales, Intents share of protocol revenue)](docs/img/dashboard_top_narrow.png)
 *The top of the dashboard: the four headline tiles, computed by `scenarios.py`. [Full-width view](docs/img/dashboard_top.png)*
@@ -42,7 +57,7 @@ Live dashboard: https://bennytimz.github.io/price-is-not-revenue/dashboard.html
 
 | ID | Claim | Key result | Verdict |
 |---|---|---|---|
-| H1 | USD revenue growth is mostly the NEAR price passing through. | elasticity 95% CIs: [1.50,1.76], [0.37,0.59], [-0.67,0.70] | **rejected on all three bases (Amendment 8c)** |
+| H1 | USD revenue growth is mostly the NEAR price passing through. | elasticity 95% CIs: [1.50,1.76], [0.37,0.59], [-0.67,0.70] | **rejected on all three bases (Amendment 8c)** (revenue does not simply track the NEAR price: gas fees moved more than one-for-one with price (elasticity 1.63), total and Intents revenue much less (0.48 and 0.02)) |
 | H2 | On-chain activity leads the NEAR price. | NEAR holdout OOS R2 -76.2% | **meets all conditions: False** (not supported: the signal reversed out of sample) |
 | H3 | NEAR is expensive relative to peers. | NEAR 3928x on gas fees (a), 276x on total revenue (c); peer median 647x | **(a) SUPPORTED; (b) SUPPORTED; (c) REJECTED** |
 | H4 | NEAR usage is not being monetised. | active +0.9%/block p=0.376; revenue/address -2.8%/block p=0.082 | **not supported (Amendment 8c)** |
@@ -81,7 +96,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
    *Dashboard section 8, where the predictions stand today: interim status, not a resolution.*
 
 3. `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`: the exact script output behind every number.
-4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 10 (including claims I withdrew) and a data correction log.
+4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 11 (including claims I withdrew) and a data correction log.
 5. `SCORECARD.md`: every test with its threshold, result and verdict. `PREDICTIONS.md`: six dated predictions that resolve on 2027-03-31. `DATA_PROVENANCE.md`: how the Blockworks data was pulled, with the exact prompts.
 6. [On-chain timestamp of PREDICTIONS.md and the data manifest (NEAR testnet)](ATTESTATION.md).
 
@@ -99,6 +114,9 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `ATTESTATION.md` | On-chain timestamp of PREDICTIONS.md and the data manifest (NEAR testnet): the transaction, how to verify it, and what it does and does not prove |
 | `verify_attestation.py` | Checks that timestamp against the files in this folder through two public archival RPCs (no account or key needed) |
 | `make_screenshots.py`, `docs/img/` | Screenshots of the built dashboard used in this README (Playwright, from disk, 1400 px wide PNGs under 400 KB, plus a 720 px wide phone-width version of the top under 150 KB); optional, not run by `run_all.py` |
+| `report_bonferroni.py`, `bonferroni_results.txt` | The four confirmatory tests against the pre-registered Bonferroni level 0.0125 (no verdict changes; Amendment 11) |
+| `erratum_h3_check.py`, `erratum_h3_results.txt` | Post-hoc: H3 recomputed as registered (2026-11-04, 90-day revenue) for Amendment 11; verdicts unchanged |
+| `provenance_crosscheck.py`, `provenance_crosscheck_results.txt` | Post-hoc: Blockworks daily transactions against NEAR's BigQuery count |
 | `check_consistency.py` | Checks that key figures (9.4x, $191M, $137M, 276x, 72%, 92%, the run-rate and others), all verdicts and the prediction anchors agree across THESIS, README, the submission draft, PREDICTIONS, SCORECARD and the dashboard; CI fails if any disagree |
 | `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
@@ -112,7 +130,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `SCORECARD.md`, `scorecard.json` | Generated full scorecard: claim, pre-registered threshold, result, verdict and source for H1 to H5 and E1 to E5 |
 | `optional_intents_explorer_sample.py` | Intents Explorer sampler (S3). Written from the docs, not run |
 | `optional_bigquery_daily_usage.sql` | Earlier draft of the BigQuery query, with a freshness check; superseded by `pull_bigquery_daily_usage.sql` |
-| `PREREGISTRATION.md` | Pre-registration with amendments 1 to 10 and a data correction log |
+| `PREREGISTRATION.md` | Pre-registration with amendments 1 to 11 and a data correction log |
 | `LICENSE` | MIT licence for the code and writing (see data rights below) |
 | `near_daily.csv` | NEAR daily: price, circulating market cap, protocol revenue, transaction fees, active addresses, transactions (2024-01-01 to 2026-11-04) |
 | `peers_weekly.csv` | SOL, ETH, SUI, APT, AVAX weekly: price, market cap, protocol revenue, transaction fees |
@@ -143,7 +161,7 @@ Extension check: E1-E3, F1-F2, X1 and X5-X8 within tolerance of the committed va
 --> build_scorecard.py
 scorecard: 12 rows written to scorecard.json, SCORECARD.md and README.md
 --> build_dashboard.py
-dashboard.html written 42888 bytes
+dashboard.html written 43087 bytes
 Done. Open dashboard.html.
 ```
 

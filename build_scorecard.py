@@ -101,7 +101,12 @@ for e in ("F1", "F2"):
 
 # Plain-English gloss shown in brackets after a verdict whose results-file wording is opaque; the verdict itself is unchanged.
 # H2: fit beta and holdout beta have opposite signs, and PREREGISTRATION.md Amendment 7 records H2 as not supported.
-GLOSS = {"H2": "not supported: the signal reversed out of sample"}
+# H1: the elasticities of USD revenue to price, read from confirmatory_results.txt (1 would be full pass-through).
+e_gas, e_tot, e_int = (grab(CONF, pat) for pat in (r"^A gas fees  \[all days\] elasticity (\S+) ", r"^B total protocol revenue elasticity (\S+) ",
+                                                     r"^C non-fee \(Intents\) revenue since \S+ elasticity (\S+) "))
+GLOSS = {"H1": f"revenue does not simply track the NEAR price: gas fees moved more than one-for-one with price (elasticity {e_gas}), "
+               f"total and Intents revenue much less ({e_tot} and {e_int})",
+         "H2": "not supported: the signal reversed out of sample"}
 assert re.search(r"H2 not supported", PRE), "Amendment 7 no longer records H2 as not supported"
 for r in rows:
     r["gloss"] = GLOSS.get(r["id"], "")

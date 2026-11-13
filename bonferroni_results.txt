@@ -1,0 +1,25 @@
+BONFERRONI REPORT: the four pre-registered confirmatory tests against p < 0.05 and the registered Bonferroni level
+Registered level: 0.05 / 4 tests = 0.0125 (PREREGISTRATION.md, Rules for reporting). No test, rule or verdict is changed.
+confirmatory_numbers.json holds near_ps_gas, near_ps_total, peers_ps_fees, peers_ps_rev (H3 P/S values, no p-values); p-values and intervals are read from confirmatory_results.txt as printed.
+
+H1  price pass-through. Rule: rejected if the elasticity 95% CI excludes 1 (or the token-denominated trend is positive with p < 0.05).
+   A gas fees [all days]: elasticity 1.63, 95% CI [1.50,1.76] excludes 1: True | 98.75% CI ~[1.46,1.80] excludes 1: True | implied p (elasticity = 1) < 0.0001
+   B total protocol revenue: elasticity 0.48, 95% CI [0.37,0.59] excludes 1: True | 98.75% CI ~[0.34,0.62] excludes 1: True | implied p (elasticity = 1) < 0.0001
+   C Intents revenue: elasticity 0.02, 95% CI [-0.67,0.70] excludes 1: True | 98.75% CI ~[-0.85,0.89] excludes 1: True | implied p (elasticity = 1) ~0.0050
+   (98.75% intervals and implied p-values are derived from the printed 95% HAC intervals, which are rounded to two decimals, so they are approximate.)
+   token-denominated trend -3.9%/block p=0.000: negative, so the 'positive trend' condition does not apply at either level.
+   Verdict at p < 0.05: rejected on all three bases (Amendment 8c). At 0.0125: unchanged.
+
+H2  activity leads price. Rule: supported only if fit-period p < 0.05, holdout out-of-sample R-squared > 0 and the sign holds.
+   NEAR fit beta +0.419 p=0.018: below 0.05: True | below 0.0125: False
+   holdout out-of-sample R-squared -76.2%: not above 0, so H2 is not supported at either level.
+   H2 would not pass the Bonferroni level (p=0.018 > 0.0125); it was already 'not supported' at p < 0.05. Verdict unchanged.
+
+H3  NEAR expensive relative to peers. Rule: a comparison of P/S levels (above the peer median and its own 75th percentile).
+   No p-value is involved, so the Bonferroni level does not apply. Verdict unchanged: (a) SUPPORTED; (b) SUPPORTED; (c) REJECTED.
+
+H4  usage not monetised. Rule: supported if active addresses trend up (p < 0.05) and revenue per active address trends down (p < 0.05).
+   pre-break (the basis in Amendment 8c): active-address trend p=0.376, revenue-per-active-address trend p=0.082
+   below 0.05: False and False | below 0.0125: False and False. Not supported at either level. Verdict unchanged.
+
+SUMMARY: no verdict changes at the Bonferroni level 0.0125. H2 (p=0.018) would not pass it and was already not supported. H1 stays rejected (each 98.75% interval still excludes 1), H3 has no p-value, H4 was not significant at 0.05.

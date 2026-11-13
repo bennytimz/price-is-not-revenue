@@ -236,6 +236,50 @@ for k, items in want.items():
         if not card or html.escape(str(p.get(field))) not in card.group(0):
             fails.append(f"dashboard.html: {k} card does not show the snapshot's {field} '{p.get(field)}'")
 
+# ---------- H3 sentences vs confirmatory_results.txt ----------
+# Bases: (a) and (b) are NEAR gas fees, (c) is NEAR total revenue. Every sentence that states an H3 verdict for a basis
+# (directly, or as "on the first/second" after naming the two bases) must use that basis' verdict from the results file.
+CR = rd("confirmatory_results.txt")
+h3v = dict(re.findall(r"^\s+\((a|b|c)\) .*-> (SUPPORTED|REJECTED|not supported)\s*$", CR, re.M))
+if sorted(h3v) != ["a", "b", "c"]:
+    fails.append("confirmatory_results.txt: H3 verdict lines (a) to (c) not found")
+canon_h3 = {"gas": {h3v.get("a", "").lower(), h3v.get("b", "").lower()}, "total": {h3v.get("c", "").lower()}}
+h3n = 0
+
+
+def h3_said(text):
+    t = text.lower()
+    return {w for w in ("supported", "rejected") if re.search(rf"(?<!not ){w}", t)}
+
+
+for doc in DOCS:
+    for i, ln in enumerate(doc_lines(doc), 1):
+        if "H3" not in ln or (doc == "SUBMISSION_DRAFT.md" and re.match(r"\| \d+ \|", ln)):
+            continue
+        low = ln.lower()
+        for m in re.finditer(r"(supported|rejected) on the (first|second)", low):
+            g, t = low.find("gas fee"), low.find("total revenue")
+            if g < 0 or t < 0:
+                continue
+            first, second = ("total", "gas") if t < g else ("gas", "total")
+            basis = first if m.group(2) == "first" else second
+            h3n += 1
+            if m.group(1) not in canon_h3[basis]:
+                fails.append(f"{doc}:{i}: H3 '{m.group(0)}' refers to {basis} revenue, which is {'/'.join(sorted(canon_h3[basis]))} in confirmatory_results.txt | {ln.strip()[:110]}")
+        for sent in re.split(r"(?<=[.;])\s+", ln):
+            if "H3" not in sent or re.search(r"on the (first|second)", sent, re.I):
+                continue
+            said = h3_said(sent)
+            sl = sent.lower()
+            basis = "gas" if ("gas fee" in sl and "total revenue" not in sl) else "total" if ("total revenue" in sl and "gas fee" not in sl) else None
+            if said and basis and len(said) == 1:
+                h3n += 1
+                if said.pop() not in canon_h3[basis]:
+                    fails.append(f"{doc}:{i}: H3 sentence on {basis} revenue disagrees with confirmatory_results.txt | {sent.strip()[:110]}")
+dash_txt = "\n".join(doc_lines("dashboard.html"))
+if re.search(r"counting intents revenue it sits below the peer median", dash_txt, re.I):
+    fails.append("dashboard.html: section 2 says Intents revenue is below the peer median; H3 (c) compares total protocol revenue")
+
 # ---------- README expected output vs the built dashboard ----------
 # build_dashboard.py prints len(html) as "dashboard.html written N bytes"; rd() reads with universal newlines,
 # so this is the same count on Windows (CRLF on disk) and Linux.
@@ -262,5 +306,6 @@ if fails:
         print("   " + f)
     sys.exit(1)
 print("All key figures, verdicts and prediction anchors agree across documents.")
+print(f"H3 statements: {h3n} checked against confirmatory_results.txt ((a) {h3v.get('a')}, (b) {h3v.get('b')}, (c) {h3v.get('c')}).")
 print(f"README expected output matches the built dashboard.html ({dash_len} bytes, line endings normalised).")
 print(f"Interim prediction status: predictions_status.json uses the PREDICTIONS.md thresholds and the dashboard shows the {PSN['snapshot_date']} snapshot.")

@@ -1,0 +1,6 @@
+PROVENANCE CROSS-CHECK (post-hoc): Blockworks daily transactions vs NEAR BigQuery daily transactions
+overlapping days 1039 (2024-01-01 to 2026-11-04); Blockworks days without a BigQuery value: 0
+total ratio (Blockworks / BigQuery): 0.9972
+daily absolute difference: median 0.00% | days within 1%: 98.6% | within 5%: 99.2% | largest 43.4% on 2025-03-20
+Spearman of daily counts: 0.999
+Other Blockworks series: Intents revenue level is checked against DefiLlama (X1, extension_results.txt); active addresses were checked against BigQuery signers and disagree (E4, E5). No independent check in this repository: NEAR price, market cap and gas fees (near_daily.csv), peers (peers_weekly.csv), total supply (near_total_supply_weekly.csv) and buybacks (near_buybacks_daily.csv).

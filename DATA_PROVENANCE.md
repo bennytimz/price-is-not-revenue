@@ -34,4 +34,6 @@ There were two versions of the peers prompt: A without `weekly_transaction_fees_
 
 "Both match" means the file equals the row count and sum recorded from the pull, within $1 for sums (`SOURCE_TOTALS.json`, `tolerance_usd`). `verify_data.py` checks the rebuilt CSV files against these totals on every run, and `MANIFEST.sha256` fixes their hashes.
 
+**What these checks show and do not show.** The row counts and sums were reported by ChatGPT in the same chat that produced the data, so matching them confirms that the files were copied correctly, not that they equal Blockworks' own figures. Independent checks exist for two series: the Intents revenue level against DefiLlama (DefiLlama's total is 0.998 of Blockworks', X1 in `extension_results.txt`) and daily transactions against NEAR's public BigQuery dataset (Blockworks' total is 0.9972 of BigQuery's, and 98.6% of days agree within 1%; `provenance_crosscheck_results.txt`, post-hoc). Active addresses were checked against on-chain signers and disagree (E4, E5). NEAR price, market cap and gas fees, the peer data (`peers_weekly.csv`), total supply and buybacks have no independent check.
+
 Orientation prompts (not used as data): a 90-day price and revenue chart, an Aug 7 to Nov 4 correlation check, a maximum-history catalogue, and a metric-name discovery question.
