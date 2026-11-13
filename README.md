@@ -67,6 +67,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 3. `confirmatory_results.txt`, `scenarios_results.txt` and `extension_results.txt`: the exact script output behind every number.
 4. `PREREGISTRATION.md`: hypotheses and rejection rules written before the long history was loaded, plus dated amendments 1 to 10 (including claims I withdrew) and a data correction log.
 5. `SCORECARD.md`: every test with its threshold, result and verdict. `PREDICTIONS.md`: six dated predictions that resolve on 2027-03-31. `DATA_PROVENANCE.md`: how the Blockworks data was pulled, with the exact prompts.
+6. [On-chain timestamp of PREDICTIONS.md and the data manifest (NEAR testnet)](ATTESTATION.md).
 
 ## What is in this repo
 
@@ -150,6 +151,8 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 - DefiLlama: a fresh pull through the endpoints in `pull_defillama_intents.py`, saved locally in `predictions_pull/` (git-ignored, never committed). The day of the pull is dropped as possibly incomplete. `--no-pull` reuses the last local pull.
 - BigQuery: the committed pulls by default. Both were run on 2026-11-11 UTC, so that partial day is dropped and the last complete day is 2026-11-10. `--dry-run` prints the bytes a re-pull up to yesterday would process; `--run` dry-runs first, refuses above `--max-gb` (default 150), then re-pulls into `repull_predictions_*.csv` (git-ignored). Setup as for `pull_bigquery.py`.
 - Output: a dated snapshot in `predictions_status.json` (derived values only, no raw data). `build_dashboard.py` shows the committed snapshot, with its date, in the dashboard section "Where the predictions stand today"; `run_all.py` does not re-pull for it.
+
+**[On-chain timestamp of PREDICTIONS.md and the data manifest (NEAR testnet)](ATTESTATION.md).** Check it with `python verify_attestation.py` (no account or key needed).
 
 ## What is and is not reproducible
 
