@@ -10,3 +10,5 @@ repull_*.csv
 *service-account*.json
 demo/build/
 demo/*.mp4
+# track_predictions.py: local DefiLlama pull (raw, never committed)
+predictions_pull/

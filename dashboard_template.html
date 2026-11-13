@@ -79,6 +79,8 @@ __SCOREHTML__
 <p class="says">Around 2026-04-02 on-chain distinct signers fell 8.1% while Blockworks active addresses fell 89.4%, so the break is probably a Blockworks definition change (E4), and over the whole period the daily changes of the two agree too weakly to call the definitions consistent (E5, Spearman 0.479 against 0.60).</p>
 <p class="src">Code: <code>analysis_extension.py</code>, E4, E5 and X2. Query: <code>pull_bigquery_daily_usage.sql</code> (NEAR public BigQuery dataset, <code>WHERE block_date &gt;= '2024-01-01'</code>). Data: <code>raw_bigquery_daily_usage.csv</code>, <code>near_daily.csv</code>. Each line is indexed to its own median over the 28 days before 2026-04-02 = 100; percentages are 28-day medians before and after.</p>
 <p class="links">Data and code: <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/analysis_extension.py">analysis_extension.py</a>, <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/pull_bigquery_daily_usage.sql">pull_bigquery_daily_usage.sql</a>, <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/raw_bigquery_daily_usage.csv">raw_bigquery_daily_usage.csv</a>, <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/near_daily.csv">near_daily.csv</a></p>
+
+__PREDHTML__
 </main>
 <script>
 (function(){

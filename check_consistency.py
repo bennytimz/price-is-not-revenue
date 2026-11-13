@@ -182,9 +182,48 @@ for p, a in anchors:
 if "Spearman(daily S4 call count, daily S1 DefiLlama volume) over at least 120 overlapping days; 0.50 or higher" not in PRE:
     fails.append("PREREGISTRATION.md: Amendment 9's F1 threshold (0.50) not found")
 
+# ---------- interim prediction status: snapshot vs PREDICTIONS.md, dashboard vs snapshot ----------
+import track_predictions as TP
+PSN = json.loads(rd("predictions_status.json"))
+PR = TP.read_predictions()
+want = {"P1": [f"${PR['P1']['min']:,.0f} a day", f"{PR['P1']['days']} consecutive days", PR["P1"]["start"], PR["P1"]["end"]],
+        "P2": [f"${PR['P2']['max']:,.0f} a day", f"{PR['P2']['days']} consecutive days", PR["P2"]["start"], PR["P2"]["end"]],
+        "P3": [f"at or below {PR['P3']['low']:.2f} bp", f"at or above {PR['P3']['high']:.2f} bp", PR["P3"]["start"], PR["P3"]["end"]],
+        "P4": [f"below ${PR['P4']['low'] / 1e6:.1f}M", f"at or above ${PR['P4']['high'] / 1e6:.1f}M", f"{PR['P4']['days']} days ending {PR['P4']['end']}"],
+        "P5": [f"at or below {PR['P5']['low']:,.0f}", f"at or above {PR['P5']['high']:,.0f}", f"{PR['P5']['days']}-day mean"],
+        "P6": [f"at or above {PR['P6']['min']:.2f}", PR["P6"]["start"], PR["P6"]["end"], f"({PR['P6']['window_days']} days)"]}
+pstat = 0
+if PSN.get("label") != TP.LABEL:
+    fails.append(f"predictions_status.json: label is '{PSN.get('label')}', not '{TP.LABEL}'")
+snap = {p["id"]: p for p in PSN["predictions"]}
+if sorted(snap) != sorted(want):
+    fails.append(f"predictions_status.json: expected P1 to P6, found {sorted(snap)}")
+dash = rd("dashboard.html")
+sec = dash[dash.find("8. Where the predictions stand today"):] if "8. Where the predictions stand today" in dash else ""
+if not sec:
+    fails.append("dashboard.html: section 'Where the predictions stand today' not found")
+for need in (f"Snapshot of {PSN['snapshot_date']}", html.escape(TP.LABEL)):
+    if sec and need not in sec:
+        fails.append(f"dashboard.html: predictions section does not show '{need}'")
+for k, items in want.items():
+    p = snap.get(k, {})
+    if p.get("title") != PR[k]["title"] or p.get("resolution_date") != PR[k]["resolution_date"]:
+        fails.append(f"predictions_status.json: {k} title or resolution date differs from PREDICTIONS.md")
+    for it in items:
+        pstat += 1
+        if it not in p.get("threshold", ""):
+            fails.append(f"predictions_status.json: {k} threshold '{p.get('threshold')}' does not contain '{it}' from PREDICTIONS.md")
+    if p.get("status") not in ("on track", "not yet", "cannot resolve"):
+        fails.append(f"predictions_status.json: {k} status '{p.get('status')}' is not one of the three allowed")
+    card = re.search(rf'<h3>{k}: .*?</div>', sec, re.S)
+    for field in ("threshold", "current_value", "status", "as_of"):
+        pstat += 1
+        if not card or html.escape(str(p.get(field))) not in card.group(0):
+            fails.append(f"dashboard.html: {k} card does not show the snapshot's {field} '{p.get(field)}'")
+
 # ---------- report ----------
 print(f"Consistency check: {sum(len(v) for v in found.values())} figure mentions and {vfound} verdicts in {len(DOCS)} documents; "
-      f"{len(anchors)} prediction anchors.")
+      f"{len(anchors)} prediction anchors; {pstat} interim-status checks (snapshot {PSN['snapshot_date']}).")
 for c in K:
     hits = found.get(c, [])
     print(f"   {c}: {len(hits)} mentions" + (f", all agree with {', '.join(f'{x:g}' for x in K[c])}" if hits and all(h[3] for h in hits) else ""))
@@ -197,3 +236,4 @@ if fails:
         print("   " + f)
     sys.exit(1)
 print("All key figures, verdicts and prediction anchors agree across documents.")
+print(f"Interim prediction status: predictions_status.json uses the PREDICTIONS.md thresholds and the dashboard shows the {PSN['snapshot_date']} snapshot.")

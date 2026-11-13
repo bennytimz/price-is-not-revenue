@@ -78,6 +78,7 @@ Over the 91 days to 2026-11-01, gross fees annualised to $70.5M a year and retai
 | `scenarios.py` | Revenue composition, run-rates, dilution, sensitivity grid and the post-hoc usage check |
 | `build_clean_data.py` | Rebuilds the CSV files from the raw exports in `raw_*.csv` files |
 | `pull_bigquery.py`, `requirements-bigquery.txt` | Optional re-pull of the two BigQuery series (dry run by default; `--run` writes `repull_*.csv` and compares with the committed pulls up to 2026-11-04) |
+| `track_predictions.py`, `predictions_status.json` | Interim status of predictions P1 to P6 (not a resolution): applies the `PREDICTIONS.md` rules to fresh DefiLlama data and the committed BigQuery pulls (`--run` re-pulls BigQuery; dry run first, size cap) and writes a dated snapshot of derived values, shown in the dashboard |
 | `check_consistency.py` | Checks that key figures (9.4x, $191M, $137M, 276x, 72%, 92%, the run-rate and others), all verdicts and the prediction anchors agree across THESIS, README, the submission draft, PREDICTIONS, SCORECARD and the dashboard; CI fails if any disagree |
 | `DATA_PROVENANCE.md` | How the Blockworks data was pulled: the verbatim prompts, and the row count and sum check for each raw file |
 | `run_all.py`, `verify_data.py`, `build_dashboard.py`, `dashboard_template.html`, `requirements.txt`, `chart.umd.js` | One-command rebuild: data check, tests, scenarios and dashboard (Chart.js bundled) |
@@ -118,7 +119,7 @@ Extension check: E1-E3, F1-F2, X1 and X5-X8 within tolerance of the committed va
 --> build_scorecard.py
 scorecard: 12 rows written to scorecard.json, SCORECARD.md and README.md
 --> build_dashboard.py
-dashboard.html written 38470 bytes
+dashboard.html written 42293 bytes
 Done. Open dashboard.html.
 ```
 
@@ -143,6 +144,12 @@ On Windows, Python may write CRLF line endings; the outputs are byte-identical t
 - `python pull_bigquery.py` is a dry run: it prints the bytes each query would process and runs nothing. It refuses to go further if either query exceeds `--max-gb` (default 150).
 - `python pull_bigquery.py --run` executes both queries (BigQuery bills the processed bytes to your project) and writes `repull_bigquery_daily_usage.csv` and `repull_bigquery_intents_contract.csv`, which git ignores. It never overwrites the committed `raw_*.csv` files. It then compares them with the committed pulls for days up to 2026-11-04 (row counts, column sums, first and last dates, and any days that differ) and prints MATCH or DIFFER. Days the committed pulls have after 2026-11-04 are left out of the comparison.
 - Checked on 2026-11-12: the dry run measured 132.3 GB for `pull_bigquery_daily_usage.sql` and 125.9 GB for `pull_bigquery_intents_contract.sql` (both with the 2026-11-04 cap). `--run` gave **MATCH** for both: 1,039 and 673 rows, the same first and last dates, the same column sums, and no day that differs from the committed pulls.
+
+**Where the predictions stand (interim status, not a resolution).** `python track_predictions.py` applies the resolution rules of P1 to P6 (`PREDICTIONS.md`) to the data available today and prints, for each prediction, the threshold, the current value, a status ("on track", "not yet" or "cannot resolve") and the as-of date. The predictions themselves resolve only on 2027-03-31.
+- Thresholds, windows and day counts are read from the wording of `PREDICTIONS.md`, not typed in the script; `check_consistency.py` fails if the snapshot's thresholds differ from them or if the dashboard does not show the snapshot.
+- DefiLlama: a fresh pull through the endpoints in `pull_defillama_intents.py`, saved locally in `predictions_pull/` (git-ignored, never committed). The day of the pull is dropped as possibly incomplete. `--no-pull` reuses the last local pull.
+- BigQuery: the committed pulls by default. Both were run on 2026-11-11 UTC, so that partial day is dropped and the last complete day is 2026-11-10. `--dry-run` prints the bytes a re-pull up to yesterday would process; `--run` dry-runs first, refuses above `--max-gb` (default 150), then re-pulls into `repull_predictions_*.csv` (git-ignored). Setup as for `pull_bigquery.py`.
+- Output: a dated snapshot in `predictions_status.json` (derived values only, no raw data). `build_dashboard.py` shows the committed snapshot, with its date, in the dashboard section "Where the predictions stand today"; `run_all.py` does not re-pull for it.
 
 ## What is and is not reproducible
 

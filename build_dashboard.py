@@ -51,8 +51,31 @@ for r in json.load(open(os.path.join(HERE, "scorecard.json"), encoding="utf-8"))
                  f'<p><span>Verdict</span> <b>{H.escape(r["verdict"])}</b>' + (f' ({H.escape(r["gloss"])})' if r.get("gloss") else '') + f'</p><p class="src">{H.escape(r["source"])}</p></div>')
 score_html = "\n".join(cards)
 
+# Section 8: interim status of the forward predictions, from the committed snapshot written by track_predictions.py
+# (not recomputed here, so run_all.py needs no network for it)
+PSF = os.path.join(HERE, "predictions_status.json")
+if os.path.exists(PSF):
+    PS_ = json.load(open(PSF, encoding="utf-8"))
+    pcards = "\n".join(
+        f'<div class="card"><h3>{p["id"]}: {H.escape(p["title"])}</h3>'
+        f'<p><span>Threshold</span> {H.escape(p["threshold"])}</p><p><span>Now</span> {H.escape(p["current_value"])}</p>'
+        f'<p><span>Status</span> <b>{H.escape(p["status"])}</b> (as of {p["as_of"]}; resolves {p["resolution_date"]})</p></div>'
+        for p in PS_["predictions"])
+    pred_html = (f'<h2>8. Where the predictions stand today ({H.escape(PS_["label"])})</h2>\n'
+                 f'<p class="sub">Snapshot of {PS_["snapshot_date"]}: <b>{H.escape(PS_["label"])}</b>. The six predictions in PREDICTIONS.md resolve on '
+                 f'2027-03-31 from data pulled on or after 2027-04-07; this applies the same rules to the data available on the snapshot date. '
+                 f'&ldquo;On track&rdquo;: {H.escape(PS_["status_definitions"]["on track"])}; &ldquo;not yet&rdquo;: {H.escape(PS_["status_definitions"]["not yet"])}; '
+                 f'&ldquo;cannot resolve&rdquo;: {H.escape(PS_["status_definitions"]["cannot resolve"])}.</p>\n<div class="sc">\n{pcards}\n</div>\n'
+                 f'<p class="src">Code: <code>track_predictions.py</code>. Snapshot: <code>predictions_status.json</code> (derived values only). '
+                 f'DefiLlama: {H.escape(PS_["sources"]["defillama"])}. BigQuery: {H.escape(PS_["sources"]["bigquery"])}.</p>\n'
+                 f'<p class="links">Data and code: <a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/track_predictions.py">track_predictions.py</a>, '
+                 f'<a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/predictions_status.json">predictions_status.json</a>, '
+                 f'<a href="https://github.com/bennytimz/price-is-not-revenue/blob/main/PREDICTIONS.md">PREDICTIONS.md</a></p>')
+else:
+    pred_html = '<h2>8. Where the predictions stand today</h2>\n<p class="sub">No snapshot yet: run <code>python track_predictions.py</code>.</p>'
+
 html = open(os.path.join(HERE, "dashboard_template.html")).read()
-html = html.replace("__SCOREHTML__", score_html)
+html = html.replace("__SCOREHTML__", score_html).replace("__PREDHTML__", pred_html)
 
 # Headline tiles, read from scenario_numbers.json (scenarios.py); no typed numbers
 oct26 = S["monthly"]["2026-10"]

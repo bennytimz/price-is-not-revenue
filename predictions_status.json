@@ -1,0 +1,98 @@
+{
+ "label": "interim status, not a resolution",
+ "snapshot_date": "2026-11-13",
+ "generated_utc": "2026-11-13T13:38:21Z",
+ "sources": {
+  "defillama": "DefiLlama free API via pull_defillama_intents.py endpoints, pulled 2026-11-13T13:38:21Z; days before 2026-11-13 (UTC) used; raw data not committed",
+  "bigquery": "committed BigQuery pulls, complete days to 2026-11-10 (2026-11-11 is the partial pull day, dropped)"
+ },
+ "status_definitions": {
+  "on track": "the interim reading is in the outcome the prediction's title names",
+  "not yet": "it is not, or there is no reading in the window yet",
+  "cannot resolve": "more than 5% of the days needed are missing or empty"
+ },
+ "predictions": [
+  {
+   "id": "P1",
+   "title": "Amendment 7 \"strengthens\" signal",
+   "resolution_date": "2027-03-31",
+   "threshold": "trailing 28-day average at least $100,000 a day on 84 consecutive days, 2026-11-12 to 2027-03-31",
+   "current_value": "$56,816 a day (trailing 28-day average); streak meeting it so far 0 days, longest 0 days, of 84 consecutive days needed",
+   "value": 56816.285714,
+   "streak": 0,
+   "longest_streak": 0,
+   "days_in_window": 1,
+   "as_of": "2026-11-12",
+   "missing_days": 0,
+   "days_used": 28,
+   "status": "not yet"
+  },
+  {
+   "id": "P2",
+   "title": "Amendment 7 \"weakens\" signal",
+   "resolution_date": "2027-03-31",
+   "threshold": "trailing 28-day average at most $30,000 a day on 56 consecutive days, 2026-11-12 to 2027-03-31",
+   "current_value": "$56,816 a day (trailing 28-day average); streak meeting it so far 0 days, longest 0 days, of 56 consecutive days needed",
+   "value": 56816.285714,
+   "streak": 0,
+   "longest_streak": 0,
+   "days_in_window": 1,
+   "as_of": "2026-11-12",
+   "missing_days": 0,
+   "days_used": 28,
+   "status": "not yet"
+  },
+  {
+   "id": "P3",
+   "title": "Take rate (bull case vs bear case)",
+   "resolution_date": "2027-03-31",
+   "threshold": "at or below 2.61 bp: bear case; at or above 5.13 bp: take rate held; over 2027-01-01 to 2027-03-31",
+   "current_value": "4.24 bp over the latest 90 days (window opens 2027-01-01), 2026-08-15 to 2026-11-12: in between",
+   "value": 4.239845,
+   "reading": "in between",
+   "as_of": "2026-11-12",
+   "missing_days": 0,
+   "days_used": 90,
+   "status": "not yet"
+  },
+  {
+   "id": "P4",
+   "title": "Revenue keeps compounding",
+   "resolution_date": "2027-03-31",
+   "threshold": "below $19.1M: not growing; at or above $38.2M: compounding (mean daily revenue x 365, 91 days ending 2027-03-31)",
+   "current_value": "$20.9M a year (mean daily revenue x 365), 91 days 2026-08-14 to 2026-11-12: in between",
+   "value": 20884277.197802,
+   "reading": "in between",
+   "as_of": "2026-11-12",
+   "missing_days": 0,
+   "days_used": 91,
+   "status": "not yet"
+  },
+  {
+   "id": "P5",
+   "title": "On-chain usage does not recover",
+   "resolution_date": "2027-03-31",
+   "threshold": "at or below 62,660: no recovery; at or above 261,846: back to a year earlier (28-day mean of daily distinct signers)",
+   "current_value": "62,660 distinct signers a day, 28-day mean ending 2026-11-10: no recovery (supports)",
+   "value": 62659.928571,
+   "reading": "no recovery (supports)",
+   "as_of": "2026-11-10",
+   "missing_days": 0,
+   "days_used": 28,
+   "status": "on track"
+  },
+  {
+   "id": "P6",
+   "title": "Contract calls keep tracking volume",
+   "resolution_date": "2027-03-31",
+   "threshold": "Spearman at or above 0.50: the proxy holds; 2026-11-12 to 2027-03-31 (140 days)",
+   "current_value": "no reading: no overlapping days in the window yet (BigQuery data ends 2026-11-10)",
+   "value": null,
+   "n_days": 0,
+   "as_of": "2026-11-10",
+   "missing_days": 0,
+   "days_used": 0,
+   "status": "not yet"
+  }
+ ]
+}
